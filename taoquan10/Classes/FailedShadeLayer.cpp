@@ -54,14 +54,15 @@ bool FailedShadeLayer::init()
                                            CC_CALLBACK_1(FailedShadeLayer::menuRestartCallback, this));
     
     restartItem->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y +visibleSize.height /3+ restartItem->getContentSize().height/2));
+                                origin.y +visibleSize.height *0.45));
+    //主界面按钮
     auto selectLevelItem = MenuItemImage::create(
                                              "shibai/selectLevelBtn.png",
                                              "shibai/selectLevelBtn.png",
                                              CC_CALLBACK_1(FailedShadeLayer::menuSelectLevelCallback, this));
     
     selectLevelItem->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                  origin.y +visibleSize.height /2+ selectLevelItem->getContentSize().height/2));
+                                  origin.y +visibleSize.height *0.52));
     
     // create menu, it's an autorelease object
     auto menu = Menu::create(restartItem,selectLevelItem, NULL);

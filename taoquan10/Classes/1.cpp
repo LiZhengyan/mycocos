@@ -12,7 +12,6 @@
 #include "FailedShadeLayer.h"
 #include "LevelData.h"
 #include "PauseLayer.h"
-#include "SmartRes.h"
 USING_NS_CC;
 
 
@@ -39,10 +38,10 @@ bool GameScene::init()
     {
         return false;
     }
-    
+
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
-    log("width===%f   height===%f",visibleSize.width,visibleSize.height);
+    
     _isTouch=true;
     _isLoopOrigin=true;
     _IsNeedExit=false;
@@ -143,8 +142,7 @@ bool GameScene::init()
         }else{
             dizuoTouying=Sprite::create("gamescene/foundation.png");
         }
-        
-        dizuoTouying->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+        dizuoTouying->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*0.095));
         dizuoTouying->setScale(0.7*visibleSize.width/640);
         this->addChild(dizuoTouying,1);
         dizuoTouyingVector.pushBack(dizuoTouying);
@@ -171,7 +169,7 @@ bool GameScene::init()
     //倒计时
     labelTime=LabelAtlas::create("60:", "gamescene/shuzi.png", 37.0f, 59.0f, '0');//加:是为了显示字母，0是开始字符
     labelTime->setScale(visibleSize.width/640.0);
-    labelTime->setPosition(Vec2(origin.x + visibleSize.width/2-labelTime->getContentSize().width/2,origin.y + visibleSize.height*0.9));
+    labelTime->setPosition(Vec2(origin.x + visibleSize.width/2-labelTime->getContentSize().width/2,origin.y + visibleSize.height*0.97 - labelTime->getContentSize().height));
     
     this->addChild(labelTime, 1);
     
@@ -216,7 +214,7 @@ bool GameScene::init()
 
     labelNumber = LabelAtlas::create(":10", "gamescene/shuzi2.png", 26.0f, 41.0f, '0');
     labelNumber->setScale(visibleSize.width/640.0);
-    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.86,origin.y + visibleSize.height*0.07));
+    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.85,origin.y + visibleSize.height*0.07));
     this->addChild(labelNumber, 1);
     //添加不动圈
     auto noMoveSprite = Sprite::create("gamescene/quan.png");
@@ -238,7 +236,7 @@ bool GameScene::init()
         int rotation=hiddenPic.at(i).asValueMap()["rotation"].asInt();
         if (_inttag>99) {
             ResolvePicture* rp=ResolvePicture::createResolvePicture();
-            rp->setScale(visibleSize.width*smartRes_hiddenPicScale/_spriteQuan->getContentSize().width*4);
+            rp->setScale(_spriteQuan->getContentSize().width*4/visibleSize.width);
             rp->initResolvePicture(name, picId);
             rp->setPicturePosition(visibleSize.width*px*0.01, visibleSize.height*py*0.01);
             rp->setRotation(rotation);
@@ -282,9 +280,6 @@ bool GameScene::init()
     //_eventDispatcher->removeAllEventListeners();
     return true;
 }
-
-
-
 //设置图片的摆放位置
 void GameScene::setNextLevelPicture(EventCustom* e)
 {
@@ -332,7 +327,7 @@ void GameScene::setNextLevelPicture(EventCustom* e)
             Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
             Texture2D* textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation2.png");
             dzty->setTexture(textureDzty);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*0.095));
             //更换背景图片
             char bgName[40];
             sprintf(bgName, "gamescene/gameBG2%d.png",num);
@@ -341,7 +336,7 @@ void GameScene::setNextLevelPicture(EventCustom* e)
 
         }else{
             Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*0.095));
         }
 //        Sprite* dz=(Sprite*)dizuoVector.at(i);
 //        dz->setPosition(rp->getPosition());
@@ -365,7 +360,7 @@ void GameScene::setNextLevelPicture(EventCustom* e)
             bigPicName=name;
         }else{
             ResolvePicture* rp=ResolvePicture::createResolvePicture();
-            rp->setScale(visibleSize.width*0.045/_spriteQuan->getContentSize().width*4);
+            rp->setScale(_spriteQuan->getContentSize().width*4/visibleSize.width);
             rp->initResolvePicture(name, picId);
             rp->setPicturePosition(visibleSize.width*px*0.01, visibleSize.height*py*0.01);
             rp->setRotation(rotation);
@@ -459,7 +454,7 @@ void GameScene::resetGame(EventCustom* e)
             Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
             Texture2D* textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation2.png");
             dzty->setTexture(textureDzty);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*0.095));
             //更换背景图片
             char bgName[40];
             sprintf(bgName, "gamescene/gameBG2%d.png",num);
@@ -468,7 +463,7 @@ void GameScene::resetGame(EventCustom* e)
 
         }else{
             Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*0.095));
         }
         
         //        Sprite* dz=(Sprite*)dizuoVector.at(i);
@@ -493,7 +488,7 @@ void GameScene::resetGame(EventCustom* e)
         }else{
             
             ResolvePicture* rp=ResolvePicture::createResolvePicture();
-            rp->setScale(visibleSize.width*0.045/_spriteQuan->getContentSize().width*4);
+            rp->setScale(_spriteQuan->getContentSize().width*4/visibleSize.width);
             rp->initResolvePicture(name, picId);
             rp->setPicturePosition(visibleSize.width*px*0.01, visibleSize.height*py*0.01);
             rp->setRotation(rotation);

@@ -1,7 +1,6 @@
 #include "AppDelegate.h"
 #include "SelectLevel.h"
 #include "HelloWorldScene.h"
-
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -35,13 +34,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-    	glview = GLViewImpl::createWithRect("My Game", Rect(0, 0, 960, 640));
+        glview = GLViewImpl::create("My Game");
         director->setOpenGLView(glview);
     }
-     director->getOpenGLView()->setDesignResolutionSize(2048, 1536, ResolutionPolicy::FIXED_HEIGHT);
-    
-
-
 
     director->setDisplayStats(true);
 

@@ -1,6 +1,4 @@
 #include "AppDelegate.h"
-//#include "HelloWorldScene.h"
-#include "Dataunit.h"
 #include "MenuScene.h"
 
 USING_NS_CC;
@@ -24,16 +22,22 @@ void AppDelegate::initGLContextAttrs()
     GLView::setGLContextAttrs(glContextAttrs);
 }
 
+// If you want to use packages manager to install more packages, 
+// don't modify or remove this function
+static int register_all_packages()
+{
+    return 0; //flag for packages manager
+}
+
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("ctaoquan7", Rect(0, 0, 960, 640));
+        glview = GLViewImpl::create("My Game");
         director->setOpenGLView(glview);
     }
-
-    director->getOpenGLView()->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_WIDTH);
+    glview->setDesignResolutionSize(480,800,ResolutionPolicy::EXACT_FIT);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -41,13 +45,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-    FileUtils::getInstance()->addSearchPath("res");
+    register_all_packages();
 
     // create a scene. it's an autorelease object
-    
-    //下面这个是对于容器的一些练习
-//    auto scene = HelloWorld::createScene();
-//    auto scene =Dataunit::create(); //数据读写联系
     auto scene = MenuScene::create();
 
     // run

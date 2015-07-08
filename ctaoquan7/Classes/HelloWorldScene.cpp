@@ -15,10 +15,10 @@ Scene* HelloWorld::createScene()
     
     // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
-
+    
     // add layer as a child to scene
     scene->addChild(layer);
-
+    
     // return the scene
     return scene;
 }
@@ -98,7 +98,7 @@ bool HelloWorld::init()
         
         
         __String * keyname3=__String::createWithFormat("VMAP(%d)",i); //ValueMap字典容器
-//        mlist.at(keyname3->getCString())=sprite1; //这样是错误的。
+        //        mlist.at(keyname3->getCString())=sprite1; //这样是错误的。
         char name[100];
         std::sprintf(name ,"key_%d",i);
         std::pair<std::string,Value> pair1(name,Value("res/start.png"));
@@ -122,12 +122,12 @@ void HelloWorld::clickstartGame3(cocos2d::Ref *Psender)
     item->setPosition(Vec2(x,y));
     log("List=count=%zd",this->list.size());
     
-//    for(auto&v:vlist){
-//        __String * name=__String::createWithFormat("%s/%s","res",v.asString().c_str());
-//        log("string=%s",name->getCString());
-//        
-//        
-//    }
+    //    for(auto&v:vlist){
+    //        __String * name=__String::createWithFormat("%s/%s","res",v.asString().c_str());
+    //        log("string=%s",name->getCString());
+    //
+    //
+    //    }
     for(auto&v:mlist){
         log("%s-%s",v.first.c_str(),v.second.asString().c_str());
     }
@@ -139,7 +139,7 @@ void HelloWorld::clickstartGame(cocos2d::Ref *Psender)
 {
     log("List=count=%zd",this->list.size());
     Size visibleSize= Director::getInstance()->getVisibleSize();
-   
+    
     for (const auto&sprite: list) {
         int x = CCRANDOM_0_1()*visibleSize.width;
         int y = CCRANDOM_0_1()*visibleSize.height;
@@ -191,7 +191,7 @@ void HelloWorld::menucloseCallBack(Ref* pSender)
     
     
     
-
+    
 }
 
 

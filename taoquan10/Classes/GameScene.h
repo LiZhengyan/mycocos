@@ -88,6 +88,7 @@ public:
     Sprite* _gameBG;
     
     ~GameScene();
+
     
 private:
     LabelAtlas* labelTime;

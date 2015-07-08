@@ -63,15 +63,15 @@ bool ShadeLayer::init() {
     Sprite* yong=Sprite::create("guoguan/yongshi.png",Rect(0, 0, 58, 57));
     yong->setAnchorPoint(Vec2(0.5, 0.5));
     yong->setScale(visibleSize.width/640);
-    yong->setPosition(Vec2(visibleSize.width/2-yong->getContentSize().width*1.7, visibleSize.height/2));
+    yong->setPosition(Vec2(visibleSize.width*0.35, visibleSize.height/2.1));
     this->addChild(yong,2);
     Sprite* shi=Sprite::create("guoguan/yongshi.png",Rect(58, 0, 58, 57));
-    shi->setPosition(Vec2(visibleSize.width/2-yong->getContentSize().width*0.6, visibleSize.height/2));
+    shi->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height/2.1));
     shi->setAnchorPoint(Vec2(0.5, 0.5));
     shi->setScale(visibleSize.width/640);
     this->addChild(shi,2);
     Sprite* miao=Sprite::create("guoguan/yongshi.png",Rect(116, 0, 58, 57));
-    miao->setPosition(Vec2(visibleSize.width/2+yong->getContentSize().width*1.6, visibleSize.height/2));
+    miao->setPosition(Vec2(visibleSize.width*0.64, visibleSize.height/2.1));
     miao->setAnchorPoint(Vec2(0.5, 0.5));
     miao->setScale(visibleSize.width/640);
     this->addChild(miao,2);
@@ -86,7 +86,7 @@ bool ShadeLayer::init() {
     //labelTime->setScale(visibleSize.width/640.0);
     labelTime->setAnchorPoint(Vec2(0.5,0.5));
     labelTime->setScale(visibleSize.width/640);
-    labelTime->setPosition(Vec2(shi->getPositionX()+labelTime->getContentSize().width/2, visibleSize.height/2));
+    labelTime->setPosition(Vec2(shi->getPositionX()+labelTime->getContentSize().width/2, visibleSize.height/2.1));
     this->addChild(labelTime, 2);
     //添加星星
     int starNum=0;
@@ -103,9 +103,9 @@ bool ShadeLayer::init() {
         
         Sprite* starL=Sprite::create("guoguan/starNoLight.png");
         if (i==1)
-            starL->setPosition(Vec2(visibleSize.width/2-starL->getContentSize().width+i*(starL->getContentSize().width), visibleSize.height/1.6));
+            starL->setPosition(Vec2(visibleSize.width/2-visibleSize.width/6+i*visibleSize.width/6, visibleSize.height/1.6));
         else
-            starL->setPosition(Vec2(visibleSize.width/2-starL->getContentSize().width+i*(starL->getContentSize().width), visibleSize.height/1.7));
+            starL->setPosition(Vec2(visibleSize.width/2-visibleSize.width/6+i*visibleSize.width/6, visibleSize.height/1.7));
         this->addChild(starL,2);
         starL->setScale(visibleSize.width/640);
         starVector.pushBack(starL);

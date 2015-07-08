@@ -8,6 +8,7 @@
 
 #include "SelectLevel.h"
 #include "GameScene.h"
+#include "SmartRes.h"
 USING_NS_CC;
 
 Scene* SelectLevel::createScene()
@@ -36,8 +37,8 @@ bool SelectLevel::init()
         string creatUserTable = "create table User(level integer,isSuo bool,starNum integer,useTime integer)";
         DataUtil::createTable(creatUserTable,"User");
         //像表格中插入数据
-        string insertUser = "insert into User values(1,'false',0,0),(2,'true',0,0),(3,'true',0,0),(4,'true',0,0),(5,'true',0,0),(6,'true',0,0),(7,'true',0,0),(8,'true',0,0),(9,'true',0,0),(10,'true',0,0),(11,'true',0,0),(12,'true',0,0),(13,'true',0,0),(14,'true',0,0),(15,'true',0,0),(16,'true',0,0),(17,'true',0,0),(18,'true',0,0)";
-        /*string insertUser = "insert into User values(1,'false',0,0),(2,'false',0,0),(3,'false',0,0),(4,'false',0,0),(5,'false',0,0),(6,'false',0,0),(7,'false',0,0),(8,'false',0,0),(9,'false',0,0),(10,'false',0,0),(11,'false',0,0),(12,'false',0,0),(13,'false',0,0),(14,'false',0,0),(15,'false',0,0),(16,'false',0,0),(17,'false',0,0),(18,'false',0,0)";*/
+        /*string insertUser = "insert into User values(1,'false',0,0),(2,'true',0,0),(3,'true',0,0),(4,'true',0,0),(5,'true',0,0),(6,'true',0,0),(7,'true',0,0),(8,'true',0,0),(9,'true',0,0),(10,'true',0,0),(11,'true',0,0),(12,'true',0,0),(13,'true',0,0),(14,'true',0,0),(15,'true',0,0),(16,'true',0,0),(17,'true',0,0),(18,'true',0,0)";*/
+        string insertUser = "insert into User values(1,'false',0,0),(2,'false',0,0),(3,'false',0,0),(4,'false',0,0),(5,'false',0,0),(6,'false',0,0),(7,'false',0,0),(8,'false',0,0),(9,'false',0,0),(10,'false',0,0),(11,'false',0,0),(12,'false',0,0),(13,'false',0,0),(14,'false',0,0),(15,'false',0,0),(16,'false',0,0),(17,'false',0,0),(18,'false',0,0)";
         DataUtil::insertData(insertUser);
     }
     
@@ -126,7 +127,7 @@ bool SelectLevel::init()
                             layer->addChild(hengTiao,2);
                             shuTiao=Sprite::create("selectlevel/shutiao2.png");
                             shuTiao->setPosition(ccpAdd(Vec2(visibleSize.width/4*3-visibleSize.width/2*j,visibleSize.height*0.576-visibleSize.height*0.13*j),Vec2(visibleSize.width*k,0)) );
-                            shuTiao->setScale(visibleSize.height*0.06/shuTiao->getContentSize().height);
+                            shuTiao->setScale(visibleSize.height*smartRes_shuTiaoScale/shuTiao->getContentSize().height);
                             layer->addChild(shuTiao,2);
     
                         }
@@ -149,9 +150,9 @@ bool SelectLevel::init()
                         levelNum->setString(levelNumber);
                         levelNum->setScale(visibleSize.width/640.0);
                         if (i==1) {
-                            levelNum->setPosition(ccpAdd(Vec2(visibleSize.width*0.72-visibleSize.width/4*j,visibleSize.height*0.615-visibleSize.height*0.128*i-20),Vec2(visibleSize.width*k,0)));
+                            levelNum->setPosition(ccpAdd(Vec2(visibleSize.width*0.72-visibleSize.width/4*j,visibleSize.height*0.605-visibleSize.height*0.13*i),Vec2(visibleSize.width*k,0)));
                         }else{
-                            levelNum->setPosition(ccpAdd(Vec2(visibleSize.width*0.22+visibleSize.width/4*j,visibleSize.height*0.615-visibleSize.height*0.128*i-20),Vec2(visibleSize.width*k,0)));
+                            levelNum->setPosition(ccpAdd(Vec2(visibleSize.width*0.22+visibleSize.width/4*j,visibleSize.height*0.605-visibleSize.height*0.13*i),Vec2(visibleSize.width*k,0)));
                         }
                         
                         layer->addChild(levelNum, 3);
@@ -162,7 +163,7 @@ bool SelectLevel::init()
                             hengTiao->setScale(visibleSize.width*0.12/hengTiao->getContentSize().width);
                             layer->addChild(hengTiao,2);
                             shuTiao=Sprite::create("selectlevel/shutiao1.png");
-                            shuTiao->setScale(visibleSize.height*0.06/shuTiao->getContentSize().height);
+                            shuTiao->setScale(visibleSize.height*smartRes_shuTiaoScale/shuTiao->getContentSize().height);
                             shuTiao->setPosition(ccpAdd(Vec2(visibleSize.width/4*3-visibleSize.width/2*j,visibleSize.height*0.576-visibleSize.height*0.13*j),Vec2(visibleSize.width*k,0)) );
                             layer->addChild(shuTiao,2);
                         }
@@ -193,7 +194,7 @@ bool SelectLevel::init()
                             star->setVisible(false);
                         else
                             star->setVisible(true);
-                            star->setPosition(levelButton->getPositionX()+visibleSize.width*0.03*(n-1), levelButton->getPositionY()-visibleSize.height*0.045);
+                            star->setPosition(levelButton->getPositionX()+visibleSize.width*0.03*(n-1), levelButton->getPositionY()-visibleSize.height*smartRes_starHigh);
                             star->setScale(visibleSize.width/640.0);
                             layer->addChild(star,3);
                         }
@@ -309,35 +310,35 @@ bool SelectLevel::init()
     _turnOff = MenuItemImage::create("selectlevel/musicClose.png","selectlevel/musicClose.png");
     MenuItemToggle *toggleItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(SelectLevel::menuMusicCallback, this), _turnOn,_turnOff, NULL);
     toggleItem->setScale(visibleSize.width*0.15/toggleItem->getContentSize().width);
-    toggleItem->setPosition(Point(_turnOn->getContentSize().width,_turnOn->getContentSize().height));
+    toggleItem->setPosition(Point(origin.x +visibleSize.width*0.05+_turnOn->getContentSize().width,origin.y +visibleSize.height*0.05+_turnOn->getContentSize().height));
     this->addChild(toggleItem,1);
     //成就按钮
     auto chengjiuButton = MenuItemImage::create("selectlevel/chengjiu.png","selectlevel/chengjiu.png",
                                            CC_CALLBACK_1(SelectLevel::menuChengjiuCallback, this));
     chengjiuButton->setScale(visibleSize.width*0.15/chengjiuButton->getContentSize().width);
-    chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width- chengjiuButton->getContentSize().width ,origin.y +visibleSize.height- chengjiuButton->getContentSize().height));
+    chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.95- chengjiuButton->getContentSize().width ,origin.y +visibleSize.height*0.95- chengjiuButton->getContentSize().height));
     //分享按钮
     auto shareButton = MenuItemImage::create("selectlevel/fenxiang.png","selectlevel/fenxiang.png",
                                                 CC_CALLBACK_1(SelectLevel::menuShareCallback, this));
     shareButton->setScale(visibleSize.width*0.15/shareButton->getContentSize().width);
-    shareButton->setPosition(Vec2(origin.x + visibleSize.width - shareButton->getContentSize().width ,origin.y +shareButton->getContentSize().height));
+    shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.95 - shareButton->getContentSize().width ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height));
     //存档按钮
     auto cundangButton = MenuItemImage::create("selectlevel/cundang.png","selectlevel/cundang.png",
                                                 CC_CALLBACK_1(SelectLevel::menuCundangCallback, this));
     cundangButton->setScale(visibleSize.width*0.15/cundangButton->getContentSize().width);
-    cundangButton->setPosition(Vec2(origin.x+cundangButton->getContentSize().width ,origin.y +visibleSize.height- cundangButton->getContentSize().height));
+    cundangButton->setPosition(Vec2(origin.x+visibleSize.width*0.05 +cundangButton->getContentSize().width ,origin.y +visibleSize.height*0.95- cundangButton->getContentSize().height));
     
     //左滑按钮
     auto leftButton = MenuItemImage::create("selectlevel/leftButton.png","selectlevel/leftButton.png",
                                                CC_CALLBACK_1(SelectLevel::leftAndRightAdjustScrollView, this));
     leftButton->setTag(1111);
-    leftButton->setPosition(Vec2(origin.x+leftButton->getContentSize().width/2 ,origin.y +visibleSize.height/2));
+    leftButton->setPosition(Vec2(origin.x+visibleSize.width*0.05 +leftButton->getContentSize().width/2 ,origin.y +visibleSize.height/2));
     leftButton->setScale(visibleSize.width*0.08/leftButton->getContentSize().width);
     //右滑按钮
     auto rightButton = MenuItemImage::create("selectlevel/rightButton.png","selectlevel/rightButton.png",
                                             CC_CALLBACK_1(SelectLevel::leftAndRightAdjustScrollView, this));
     rightButton->setTag(2222);
-    rightButton->setPosition(Vec2(origin.x+visibleSize.width-rightButton->getContentSize().width/2 ,origin.y +visibleSize.height/2));
+    rightButton->setPosition(Vec2(origin.x+visibleSize.width*0.95-rightButton->getContentSize().width/2 ,origin.y +visibleSize.height/2));
     rightButton->setScale(visibleSize.width*0.08/rightButton->getContentSize().width);
 
     // create menu, it's an autorelease object
