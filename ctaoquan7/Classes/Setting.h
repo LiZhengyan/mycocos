@@ -17,10 +17,15 @@ class Setting: public cocos2d::Scene
 public:
     virtual bool init();
     CREATE_FUNC(Setting);
+    virtual void onEnter();
+    virtual void onEnterTransitionDidFinish();
+    virtual void onExit();
+    virtual void onExitTransitionDidStart();
 private:
     void menuOkCallback(Ref*pSender);
     void menuSoundToggleCallback(Ref*pSender);
     void menuMusicToggleCallback(Ref*pSender);
+
 };
 
 

@@ -74,8 +74,37 @@ void Setting::menuOkCallback(Ref*pSender)
     Director::getInstance()->popScene();
 }
 void Setting::menuSoundToggleCallback(Ref*pSender)
-{}
+{
+    
+}
 void Setting::menuMusicToggleCallback(Ref*pSender)
 {}
 
 
+void Setting::menuCallback(Ref* pSender)
+{
+    Director::getInstance()->replaceScene(HelloWorld::createScene());
+}
+
+void Setting::onEnter()
+{
+    Layer::onEnter();
+    log("GameScene onEnter");
+}
+
+void Setting::onEnterTransitionDidFinish()
+{
+    Layer::onEnterTransitionDidFinish();
+    log("GameScene onEnterTransitionDidFinish");
+}
+
+void Setting::onExit()
+{
+    Layer::onExit();
+    log("GameScene onExit");
+}
+
+void Setting::onExitTransitionDidStart()
+{
+    Layer::onExitTransitionDidStart();
+    log("GameScene onExitTransitionDidStart");

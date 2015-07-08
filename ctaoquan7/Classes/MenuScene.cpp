@@ -27,7 +27,7 @@ bool MenuScene::init()
     
     //开始精灵
     Sprite *startSpriteNormal = Sprite::create("start-up.png");
-    Sprite *startSpriteSelected =Sprite::create("start-down.png");
+    Sprite *startSpriteSelected =Sprite::create("start-up.png");
     
     MenuItemSprite*startMenuItem = MenuItemSprite::create(startSpriteNormal,
                                                           startSpriteSelected,
@@ -37,14 +37,14 @@ bool MenuScene::init()
     //设置图片菜单
     MenuItemImage *settingMenuItem = MenuItemImage::create(
                                                            "setting-up.png",
-                                                           "setting-down.png",
+                                                           "setting-up.png",
                                                            CC_CALLBACK_1(MenuScene::menuItemSettingCallback,this));
     settingMenuItem->setPosition(Director::getInstance()->convertToGL(Point(480,400)));
     
     //帮助图片菜单
     MenuItemImage *helpMenuItem = MenuItemImage::create(
                                                         "help-up.png",
-                                                        "help-down.png",
+                                                        "help-up.png",
                                                         CC_CALLBACK_1(MenuScene::
                                                                       menuItemHelpCallback,this));
     helpMenuItem->setPosition(Director::getInstance()->convertToGL(Point(860,480)));
