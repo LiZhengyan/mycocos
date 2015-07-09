@@ -8,7 +8,13 @@
 
 #include "MenuScene.h"
 #include "Setting.h"
+#include "SystemHeader.h"
+#include "cocos2d.h"
+
+
+
 USING_NS_CC;
+using namespace CocosDenshion;
 
 bool MenuScene::init()
 {
@@ -57,9 +63,18 @@ bool MenuScene::init()
 
 void MenuScene::menuItemSettingCallback(Ref* pSender)
 {
-    auto sc = Setting::create();
+    MenuItem* item = (MenuItem*)pSender;
+    log("进入设置 %p", item);
+    auto sc = Setting::createScene();
+    log("进入设置 %p->%p", item,sc);
     //Director::getInstance()->replaceScene(sc);
     Director::getInstance()->pushScene(sc);
+    
+    if(UserDefault::getInstance()->getBoolForKey(SOUND_KEY)){
+        SimpleAudioEngine::getInstance()->playEffect("sound/001.wav");
+        
+        
+    }
 }
 
 void MenuScene::menuItemHelpCallback(Ref*pSender)

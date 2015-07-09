@@ -12,19 +12,23 @@
 #include <stdio.h>
 #include "cocos2d.h"
 
-class Setting: public cocos2d::Scene
+class Setting: public cocos2d::Layer
 {
 public:
     virtual bool init();
-    CREATE_FUNC(Setting);
+    static cocos2d::Scene* createScene();
+    ~Setting(void);
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
     virtual void onExit();
     virtual void onExitTransitionDidStart();
 private:
+    
+    CREATE_FUNC(Setting);
     void menuOkCallback(Ref*pSender);
     void menuSoundToggleCallback(Ref*pSender);
     void menuMusicToggleCallback(Ref*pSender);
+    void menuCallback(Ref* pSender);
 
 };
 

@@ -7,11 +7,29 @@
 //
 
 #include "Setting.h"
+#include "SystemHeader.h"
+#include "cocos2d.h";
 USING_NS_CC;
+
+Scene* Setting::createScene()
+{
+    // 'scene' is an autorelease object
+    auto scene = Scene::create();
+    
+    // 'layer' is an autorelease object
+    auto layer = Setting::create();
+    
+    // add layer as a child to scene
+    scene->addChild(layer);
+    
+    // return the scene
+    return scene;
+}
+
 
 bool Setting::init()
 {
-    if ( !Scene::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
@@ -66,45 +84,74 @@ bool Setting::init()
     mn->setPosition(Point::ZERO);
     this->addChild(mn);
     
+    auto defaults=UserDefault::getInstance();
+    defaults->getBoolForKey(MUSIC_KEY)?musicToggleMenuItem->setSelectedIndex(0):
+                                        musicToggleMenuItem->setSelectedIndex(1);
+    
+    defaults->getBoolForKey(SOUND_KEY)?musicToggleMenuItem->setSelectedIndex(0):
+    musicToggleMenuItem->setSelectedIndex(1);
+    
+    
+    
+    
+    
     return true;
+}
+
+Setting::~Setting(void)
+{
+    log("GameScene destructor");
 }
 
 void Setting::menuOkCallback(Ref*pSender)
 {
     Director::getInstance()->popScene();
 }
+
+
+
 void Setting::menuSoundToggleCallback(Ref*pSender)
 {
+    auto  soundToggleMenuItem = (MenuItemToggle*) pSender;
+    log("soundToggleMenuItem %d", soundToggleMenuItem->getSelectedIndex());
+    
+    UserDefault* defaults = UserDefault::getInstance();
+    defaults->getBoolForKey(SOUND_KEY)?defaults->setBoolForKey(SOUND_KEY, false):defaults->setBoolForKey(SOUND_KEY,true);
+    
     
 }
 void Setting::menuMusicToggleCallback(Ref*pSender)
-{}
+{
+    MenuItem* item = (MenuItem*)pSender;
+    log("TouchMusic %p", item);
+}
 
 
 void Setting::menuCallback(Ref* pSender)
 {
-    Director::getInstance()->replaceScene(HelloWorld::createScene());
+    Director::getInstance()->replaceScene(Setting::createScene());
 }
 
 void Setting::onEnter()
 {
     Layer::onEnter();
-    log("GameScene onEnter");
+    log("Setting onEnter");
 }
 
 void Setting::onEnterTransitionDidFinish()
 {
     Layer::onEnterTransitionDidFinish();
-    log("GameScene onEnterTransitionDidFinish");
+    log("Setting onEnterTransitionDidFinish");
 }
 
 void Setting::onExit()
 {
     Layer::onExit();
-    log("GameScene onExit");
+    log("Setting onExit");
 }
 
 void Setting::onExitTransitionDidStart()
 {
     Layer::onExitTransitionDidStart();
-    log("GameScene onExitTransitionDidStart");
+    log("Setting onExitTransitionDidStart");
+}
