@@ -33,7 +33,7 @@ void ResolvePicture::setPicturePosition(float x,float y)
  
     this->setPosition(Vec2(x, y));
 }
-void ResolvePicture::changPicture()
+void ResolvePicture::changPicture(int level)
 {
     /*this->runAction(Sequence::create(DelayTime::create(1.0f),CallFunc::create([=](){
      //套中后更换图片
@@ -48,11 +48,20 @@ void ResolvePicture::changPicture()
      this->ID=randN;
      
      }),NULL)) ;*/
+    int picMax=0;int picMin=0;
+    if (level<=2) {
+        picMax=16;
+        picMin=11;
+    }else{
+        picMax=39;
+        picMin=31;
+    }
+    
     this->runAction(Sequence::create(CallFunc::create([=](){
         //套中后更换图片
         int randN;
         do {
-            randN=random(1, 6);
+            randN=random(picMin, picMax);
         } while (randN==this->ID);
         char name[20];
         sprintf(name, "gamescene/%d.png",randN);

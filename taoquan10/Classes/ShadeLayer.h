@@ -26,13 +26,14 @@ public:
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
-    void menuNextCallback(Ref* pSender);
- 
+    void menuNextCallback(Ref* pSender);//下一关按钮回调
+    void menuFileCallback(Ref* pSender);//归档按钮回调
+    
     Size visibleSize;
     
     //int currentLevel;
     Vector<Sprite*>starVector;
-
+    int _level;
 };
 
 #endif /* defined(__TaoQuan__ShadeLayer__) */

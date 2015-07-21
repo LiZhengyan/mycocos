@@ -14,16 +14,20 @@ USING_NS_CC;
 #define smartRes_hiddenPicScale         SmartRes::getSmartResHiddenPicScale()
 #define smartRes_shuTiaoScale           SmartRes::getSmartResShuTiaoScale()
 #define smartRes_starHigh               SmartRes::getSmartResSatrHight()
+#define smartRes_shuZiHigh              SmartRes::getSmartShuZiHight()
+#define smartRes_restartBtnHigh         SmartRes::getSmartRestartBtnHight()
+
 class SmartRes
 {
 public:
+
     static float getSmartResM_dzty(){
         TargetPlatform target=Application::getInstance()->getTargetPlatform();
         float m_dzty;
         if (target==kTargetIpad) {
-            m_dzty=0.12;
+            m_dzty=0.186;
         }else{
-            m_dzty=0.095;
+            m_dzty=0.137;
         }
         return m_dzty;
     }
@@ -33,9 +37,9 @@ public:
         float hiddenPicScale;
         if (target==kTargetIpad) {
 
-            hiddenPicScale=0.045;
+            hiddenPicScale=0.08;
         }else{
-            hiddenPicScale=0.045;
+            hiddenPicScale=0.08;
         }
         return hiddenPicScale;
     }
@@ -61,7 +65,27 @@ public:
         }
         return starHight;
     }
-};
+    static float getSmartShuZiHight(){
+        TargetPlatform target=Application::getInstance()->getTargetPlatform();
+        float shuZiHight;
+        if (target==kTargetIpad) {
+            shuZiHight=0.605;
+        }else{
+            shuZiHight=0.615;
+        }
+        return shuZiHight;
+    }
+    static float getSmartRestartBtnHight(){
+        TargetPlatform target=Application::getInstance()->getTargetPlatform();
+        float restartBtnHight;
+        if (target==kTargetIpad) {
+            restartBtnHight=0.4;
+        }else{
+            restartBtnHight=0.4;
+        }
+        return restartBtnHight;
+    }
 
+};
 
 #endif

@@ -56,9 +56,11 @@ bool ShadeLayer::init() {
     whiteBG->setScale(visibleSize.width*2/3/whiteBG->getContentSize().width,visibleSize.height*2/3/whiteBG->getContentSize().height);
     this->addChild(whiteBG);
     
-    
+    _level=UserDefault::getInstance()->getIntegerForKey("comeInLevel");
     //添加用时
-    std::string sqlssssss = "select * from User where level=1";
+    char getUserSql[100];
+    sprintf(getUserSql, "select * from User where level=%d",_level);
+
     //取出数据库所有
     Sprite* yong=Sprite::create("guoguan/yongshi.png",Rect(0, 0, 58, 57));
     yong->setAnchorPoint(Vec2(0.5, 0.5));
@@ -76,7 +78,7 @@ bool ShadeLayer::init() {
     miao->setScale(visibleSize.width/640);
     this->addChild(miao,2);
     
-    Value avm=DataUtil::getRow(sqlssssss);
+    Value avm=DataUtil::getRow(getUserSql);
     int time=avm.asValueMap()["useTime"].asInt();
     char timeChar[10];
     sprintf(timeChar, ":%d", time);
@@ -118,16 +120,25 @@ bool ShadeLayer::init() {
 
     
     //下一关按钮
-    auto closeItem = MenuItemImage::create(
+    auto nextLevelItem = MenuItemImage::create(
                                            "guoguan/nextLevel.png",
                                            "guoguan/nextLevel.png",
                                            CC_CALLBACK_1(ShadeLayer::menuNextCallback, this));
     
-    closeItem->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y +visibleSize.height /4+ closeItem->getContentSize().height/2));
+    nextLevelItem->setPosition(Vec2(origin.x + visibleSize.width*0.7,
+                                origin.y +visibleSize.height /4+ nextLevelItem->getContentSize().height/2));
+    
+    //归档按钮
+    auto fileItem = MenuItemImage::create(
+                                           "selectlevel/cundang.png",
+                                           "selectlevel/cundang.png",
+                                           CC_CALLBACK_1(ShadeLayer::menuFileCallback, this));
+    
+    fileItem->setPosition(Vec2(origin.x + visibleSize.width*0.3,
+                                origin.y +visibleSize.height /4+ fileItem->getContentSize().height/2));
     
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
+    auto menu = Menu::create(nextLevelItem,fileItem, NULL);
     menu->setPosition(Vec2::ZERO);
     menu->setScale(visibleSize.width/640);
     this->addChild(menu, 1);
@@ -163,6 +174,12 @@ void ShadeLayer::menuNextCallback(Ref* pSender)
     //this->removeAllChildrenWithCleanup(true);
     this->removeFromParentAndCleanup(true);
    
+}
+
+//归档按钮回调
+void ShadeLayer::menuFileCallback(Ref* pSender)
+{
+     DataUtil::updateIsFileData(true, _level);//本关是否存档
 }
 
 bool ShadeLayer::onTouchBegan( Touch* touch, Event* event )

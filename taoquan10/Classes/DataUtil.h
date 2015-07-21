@@ -35,6 +35,9 @@ public:
     static void updateSuoData( bool columnSuo, int level);
     //修改用户表的星星的数量
     static void updateStarData( int columnStarNum, int level);
+    //修改用户表的是否存档
+    static void updateIsFileData( bool columnIsFile, int level);
+    
     //获取一个记录的条数
     static int getDataCount(string sql);
     //读取一条记录的信息

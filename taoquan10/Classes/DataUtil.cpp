@@ -137,6 +137,14 @@ void DataUtil::updateStarData( int columnStarNum, int level)
     if(result != SQLITE_OK )
         log( "插入记录失败，错误码:%d ，错误原因:%s\n" , result, errMsg );
 }
+void DataUtil::updateIsFileData( bool columnIsFile, int level)
+{
+    std::stringstream str;
+    str<<"update User"<<" set isFile="<< columnIsFile<< " WHERE level = " <<level<< "";
+    result = sqlite3_exec( pDB, str.str().c_str() , NULL, NULL, &errMsg );
+    if(result != SQLITE_OK )
+        log( "插入记录失败，错误码:%d ，错误原因:%s\n" , result, errMsg );
+}
 
 //getDataCount的回调函数
 int loadRecordCount( void * para, int n_column, char ** column_value, char ** column_name )

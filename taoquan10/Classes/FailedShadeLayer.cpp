@@ -9,7 +9,7 @@
 #include "FailedShadeLayer.h"
 #include "GameScene.h"
 #include "SelectLevel.h"
-
+#include "SmartRes.h"
 USING_NS_CC;
 
 
@@ -54,11 +54,11 @@ bool FailedShadeLayer::init()
                                            CC_CALLBACK_1(FailedShadeLayer::menuRestartCallback, this));
     
     restartItem->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y +visibleSize.height *0.45));
+                                origin.y +visibleSize.height *smartRes_restartBtnHigh));
     //主界面按钮
     auto selectLevelItem = MenuItemImage::create(
-                                             "shibai/selectLevelBtn.png",
-                                             "shibai/selectLevelBtn.png",
+                                             "selectlevel/cundang.png",
+                                             "selectlevel/cundang.png",
                                              CC_CALLBACK_1(FailedShadeLayer::menuSelectLevelCallback, this));
     
     selectLevelItem->setPosition(Vec2(origin.x + visibleSize.width/2,
@@ -81,8 +81,6 @@ void FailedShadeLayer::menuRestartCallback(Ref* pSender)
     //UserDefault::getInstance()->setIntegerForKey("CurrentLevel", currentLevel);
     
     this->removeFromParent();
-    //Scene* gameScene=GameScene::createScene();
-    //Director::getInstance()->replaceScene(gameScene);
     
     EventCustom _event("failedUI");
     _eventDispatcher->dispatchEvent(&_event);
@@ -90,13 +88,10 @@ void FailedShadeLayer::menuRestartCallback(Ref* pSender)
 
 void FailedShadeLayer::menuSelectLevelCallback(Ref* pSender)
 {
-    //MoveBy* my=MoveBy::create(0.1, Vec2(0,visibleSize.height));
-    //this->runAction(my);
-    //currentLevel++;
-    //UserDefault::getInstance()->setIntegerForKey("CurrentLevel", currentLevel);
-    
+    int level =UserDefault::getInstance()->getIntegerForKey("comeInLevel");
+    DataUtil::updateIsFileData(true, level);//本关是否存档
     this->removeFromParent();
     
-    Scene* selectLevel=SelectLevel::createScene();
-    Director::getInstance()->replaceScene(selectLevel);
+    //Scene* selectLevel=SelectLevel::createScene();
+    //Director::getInstance()->replaceScene(selectLevel);
 }

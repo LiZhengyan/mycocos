@@ -27,7 +27,7 @@ public:
     
     void menuBackCallback(cocos2d::Ref* pSender);//返回按钮回调方法
     void menuPauseCallback(Ref* pSender);//暂停按钮回调方法
-    void menuResartCallback(cocos2d::Ref* pSender);//重新开始按钮回调方法
+    //void menuResartCallback(cocos2d::Ref* pSender);//重新开始按钮回调方法
     void menuHelpCallback(Ref* pSender);//帮助按钮回调方法
     
     CREATE_FUNC(GameScene);
@@ -58,10 +58,11 @@ public:
     
     bool _IsNeedExit;
     
-    Sprite* _spriteTiao;
-    ProgressTimer* _powerProgress;
+    Sprite* _dottedSprite;//虚线指针
+    Sprite* _spriteTiao;//指针
+    ProgressTimer* _powerProgress;//指针进度条
     Sprite* _spriteQuan;
-    //QuanSprite* spriteQuan;
+    ProgressTimer* _dottedLineProgress;//虚线进度条
 
     
     Vector<ResolvePicture*> spriteVector;//小图
@@ -71,6 +72,7 @@ public:
     Vector<Sprite*> dizuoTouyingVector;//底座投影
     Vector<Sprite*>waterVector;
     
+    int _helpNumber;
     int _timeNumber;//时间
     int _loopNumber;//环数
     char _loopNumberLabel[10];
@@ -78,7 +80,8 @@ public:
     
     bool _isTouch;//判断是否可触摸
     bool _isLoopOrigin;//判断环是否在原来位置
-    bool _isBeganGame;
+    bool _isHelp;
+    bool _isSucceed;
     
     ShadeLayer* _succeedLayer;//过关的层
     FailedShadeLayer* _failLayer;//失败层
@@ -87,16 +90,21 @@ public:
     Sprite* _wholePicture;//全图
     Sprite* _gameBG;
     
+    
+    RepeatForever* _repeatLineBG;
+   
+    
     ~GameScene();
 
     
 private:
     LabelAtlas* labelTime;
     LabelAtlas* labelNumber;
+    LabelAtlas* _labelHelpNumber;
     Size visibleSize ;
     Vec2 origin;
     
-    MenuItemImage*pauseItem;
-    MenuItemImage*resumeItem;
+    
+    
 };
 #endif /* defined(__TaoQuan__GameScene__) */

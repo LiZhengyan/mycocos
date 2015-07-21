@@ -23,9 +23,16 @@ public:
     virtual bool init();
     
     CREATE_FUNC(SelectLevel);
+    
+    Size visibleSize;
+    Vec2 origin;
 
-    void menuLevelButtonCallback(Ref* pSender,int level,bool issuo);//关卡按钮的回调方法
-    void leftAndRightAdjustScrollView(Ref* pSender);
+    void menuLevelButtonCallback(Ref* pSender,int level,bool issuo,bool isfile);//关卡按钮的回调方法
+    void leftAndRightAdjustScrollView(Ref* pSender);//左右按钮的回调方法
+    
+    void alertIsFileFunction();//提示是否存档
+    void menuIsFileBttonCallback(Ref*pSender);//是否存档按钮的回调函数
+    
     //以下是注册触摸事件和实现各种的touch函数
     virtual bool onTouchBegan(Touch *touch, Event *event);
     
@@ -50,9 +57,17 @@ public:
     void menuCundangCallback(cocos2d::Ref* pSender);
     
     //是否解锁
-    bool isJieSuo;
     bool m_IsNeedExit;
-
+    bool _isSound;
+    
+    Sprite* _isFileButtonBG;
+    MenuItemImage* _yesButton;
+    MenuItemImage* _noButton;
+    Menu* _menu;
+    
+    Vector<MenuItemImage*>menuVector;
+    
+    
     
 private:
     //将CCScrollView作为自己的层添加进来
