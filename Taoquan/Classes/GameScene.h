@@ -84,6 +84,7 @@ public:
     //bool _isSucceed;
     //bool _isFailed;
     bool _isTaoZhong;
+    MotionStreak*  p6;
     
     
     ShadeLayer* _succeedLayer;//过关的层
@@ -106,6 +107,7 @@ private:
     LabelAtlas* _labelHelpNumber;
     Size visibleSize ;
     Vec2 origin;
+    Vector<Sprite*> _spriteQuan_v;
     
     
     
