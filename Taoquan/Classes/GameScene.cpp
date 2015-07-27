@@ -653,38 +653,7 @@ void GameScene::updateTime(float dt)
         labelTime->setString(Nmuber);
         
     }
-//    log("关卡数： %d",cLevel);
     
-//    //测试
-//       if (_timeNumber%5==0) {
-//        
-//           DataUtil::updateTimeData(60-_timeNumber, cLevel);//更新时间
-//           DataUtil::updateSuoData(false, cLevel+1);//下一关解锁
-//           int starNum=0;
-//           if (_timeNumber>=40) {
-//            starNum=3;
-//           }
-//           else if (_timeNumber>=20&&_timeNumber<40){
-//               starNum=2;
-//           }else{
-//                starNum=1;
-//           }
-//           DataUtil::updateStarData(starNum, cLevel);//更新星星的数量
-//           
-//           if (getChildByName("layer")==NULL) {
-//               _succeedLayer=ShadeLayer::create();
-//               _succeedLayer->init();
-//               this->addChild(_succeedLayer,100,"layer");
-//               log("cLevel= %d",cLevel);
-//            }
-//
-//    }
-//    if (_timeNumber%5==0) {
-//         Director::getInstance()->pause();//暂停游戏
-//        _failLayer=FailedShadeLayer::create();
-//        _failLayer->init();
-//          this->addChild(_failLayer,100);
-//    }
     
     
     
@@ -746,11 +715,11 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
     _dottedLineProgress->setVisible(false);
     
     if (_isTouch) {
+        float rr=sqrt(visibleSize.width/2*visibleSize.width/2+visibleSize.height*9/10*visibleSize.height*9/10);
+        float r=_powerProgress->getPercentage()*0.01*rr;
         
         if (_spriteTiao->getRotation()>0) {
-            float rr=sqrt(visibleSize.width/2*visibleSize.width/2+visibleSize.height*9/10*visibleSize.height*9/10);
-            
-            float r=_powerProgress->getPercentage()*0.01*rr;
+
             float x1=r*cos((90-_spriteTiao->getRotation())*3.1415926/180);
             float y1=r*sin((90-_spriteTiao->getRotation())*3.1415926/180);
             if (y1<0) {
@@ -758,20 +727,7 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
             }
             y=y1+visibleSize.height/10;
             x=x1+visibleSize.width/2;
-            
-            float s=sqrtf((x*x+y*y)-(_spriteQuan->getPositionX()*getPositionX()+getPositionY()*getPositionY()));
-            _isTouch=false;
-            MoveTo* quanMove=MoveTo::create(s/visibleSize.width*1.3, Vec2(x, y));
-            auto ease=EaseSineOut::create(quanMove);
-            _spriteQuan->runAction(ease);
-//            _loopNumber--;
-//            sprintf(_loopNumberLabel, ":%d",_loopNumber);
-//            labelNumber->setString(_loopNumberLabel);
-            
-            log("-----End-------x= %f y=%f ",x,y);
         }else{
-            float rr=sqrt(visibleSize.width/2*visibleSize.width/2+visibleSize.height*9/10*visibleSize.height*9/10);
-            float r=_powerProgress->getPercentage()*0.01*rr;
             float x1=r*cos((90+_spriteTiao->getRotation())*3.1415926/180);
             float y1=r*sin((90+_spriteTiao->getRotation())*3.1415926/180);
             if (y1<0) {
@@ -779,119 +735,131 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
             }
             y=y1+visibleSize.height/10;
             x=visibleSize.width/2-x1;
+        }
             float s=sqrtf((x*x+y*y)-(_spriteQuan->getPositionX()*getPositionX()+getPositionY()*getPositionY()));
             _isTouch=false;
-            MoveTo* quanMove=MoveTo::create(s/visibleSize.width*1.3, Vec2(x, y));
-            auto ease=EaseSineOut::create(quanMove);
-            _spriteQuan->runAction(ease);
-//            _loopNumber--;
-//            sprintf(_loopNumberLabel, ":%d",_loopNumber);
-//            labelNumber->setString(_loopNumberLabel);
+        
+            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(x, y));
+            auto quanRate = Spawn::create(quanMove, RotateBy::create(s/(visibleSize.width*1.3),360),NULL);
+            auto ease=EaseSineOut::create(quanRate);
+        
+        
+            p6 = MotionStreak::create(0.25, 1, _spriteQuan->getContentSize().width*0.9*(_spriteQuan->getScale()), Color3B::WHITE,"quan_weiba2.png" );
+            p6->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1));
+            p6->isFastMode();
+            this->addChild(p6,5);
+            p6->setVisible(true);
+        
+            auto menuItemBlink=Spawn::create(JumpBy::create(0.6f, Vec2(0,50), 50, 1),FadeTo::create(0.6f, 0), NULL);
+
+        
+            ResolvePicture* taozhong=NULL;
+            ResolvePicture* taozhong_heshi=NULL;
+            for (int i=0; i<spriteVector.size(); i++)
+            {
+                //判断是否套住
+                ResolvePicture* showRp=spriteVector.at(i);
+                if (sqrt((x-showRp->getPositionX())*(x-showRp->getPositionX())+(y-showRp->getPositionY())*(y-showRp->getPositionY()))<=53.0)
+                {
+                    taozhong=showRp;
+                    showRp->isCover=true;
+                    for (int j=0; j<hiddenPictureVector.size(); j++) {
+                        ResolvePicture* hiddenRp=hiddenPictureVector.at(j);
+                        if (hiddenRp->ID==showRp->ID)
+                        {
+                            taozhong_heshi=hiddenRp;
+                        }
+                    }
+                }
+            }
+        
+        
+//        auto spriteQuan_return  = TargetedAction::create(_spriteQuan, MoveTo::create(0, Vec2(visibleSize.width/2, visibleSize.height*0.1)));  //设置一个圈子回来的公共动作
+        auto spriteQuan_return  = TargetedAction::create(_spriteQuan,Place::create(Vec2(visibleSize.width/2, visibleSize.height*0.1)));
+        auto targetAct = TargetedAction::create(taozhong,menuItemBlink);
+        
+    
+        
+        if(taozhong != NULL && taozhong_heshi!=NULL)
+        {
+            ParticleSystem * p4=ParticleGalaxy::createWithTotalParticles(200);
+            p4->setPosition(Vec2(taozhong->getPositionX(),taozhong->getPositionY()+50));
+            p4->setStartColor(Color4F(1,1,1,1));
+            this->addChild(p4,5);
+            p4->setVisible(false);
             
-            log("-----End-------x= %f y=%f ",x,y);
+            
+            auto p5 = MotionStreak::create(0.2, 1, 100, Color3B::WHITE,"start5.png" );
+            p5->setPosition(Vec2(taozhong->getPositionX(),taozhong->getPositionY()+50));
+            p5->setVisible(false);
+            p5->isFastMode();
+            this->addChild(p5,5);
+            
+            
+            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{p6->setVisible(false);}),
+                                                    
+                                                    FadeTo::create(0.2, 0),
+                                                    targetAct,
+                                                    spriteQuan_return,
+                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);
+                
+                                                                            taozhong->setPosition(taozhong->getPositionX(),taozhong->getPositionY()-50);
+//                                                                            firesprite->setPosition(taozhong->getPosition());
+//                                                                            firesprite->setVisible(true);
+                                                                            p4->setVisible(true);
+                                                                            p5->setVisible(true);
+                
+                                                                            p4->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
+                                                                            p5->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
+                                                                            taozhong->changPicture(cLevel);
+                
+                
+                
+                                                                            }),
+                                                    
+                                                    DelayTime::create(0.5), //等p4结束哦 0.5秒
+                                                    CallFunc::create([=](){taozhong->setVisible(true);taozhong->setOpacity(255);
+//                                                                            taozhong_heshi->setVisible(false);
+                                                                            addChild(taozhong_heshi,3);
+                                                                            taozhong_heshi->setOpacity(0);
+                                                                            hiddenPictureVector.eraseObject(taozhong_heshi);
+                                                                            showPictureVector.pushBack(taozhong_heshi);
+                                                                            taozhong_heshi->runAction(FadeTo::create(0.5, 255));
+                                                                            removeChild(p4,p5);if(--_loopNumber>0){_isTouch=true;}}),
+                                                                            NULL));
+        }else if (taozhong != NULL)
+        {
+            auto targetAct = TargetedAction::create(taozhong,Sequence::create(MoveBy::create(0.05, Vec2(-15,0)),MoveBy::create(0.1, Vec2(30,0)), MoveBy::create(0.05, Vec2(-15,0)),NULL));
+            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{p6->setVisible(false);}),
+                                                    FadeTo::create(0.2, 0),spriteQuan_return,
+                                                    Repeat::create(targetAct,1),
+                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);
+                                                                            taozhong->setPosition(taozhong->getPositionX(),taozhong->getPositionY());
+                                                                            _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1));if(--_loopNumber>0){_isTouch=true;}
+                                                                            }),NULL));
+        }else
+        {
+            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{p6->setVisible(false);}),
+                                                    FadeTo::create(0.2, 0),spriteQuan_return,CallFunc::create([=](){_spriteQuan->setOpacity(255);if(--_loopNumber>0){_isTouch=true;}}),NULL));
+            log("啥都没有中。回来吧");
+            log("在循环里面圈子的数目是%d",_loopNumber);
+
+            
         }
-        
-        
+    log("-----End-------x= %f y=%f ",x,y);
     }
-    
-    
+    if(_loopNumber==0){_isTouch=false;}
     
 }
 
 void GameScene::onTouchCancelled(Touch *touch, Event *event)
 {}
 
-
 void GameScene::update(float dt)
 {
-    //判断圈是否到达目的地
-    if (_spriteQuan->getPositionX()==x&&_spriteQuan->getPositionY()==y)
-    {
-        log("for循环开始");
-        for (int i=0; i<spriteVector.size(); i++)
-        {
-            //判断是否套住
-            ResolvePicture* showRp=spriteVector.at(i);
-            if (sqrt((x-showRp->getPositionX())*(x-showRp->getPositionX())+(y-showRp->getPositionY())*(y-showRp->getPositionY()))<=53.0)
-            {
-                showRp->isCover=true;
-                //Blink* menuItemBlink=Blink::create(1.0f, 2);
-                JumpBy* menuItemBlink=JumpBy::create(0.5f, Vec2(0,100), 100, 1);
-//                showRp->runAction( Sequence::create(menuItemBlink,CallFunc::create([=]()
-
-                if (_spriteQuan->getPosition()==Vec2(visibleSize.width/2, visibleSize.height*0.1)) {
-                    log("圈子回来了");
-                        _isLoopOrigin=true;
-                    }else{
-                        _isLoopOrigin=false;
-                    }
-                auto firesprite=Sprite::create("fire.png");
-                this->addChild(firesprite,3);
-                
-                
-//                if (showRp->isCover)
-//                {
-                for (int j=0; j<hiddenPictureVector.size(); j++) {
-                        ResolvePicture* hiddenRp=hiddenPictureVector.at(j);
-                        if (hiddenRp->ID==showRp->ID)
-                        {
-                            log("在这里开始换");
-                            firesprite->setVisible(true);
-                                
-                            showRp->runAction(Sequence::create(menuItemBlink,CallFunc::create([=]()
-                            {   showRp->setVisible(false);
-                                firesprite->setPosition(showRp->getPosition());
-                                firesprite->runAction(Sequence::create(MoveTo::create(2, hiddenRp->getPosition()),CallFunc::create([=](){
-                                    showRp->changPicture(cLevel);
-                                    log("在这里END换");
-                                    log("hiddenPictureVector.size=%zd",hiddenPictureVector.size());
-                                    
-                                    this->addChild(hiddenRp,3);
-                                    hiddenPictureVector.eraseObject(hiddenRp);
-                                    showPictureVector.pushBack(hiddenRp);
-                                    log("hiddenPictureVector.size=%zd",hiddenPictureVector.size());
-                                }),CallFunc::create([=](){
-                                this->removeChild(firesprite);
-                                showRp->setPosition(showRp->getPositionX(),showRp->getPositionY()-100);
-                                showRp->setVisible(true);
-                                    
-                            }),CallFunc::create([=](){log("等着移动完了执行");}),
-                            NULL));
-                                    
-                                }), NULL));
-                            break;
-                        }else{
-                            auto point= showRp->getPosition();
-                            showRp->runAction(Sequence::create(menuItemBlink,CallFunc::create([=](){showRp->setPosition(point);}),NULL));
-                        }
-                            
-                    }
-                _loopNumber--;
-//                }
-                
-                
-//                }),NULL));
-                
-                
-                
-            }
-            _isTouch=true;
-        }
-        log("for循环结束");
-        x=0.0;y=0.0;
-        _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1+ origin.y));
-        _isTouch=true;
-        
-        
-        //圈数减1
-        
-        
-        
-        sprintf(_loopNumberLabel, ":%d",_loopNumber);
-        labelNumber->setString(_loopNumberLabel);
-        
-    }
-    
+    if(p6!=NULL){p6->setPosition(_spriteQuan->getPositionX(),_spriteQuan->getPositionY()-20);}
+    sprintf(_loopNumberLabel, ":%d",_loopNumber);
+    labelNumber->setString(_loopNumberLabel);
     
     if (hiddenPictureVector.size()==0)
     {
@@ -902,7 +870,7 @@ void GameScene::update(float dt)
     {   log("这里进入失败界面2");
         this->scheduleOnce(SEL_SCHEDULE(&GameScene::enterIntoFailedUI), 1.0f);
         
-    }else if(_timeNumber==0&&hiddenPictureVector.size()>0)
+    }else if(_timeNumber==0&&hiddenPictureVector.size()>0&&_isTouch)
     {
         this->scheduleOnce(SEL_SCHEDULE(&GameScene::enterIntoFailedUI), 1.0f);
     }
@@ -914,7 +882,7 @@ void GameScene::enterIntoSucceedUI()
 {
     //套完所有图片执行
 
-    if (hiddenPictureVector.size()==0&&getChildByName("succeedLayer")==NULL&&_isLoopOrigin) {
+    if (hiddenPictureVector.size()==0&&getChildByName("succeedLayer")==NULL) {
         for (int i=0; i<showPictureVector.size(); i++) {
             ResolvePicture* rp=(ResolvePicture*)showPictureVector.at(i);
             this->removeChild(rp);
