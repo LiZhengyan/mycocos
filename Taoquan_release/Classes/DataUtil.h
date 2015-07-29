@@ -29,14 +29,13 @@ public:
     static void insertData(string sql);
     //用来向表中删除一条数据
     static void deleteData(string sql);
-    //修改用户表的时间数据
-    static void updateTimeData( int columnTime, int level);
+   
     //修改用户表的是否锁
     static void updateSuoData( bool columnSuo, int level);
     //修改用户表的星星的数量
     static void updateStarData( int columnStarNum, int level);
-    //修改用户表的是否存档
-    static void updateIsFileData( bool columnIsFile, int level);
+    //修改用户表的游戏模式
+    static void updatePatternData( int columnpattern, int level);
     
     //修改道具表的数据
     static void updatePropData( string column, int number);

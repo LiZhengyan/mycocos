@@ -30,12 +30,12 @@ cocos2d::Value LevelData::paeseXml(int level)
     const char* ch = _json.GetString();
     log("ch  =%s",ch);
 
-    char levelChar[10];
+    char levelChar[20];
     TargetPlatform target=Application::getInstance()->getTargetPlatform();
     if (target==kTargetIpad) {
         sprintf(levelChar, "Ipad%d",level);
     }else{
-        sprintf(levelChar, "%d",level);
+        sprintf(levelChar, "hiddenPicture%d",level);
     }
 
     
@@ -121,8 +121,8 @@ cocos2d::Value LevelData::paeseLevelSmallPicture(int level)
     const char* ch = _json.GetString();
     log("ch  =%s",ch);
     
-    char levelChar[10];
-    sprintf(levelChar, "pic%d",level);
+    char levelChar[20];
+    sprintf(levelChar, "showPicture%d",level);
     rapidjson::Value& _array = readdoc[levelChar];
     
     log("json  =%d",_array.Capacity());

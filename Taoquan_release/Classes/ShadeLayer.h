@@ -27,7 +27,7 @@ public:
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
     void menuNextCallback(Ref* pSender);//下一关按钮回调
-    
+    void menuThisLevelCallback(Ref* pSender);//本关金星模式按钮回调
     
     Size visibleSize;
     

@@ -9,6 +9,8 @@
 #include "LogoScene.h"
 #include "SelectLevel.h"
 USING_NS_CC;
+#include"SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 Scene* LogoScene::createScene()
 {
@@ -51,13 +53,26 @@ bool LogoScene::init()
     // add the sprite as a child to this layer
     this->addChild(logoSp, 2);
     
+    
+    paeseXml();
+    
+    //音乐音效的加载
+    //FileUtils::getInstance()->fullPathForFilename("musicAndeffect/selectLevelMusic.mp3");
+    //FileUtils::getInstance()->fullPathForFilename("musicAndeffect/selectLevelMusic.mp3")
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("musicAndeffect/selectLevelMusic.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("musicAndeffect/selectLevelButtonEffect.wav");
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("musicAndeffect/gameSceneMusic.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("musicAndeffect/buttonEffect.wav");
+    UserDefault::getInstance()->setBoolForKey("isSound", true);
+    
     this->runAction(Sequence::create(DelayTime::create(1.0f),CallFunc::create([=](){
         //跳转到选择关卡界面
         Scene* selectLevelScene=SelectLevel::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.2f, selectLevelScene));
     }),NULL));
     
-     paeseXml();
+    
+    
 
     return true;
 }

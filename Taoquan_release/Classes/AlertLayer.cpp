@@ -9,6 +9,8 @@
 #include "AlertLayer.h"
 #include "DataUtil.h"
 #include "GameScene.h"
+#include"SimpleAudioEngine.h"
+using namespace CocosDenshion;
 AlertLayer* AlertLayer::create()
 {
     AlertLayer* layer=new AlertLayer();
@@ -71,6 +73,12 @@ bool AlertLayer::init() {
 
 void AlertLayer::menuConfirmCallback(Ref* pSender)
 {
+    
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
+
     this->removeFromParent();
     //Director::getInstance()->resume();
     EventCustom _event("alertUI");
@@ -79,6 +87,10 @@ void AlertLayer::menuConfirmCallback(Ref* pSender)
 
 void AlertLayer::menuCancelCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     //Director::getInstance()->resume();
     this->removeFromParent();
     //点击返回上一存档按钮进入上一次存档的关卡

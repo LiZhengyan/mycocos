@@ -30,7 +30,6 @@ public:
     
     Size visibleSize;
     
-    bool _isFile;//判断本关是否存档
     int _clevel;
     
 };

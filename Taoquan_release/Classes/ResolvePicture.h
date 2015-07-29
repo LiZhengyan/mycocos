@@ -22,6 +22,7 @@ public:
     void changPicture(int level);
     
     int ID;
+    std::string pictureColor;
     bool isCover;
     
 };

@@ -7,6 +7,8 @@
 //
 
 #include "PauseLayer.h"
+#include"SimpleAudioEngine.h"
+using namespace CocosDenshion;
 PauseLayer* PauseLayer::create()
 {
     PauseLayer* layer=new PauseLayer();
@@ -63,6 +65,10 @@ bool PauseLayer::init() {
 
 void PauseLayer::menuSelectLevelCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     this->removeFromParent();
     Director::getInstance()->resume();
     EventCustom _event("backSelectLevel");
@@ -71,6 +77,10 @@ void PauseLayer::menuSelectLevelCallback(Ref* pSender)
 
 void PauseLayer::menuResumeCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     Director::getInstance()->resume();
     this->removeFromParent();
 }

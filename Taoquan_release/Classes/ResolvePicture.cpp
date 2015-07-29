@@ -49,12 +49,12 @@ void ResolvePicture::changPicture(int level)
      
      }),NULL)) ;*/
     int picMax=0;int picMin=0;
-    if (level<=18) {
-        picMax=16;
-        picMin=11;
+    if (level<=9) {
+        picMax=8;
+        picMin=1;
     }else{
-        picMax=39;
-        picMin=31;
+        picMax=6;
+        picMin=1;
     }
     
     this->runAction(Sequence::create(CallFunc::create([=](){
@@ -62,9 +62,13 @@ void ResolvePicture::changPicture(int level)
         int randN;
         do {
             randN=random(picMin, picMax);
+
         } while (randN==this->ID);
         char name[20];
-        sprintf(name, "gamescene/%d.png",randN);
+        if (level<=9)
+            sprintf(name, "gamescene/n%d.png",randN);
+        else
+        sprintf(name, "gamescene/t%d.png",randN);
         Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name);
         this->setTexture(texture);
         this->ID=randN;

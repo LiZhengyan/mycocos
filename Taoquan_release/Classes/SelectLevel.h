@@ -16,6 +16,8 @@
 #include "AlertLayer.h"
 USING_NS_CC_EXT;
 USING_NS_CC;
+
+
 class SelectLevel:public Layer
 {
 public:
@@ -29,11 +31,9 @@ public:
     
     ~SelectLevel();
 
-    void menuLevelButtonCallback(Ref* pSender,int level,bool issuo,bool isfile);//关卡按钮的回调方法
+    void menuLevelButtonCallback(Ref* pSender,int level,bool issuo);//关卡按钮的回调方法
     void leftAndRightAdjustScrollView(Ref* pSender);//左右按钮的回调方法
     
-    void alertIsFileFunction();//提示是否存档
-    void menuIsFileBttonCallback(EventCustom* e);//是否存档按钮的回调函数
     void callBackPropNumberChange(EventCustom* e);
     
     //以下是注册触摸事件和实现各种的touch函数
@@ -61,15 +61,16 @@ public:
     
     //是否解锁
     bool m_IsNeedExit;
-    bool _isSound;
+
     
     
-    LabelAtlas* _sPropNumber;
-    LabelAtlas* _hPropNumber;
     LabelAtlas* _cPropNumber;
+    LabelAtlas* _hPropNumber;
     
     MenuItemImage* _leftButton;
     MenuItemImage* _rightButton;
+    MenuItemImage* _musicMenu;
+    
     
     AlertLayer* _alertLayer;//弹窗层
     

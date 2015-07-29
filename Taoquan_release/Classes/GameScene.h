@@ -46,6 +46,7 @@ public:
     void resetGame(EventCustom* e);//自定义监听，重新开始的回调方法
     void backSelectLevel(EventCustom* e);//自定义监听，返回主界面回调方法
 
+    std::string randomChoosePictureColor(int num);//随机选择图片颜色
     
     void enterIntoSucceedUI();
     void enterIntoFailedUI();
@@ -63,7 +64,8 @@ public:
     ProgressTimer* _powerProgress;//指针进度条
     Sprite* _spriteQuan;
     ProgressTimer* _dottedLineProgress;//虚线进度条
-
+    
+    ProgressTimer* _dottedLineProgress2;//虚线进度条
     
     Vector<ResolvePicture*> spriteVector;//小图
     Vector<ResolvePicture*> hiddenPictureVector;//隐藏的小图
@@ -72,17 +74,16 @@ public:
     Vector<Sprite*> dizuoTouyingVector;//底座投影
     Vector<Sprite*>waterVector;
     
-    int _helpNumber;
-    int _timeNumber;//时间
+    
+    int _powerNumber;//力度
+    int _angleNumber;//角度
+    int _helpNumber;//帮助
     int _loopNumber;//环数
     char _loopNumberLabel[10];
     float x;float y;
     
     bool _isTouch;//判断是否可触摸
-    bool _isLoopOrigin;//判断环是否在原来位置
     bool _isHelp;
-    //bool _isSucceed;
-    //bool _isFailed;
     bool _isTaoZhong;
     
     
@@ -92,18 +93,24 @@ public:
     
     Sprite* _wholePicture;//全图
     Sprite* _gameBG;
-    
+    Sprite* _ruling;//刻度
     
     RepeatForever* _repeatLineBG;
-   
+    ValueVector calculationSatrNumber(int quanNumber,int picNumber);//计算所得星星的个数
+    
+    float _speed;//指针摆动速度
+    float QUAN_SCA;
     
     ~GameScene();
-
-    
+        
 private:
     LabelAtlas* labelTime;
     LabelAtlas* labelNumber;
     LabelAtlas* _labelHelpNumber;
+    LabelAtlas* _labelPower;
+    LabelAtlas* _labelAngle;
+    
+    
     Size visibleSize ;
     Vec2 origin;
     

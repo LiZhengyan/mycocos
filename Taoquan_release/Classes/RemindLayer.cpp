@@ -8,6 +8,8 @@
 
 #include "RemindLayer.h"
 #include "ShoppingMall.h"
+#include"SimpleAudioEngine.h"
+using namespace CocosDenshion;
 RemindLayer* RemindLayer::create()
 {
     RemindLayer* layer=new RemindLayer();
@@ -65,6 +67,10 @@ bool RemindLayer::init() {
 
 void RemindLayer::menuConfirmCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     this->removeFromParent();
     //跳转到商城
     Scene* shopScene=ShoppingMall::createScene();
@@ -73,6 +79,10 @@ void RemindLayer::menuConfirmCallback(Ref* pSender)
 
 void RemindLayer::menuCancelCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     //Director::getInstance()->resume();
     this->removeFromParent();
     

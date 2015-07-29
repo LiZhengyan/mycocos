@@ -9,6 +9,8 @@
 #include "ShoppingMall.h"
 #include "DataUtil.h"
 USING_NS_CC;
+#include"SimpleAudioEngine.h"
+using namespace CocosDenshion;
 Scene* ShoppingMall::createScene()
 {
     // 'scene' is an autorelease object
@@ -162,6 +164,10 @@ bool ShoppingMall::init()
 //归档按钮回调方法
 void ShoppingMall::menuFileButtonCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     _hx15Button->setVisible(false);
     _hx6Button->setVisible(false);
     _hx35Button->setVisible(false);
@@ -183,6 +189,10 @@ void ShoppingMall::menuFileButtonCallback(Ref* pSender)
 //帮助按钮回调方法
 void ShoppingMall::menuHelpButtonCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     _qx5Button->setVisible(false);
     _sx1Button->setVisible(false);
     _sx3Button->setVisible(false);
@@ -204,6 +214,10 @@ void ShoppingMall::menuHelpButtonCallback(Ref* pSender)
 //圈按钮回调方法
 void ShoppingMall::menuQuanButtonCallback(Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
      _qx5Button->setVisible(true);
     _hx15Button->setVisible(false);
     _hx6Button->setVisible(false);
@@ -225,6 +239,10 @@ void ShoppingMall::menuQuanButtonCallback(Ref* pSender)
 //购买归档道具按钮的回调方法
 void ShoppingMall::menuBuyFileButtonCallback(cocos2d::Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     MenuItemImage* button=(MenuItemImage*)pSender;
     char getUserSql[100];
     sprintf(getUserSql, "select * from Prop ");
@@ -255,6 +273,10 @@ void ShoppingMall::menuBuyFileButtonCallback(cocos2d::Ref* pSender)
 //购买帮助道具按钮的回调方法
 void ShoppingMall::menuBuyHelpButtonCallback(cocos2d::Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     MenuItemImage* button=(MenuItemImage*)pSender;
     char getUserSql[100];
     sprintf(getUserSql, "select * from Prop ");
@@ -288,7 +310,10 @@ void ShoppingMall::menuBuyHelpButtonCallback(cocos2d::Ref* pSender)
 //购买圈道具按钮的回调方法
 void ShoppingMall::menuBuyQuanButtonCallback(cocos2d::Ref* pSender)
 {
-    char getUserSql[100];
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }    char getUserSql[100];
     sprintf(getUserSql, "select * from Prop ");
     Value avm=DataUtil::getRow(getUserSql);
     int circlePropNumber=avm.asValueMap()["circleProp"].asInt();
@@ -301,6 +326,10 @@ void ShoppingMall::menuBuyQuanButtonCallback(cocos2d::Ref* pSender)
 //关闭按钮的回调方法
 void ShoppingMall::menuCloseButtonCallback(cocos2d::Ref* pSender)
 {
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     //发送通知，改变选择关卡界面的道具数
     EventCustom _event("shopUI");
     _eventDispatcher->dispatchEvent(&_event);
