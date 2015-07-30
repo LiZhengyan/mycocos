@@ -62,7 +62,11 @@ public:
     Sprite* _dottedSprite;//虚线指针
     Sprite* _spriteTiao;//指针
     ProgressTimer* _powerProgress;//指针进度条
+    
+    Sprite* _powerBarPoint;//力度
+    Sprite* _noMoveSprite;
     Sprite* _spriteQuan;
+    Sprite* _spritePower;//进度条图片
     ProgressTimer* _dottedLineProgress;//虚线进度条
     
     ProgressTimer* _dottedLineProgress2;//虚线进度条

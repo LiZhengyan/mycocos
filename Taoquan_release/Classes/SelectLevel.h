@@ -64,8 +64,8 @@ public:
 
     
     
-    LabelAtlas* _cPropNumber;
-    LabelAtlas* _hPropNumber;
+//    LabelAtlas* _cPropNumber;
+//    LabelAtlas* _hPropNumber;
     
     MenuItemImage* _leftButton;
     MenuItemImage* _rightButton;

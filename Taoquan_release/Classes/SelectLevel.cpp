@@ -72,7 +72,7 @@ bool SelectLevel::init()
     
     //创建一个CCLayer，将内容添加到CCLayer中，然后将这个layer添加到scrollview中
         Layer * layer =Layer::create();
-        for(int k = 0;k<5;k++)
+        for(int k = 0;k<3;k++)
         {
             //String * string = String::createWithFormat("gamescene/%d.png",i+1);
             //Sprite * sprite = Sprite::create(string->getCString());
@@ -81,30 +81,23 @@ bool SelectLevel::init()
             //layer->addChild(sprite);
             //背景
             char gameName[30];
-        
-            if (k<2) {
-                //sprintf(gameName, "selectlevel/gameBG%d.jpg",1);
-                sprintf(gameName, "selectlevel/gameBG%d.jpg",(k+1)+k);
-            }else{
-                sprintf(gameName, "selectlevel/gameBG%d.jpg",3);
-            }
+            sprintf(gameName, "selectlevel/gameBG%d.jpg",k);
             auto sprite = Sprite::create(gameName);
             sprite->setPosition(ccpAdd(Vec2(visibleSize.width/2,visibleSize.height/2),Vec2(visibleSize.width*k,0)));
             sprite->setScale(visibleSize.width/sprite->getContentSize().width);
             layer->addChild(sprite, 0);
-            //圈
-            char circleName[30];
-            if (k<4) {
-                sprintf(circleName, "selectlevel/micheng%d.png",k+1);
-                Sprite* micheng1=Sprite::create(circleName);
-                micheng1->setScale(visibleSize.width*1.2/640.0);
-                micheng1->setPosition(Vec2(visibleSize.width/2+visibleSize.width*k,visibleSize.height*0.82));
-                layer->addChild(micheng1,3);
-            }
-            auto quanBG = Sprite::create("selectlevel/circleBG1.png");
+            //标题
+            char titleName[30];
+            sprintf(titleName, "selectlevel/title%d.png",k);
+            Sprite* spriteTitle=Sprite::create(titleName);
+            spriteTitle->setScale(visibleSize.width*1.2/640.0);
+            spriteTitle->setPosition(Vec2(visibleSize.width/2+visibleSize.width*k,visibleSize.height*0.82));
+            layer->addChild(spriteTitle,3);
+            //背景圆
+            auto quanBG = Sprite::create("selectlevel/circleBG.png");
             quanBG->setPosition(ccpAdd(Vec2(visibleSize.width/2,visibleSize.height/2),Vec2(visibleSize.width*k,0)));
             quanBG->setScale(visibleSize.width*0.9/quanBG->getContentSize().width);
-            layer->addChild(quanBG, 0);
+            layer->addChild(quanBG, 2);
             
             for (int i=0; i<3; i++) {
                 for (int j=0; j<3; j++) {
@@ -233,43 +226,43 @@ bool SelectLevel::init()
         //this->m_scrollView->setContentOffsetInDuration(Vec2(-visibleSize.width * 1,0), 0.1f);//设置滑动视图的当前页在0.1秒内移动多少像素
     
     //透明条
-    Sprite* transparent=Sprite::create("selectlevel/toumingtiao.png");
-    transparent->setPosition(Vec2(visibleSize.width/2, visibleSize.height-transparent->getContentSize().height/2));
-    transparent->setScale(visibleSize.width/640);
-    this->addChild(transparent,2);
+//    Sprite* transparent=Sprite::create("selectlevel/toumingtiao.png");
+//    transparent->setPosition(Vec2(visibleSize.width/2, visibleSize.height-transparent->getContentSize().height/2));
+//    transparent->setScale(visibleSize.width/640);
+//    this->addChild(transparent,2);
     
     //帮助数量图标
-    Sprite* hNumber=Sprite::create("selectlevel/h.png");
-    hNumber->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height*0.97));
-    hNumber->setScale(visibleSize.width/640);
-    this->addChild(hNumber,3);
+//    Sprite* hNumber=Sprite::create("selectlevel/h.png");
+//    hNumber->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height*0.97));
+//    hNumber->setScale(visibleSize.width/640);
+//    this->addChild(hNumber,3);
     //圈数量图标
-    Sprite* cNumber=Sprite::create("selectlevel/c.png");
-    cNumber->setPosition(Vec2(visibleSize.width*0.7, visibleSize.height*0.97));
-    cNumber->setScale(visibleSize.width/640);
-    this->addChild(cNumber,3);
+//    Sprite* cNumber=Sprite::create("selectlevel/c.png");
+//    cNumber->setPosition(Vec2(visibleSize.width*0.7, visibleSize.height*0.97));
+//    cNumber->setScale(visibleSize.width/640);
+//    this->addChild(cNumber,3);
     
-    char getUserSql[100];
-    sprintf(getUserSql, "select * from Prop ");
-    Value avm=DataUtil::getRow(getUserSql);
-    int PropNumber0=avm.asValueMap()["helpProp"].asInt();
-    int PropNumber2=avm.asValueMap()["circleProp"].asInt();
-    
- 
-
-    char hpropChar[20];
-    sprintf(hpropChar, ":%d",PropNumber0);
-    _hPropNumber=LabelAtlas::create(hpropChar, "selectlevel/propNumber.png", 17.0f, 24.0f, '0');
-    _hPropNumber->setPosition(Vec2(visibleSize.width*0.5, visibleSize.height*0.957));
-    _hPropNumber->setScale(visibleSize.width/640);
-    this->addChild(_hPropNumber,2);
-    
-    char cpropChar[20];
-    sprintf(cpropChar, ":%d",PropNumber2);
-    _cPropNumber=LabelAtlas::create(cpropChar, "selectlevel/propNumber.png", 17.0f, 24.0f, '0');
-    _cPropNumber->setPosition(Vec2(visibleSize.width*0.75, visibleSize.height*0.957));
-    _cPropNumber->setScale(visibleSize.width/640);
-    this->addChild(_cPropNumber,2);
+//    char getUserSql[100];
+//    sprintf(getUserSql, "select * from Prop ");
+//    Value avm=DataUtil::getRow(getUserSql);
+//    int PropNumber0=avm.asValueMap()["helpProp"].asInt();
+//    int PropNumber2=avm.asValueMap()["circleProp"].asInt();
+//    
+// 
+//
+//    char hpropChar[20];
+//    sprintf(hpropChar, ":%d",PropNumber0);
+//    _hPropNumber=LabelAtlas::create(hpropChar, "selectlevel/propNumber.png", 17.0f, 24.0f, '0');
+//    _hPropNumber->setPosition(Vec2(visibleSize.width*0.5, visibleSize.height*0.957));
+//    _hPropNumber->setScale(visibleSize.width/640);
+//    this->addChild(_hPropNumber,2);
+//    
+//    char cpropChar[20];
+//    sprintf(cpropChar, ":%d",PropNumber2);
+//    _cPropNumber=LabelAtlas::create(cpropChar, "selectlevel/propNumber.png", 17.0f, 24.0f, '0');
+//    _cPropNumber->setPosition(Vec2(visibleSize.width*0.75, visibleSize.height*0.957));
+//    _cPropNumber->setScale(visibleSize.width/640);
+//    this->addChild(_cPropNumber,2);
 
     // 添加 声音  的开关按钮
     if (isSound) {
@@ -338,17 +331,17 @@ bool SelectLevel::init()
 
 void SelectLevel::callBackPropNumberChange(EventCustom* e)
 {
-    char getUserSql[100];
-    sprintf(getUserSql, "select * from Prop ");
-    Value avm=DataUtil::getRow(getUserSql);
-    int PropNumber0=avm.asValueMap()["helpProp"].asInt();
-    int PropNumber2=avm.asValueMap()["circleProp"].asInt();
-    
-    char hPropChar[10];
-    sprintf(hPropChar, ":%d",PropNumber0);
-    char cPropChar[10];
-    sprintf(cPropChar, ":%d",PropNumber2);
-    _hPropNumber->setString(hPropChar);
+//    char getUserSql[100];
+//    sprintf(getUserSql, "select * from Prop ");
+//    Value avm=DataUtil::getRow(getUserSql);
+//    int PropNumber0=avm.asValueMap()["helpProp"].asInt();
+//    int PropNumber2=avm.asValueMap()["circleProp"].asInt();
+//    
+//    char hPropChar[10];
+//    sprintf(hPropChar, ":%d",PropNumber0);
+//    char cPropChar[10];
+//    sprintf(cPropChar, ":%d",PropNumber2);
+//    _hPropNumber->setString(hPropChar);
     
 }
 
@@ -399,7 +392,7 @@ void SelectLevel::onTouchMoved(Touch * touch,Event * pEvent)
         //当在第1页时不能再往左滑动并且左按钮消失 只在x方向偏移
         spriteDirection = Point(0,0);
         _leftButton->setVisible(false);
-    }else if (m_nCurPage==4)
+    }else if (m_nCurPage==2)
     {
         //当在第最后一页时不能再往右滑动并且右按钮消失 只在x方向偏移
         spriteDirection = Point(this->m_offsetPoint.x,0);
@@ -455,8 +448,8 @@ void SelectLevel::adjustScrollView(float offset)
     //不允许超出最左边的一页和最右边的一页
     if (m_nCurPage < 0)
         m_nCurPage = 0;
-    else if (m_nCurPage > 4)
-        m_nCurPage = 4;
+    else if (m_nCurPage > 2)
+        m_nCurPage = 2;
     
     Point adjustPoint = Vec2(-winSize.width * m_nCurPage , 0);
     //这个函数比setContentOffset多了一个参数，第二个参数是设置时间的，就是用多长的时间来改变偏移量
@@ -483,8 +476,8 @@ void SelectLevel::leftAndRightAdjustScrollView(Ref* pSender)
         m_nCurPage = 0;
         _leftButton->setVisible(false);
     }
-    else if (m_nCurPage > 4){
-        m_nCurPage = 4;
+    else if (m_nCurPage > 2){
+        m_nCurPage = 2;
         _rightButton->setVisible(false);
     }else{
         _rightButton->setVisible(true);
