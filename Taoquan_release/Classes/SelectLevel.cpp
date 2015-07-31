@@ -170,7 +170,7 @@ bool SelectLevel::init()
                         layer->addChild(hengTiao,2);
                         shuTiao=Sprite::create("selectlevel/shutiao2.png");
                         shuTiao->setPosition(ccpAdd(Vec2(visibleSize.width/4*3-visibleSize.width/2*j,visibleSize.height*0.576-visibleSize.height*0.13*j),Vec2(visibleSize.width*k,0)) );
-                        shuTiao->setScale(visibleSize.height*smartRes_shuTiaoScale/shuTiao->getContentSize().height);
+                        shuTiao->setScale(visibleSize.width*1.1/640,visibleSize.height*smartRes_shuTiaoScale/shuTiao->getContentSize().height);
                         layer->addChild(shuTiao,2);
                         
                     }

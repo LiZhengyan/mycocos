@@ -62,8 +62,8 @@ bool GameScene::init()
     //添加暂停按钮
     MenuItemImage*pauseItem = MenuItemImage::create("gamescene/pauseButton.png","gamescene/pauseButton.png",
                                            CC_CALLBACK_1(GameScene::menuPauseCallback, this));
-    pauseItem->setScale(visibleSize.width*0.9/640);
-    pauseItem->setPosition(Vec2(visibleSize.width*0.9,origin.y + visibleSize.height*0.94));
+    pauseItem->setScale(visibleSize.width*0.92/640);
+    pauseItem->setPosition(Vec2(visibleSize.width*0.9,origin.y + visibleSize.height*0.929));
     
     //帮助按钮
     /*auto helpItem = MenuItemImage::create("gamescene/helpButton.png","gamescene/helpButton.png",
@@ -95,10 +95,10 @@ bool GameScene::init()
     char circleNumberChar[10];
     sprintf(circleNumberChar, "%d",_loopNumber);
     labelNumber = LabelAtlas::create(circleNumberChar, "gamescene/shuzi2.png", 27.0f, 40.0f, '0');
-    labelNumber->setScale(visibleSize.width/640.0);
+    labelNumber->setScale(visibleSize.width*1.1/640.0);
     //labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.84,origin.y + visibleSize.height*0.062));
-    
-    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.19,origin.y + visibleSize.height*0.915));
+    labelNumber->setAnchorPoint(Vec2(0.5, 0.5));
+    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.23,origin.y + visibleSize.height*0.93));
     
     this->addChild(labelNumber, 1);
     //添加不动圈
@@ -107,49 +107,38 @@ bool GameScene::init()
     }else
         _noMoveSprite = Sprite::create("gamescene/huan2.png");
     
-    _noMoveSprite->setScale(visibleSize.width*1.3/640.0);
+    _noMoveSprite->setScale(visibleSize.width*1.25/640.0);
     //noMoveSprite->setPosition(Vec2(origin.x + visibleSize.width*0.78, origin.y + visibleSize.height*0.08));
-    _noMoveSprite->setPosition(Vec2(origin.x + visibleSize.width*0.1, origin.y + visibleSize.height*0.93));
+    _noMoveSprite->setPosition(Vec2(origin.x + visibleSize.width*0.1, origin.y + visibleSize.height*0.929));
     this->addChild(_noMoveSprite, 1);
-
     
-    
-    
-    // create menu, it's an autorelease object
     auto menu = Menu::create(pauseItem, NULL);
     menu->setPosition(Vec2::ZERO);
     
     this->addChild(menu, 1);
 
     
-    //添加圈
+    //添加圈//力度条背景
     if (cLevel>9) {
         _spriteQuan=Sprite::create("gamescene/quan3.png");
-    }else
+        _ruling=Sprite::create("gamescene/powerBarBG2.png");
+    }else{
         _spriteQuan=Sprite::create("gamescene/quan2.png");
+        _ruling=Sprite::create("gamescene/powerBarBG1.png");
+    }
     _spriteQuan->setScale(0.8*visibleSize.width/640);
     _spriteQuan->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*0.1 + origin.y));
     this->addChild(_spriteQuan,3);
     
-    QUAN_SCA=0.8*visibleSize.width/640;
-    
-    //力度条背景
-    _ruling=Sprite::create("gamescene/powerBarBG.png");
     _ruling->setScale(1.1*visibleSize.width/640);
-    _ruling->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*0.255 + origin.y));
+    _ruling->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*smartRes_jinDuTiaoHeigh + origin.y));
     this->addChild(_ruling,2);
     
-//    _powerBarPoint=Sprite::create("gamescene/powerBarPoint.png");
-//    _powerBarPoint->setScale(1.1*visibleSize.width/640);
-//    _powerBarPoint->setAnchorPoint(Vec2(0,0.5));
-//    _powerBarPoint->setPosition(Vec2(visibleSize.width*0.01 + origin.x, visibleSize.height*0.01 + origin.y));
-//    _powerBarPoint->setRotation(-45);
-//    _powerBarPoint->setVisible(false);
-//    _ruling->addChild(_powerBarPoint,2);
-
+    QUAN_SCA=0.8*visibleSize.width/640;
+    
     //上次套圈轨迹虚线
     _dottedLineProgress2=ProgressTimer::create(Sprite::create("gamescene/dottedLine.png"));
-    _dottedLineProgress2->setScale(visibleSize.width*0.85/640);
+    _dottedLineProgress2->setScale(visibleSize.width*smartRes_shangCiGuiJiHeigh/640);
     _dottedLineProgress2->setTag(2);
     _dottedLineProgress2->setRotation(0);
     
@@ -202,7 +191,7 @@ bool GameScene::init()
             if (i<4) {
                 int randName=random(0, 2);
                 int mPicID =picVV.at(i+randName*4).asValueMap()["id"].asInt();
-                std::string mPicName =picVV.at(i).asValueMap()["pictureName"].asString();
+                std::string mPicName =picVV.at(i+randName*4).asValueMap()["pictureName"].asString();
                 name<<mPicName<<mPicID<<".png";
                 rp->initResolvePicture(name.str(), mPicID);
             }else{
@@ -239,11 +228,7 @@ bool GameScene::init()
         dizuoTouying->setScale(0.8*visibleSize.width/640);
         this->addChild(dizuoTouying,1);
         dizuoTouyingVector.pushBack(dizuoTouying);
-//        Sprite* dizuo=Sprite::create("gamescene/foundation.png");
-//        dizuo->setScale(0.7*visibleSize.width/640);
-//        dizuo->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*0.91*pY*0.01));
-//        this->addChild(dizuo, 1);
-//        dizuoVector.pushBack(dizuo);
+
     }
 
 
@@ -266,11 +251,9 @@ bool GameScene::init()
     if (cLevel>9) {
         //指针
         _spriteTiao=Sprite::create("gamescene/zhizhenBG2.png");
-        _spritePower =Sprite::create("gamescene/powerBar2.png");
     }else{
         //指针
         _spriteTiao=Sprite::create("gamescene/zhizhenBG1.png");
-        _spritePower =Sprite::create("gamescene/powerBar1.png");
     }
     _spriteTiao->setScale(0.7*visibleSize.width/640);
     _spriteTiao->setRotation(45);
@@ -279,29 +262,17 @@ bool GameScene::init()
     _spriteTiao->setAnchorPoint(Vec2(0.5,0.5));
     this->addChild(_spriteTiao, 0);
     //添加进度条
-    _powerProgress=ProgressTimer::create(_spritePower);
+    _powerProgress=ProgressTimer::create(Sprite::create("gamescene/powerBar.png"));
     _powerProgress->setScale(1.1*visibleSize.width/640);
     _powerProgress->setTag(2);
     _powerProgress->setAnchorPoint(Vec2(0.5,0.5));
     _powerProgress->setBarChangeRate(Point(1,0));
     _powerProgress->setType(ProgressTimer::Type::BAR);
     _powerProgress->setMidpoint(Point(0,0));
-    _powerProgress->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*0.255 + origin.y));
+    _powerProgress->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*smartRes_jinDuTiaoHeigh + origin.y));
     _powerProgress->setPercentage(0.0f);
     this->addChild(_powerProgress,2);
     _powerProgress->setVisible(false);
-
-    //虚线指针
-    _dottedSprite=Sprite::create("gamescene/dottedLine.png");
-    _dottedSprite->setScale(0.9*visibleSize.width/640);
-    _dottedSprite->setRotation(45);
-    _dottedSprite->setTag(1);
-    _dottedSprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*0.1 + origin.y));
-    _dottedSprite->setAnchorPoint(Vec2(0.5,0));
-    this->addChild(_dottedSprite, 3);
-    _dottedSprite->setVisible(false);
-    
-    
 
     //旋转
     RotateTo* rotate1= RotateTo::create(_speed,-45.0);
@@ -310,30 +281,6 @@ bool GameScene::init()
     RepeatForever* repeatBG=RepeatForever::create(sequenceBG);
     repeatBG->setTag(1000);
     _spriteTiao->runAction(repeatBG);
-    
-    auto lineRotate1= RotateTo::create(_speed,-45.0);
-    auto lineRotate2= RotateTo::create(_speed,45.0);
-    auto sequenceLineBG=Sequence::create(lineRotate1, lineRotate2, NULL);
-    _repeatLineBG=RepeatForever::create(sequenceLineBG);
-    _repeatLineBG->setTag(1001);
-    _dottedSprite->runAction(_repeatLineBG);
-    //添加虚线进度条
-    _dottedLineProgress=ProgressTimer::create(Sprite::create("gamescene/dottedLine.png"));
-    _dottedLineProgress->setScale(visibleSize.width*0.9/640);
-    _dottedLineProgress->setTag(2);
-    _dottedLineProgress->setRotation(0);
-    
-    _dottedLineProgress->setAnchorPoint(Vec2(0.5,0));
-    _dottedLineProgress->setBarChangeRate(Point(0,1));
-    _dottedLineProgress->setType(ProgressTimer::Type::BAR);
-    _dottedLineProgress->setMidpoint(Point(0,0));
-    _dottedLineProgress->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*0.1 + origin.y));
-    _dottedLineProgress->setPercentage(0.0f);
-    this->addChild(_dottedLineProgress,3);
-    _repeatLineBG->setTag(2000);
-    
-   _dottedLineProgress->setVisible(false);
-
     
     //json文件解析获取隐藏小图
     
@@ -451,11 +398,15 @@ void GameScene::setNextLevelPicture(EventCustom* e)
     _isTouch=true;
     SimpleAudioEngine::getInstance()->rewindBackgroundMusic();//重新开始播放背景音乐
     _isTaoZhong=false;
+    //更新圈数
     char*buf =static_cast<char*>(e->getUserData());
-     _loopNumber=std::atoi(buf);
-    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.19,origin.y + visibleSize.height*0.915));
+    _loopNumber=std::atoi(buf);
+    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.23,origin.y + visibleSize.height*0.93));
     labelNumber->setString(buf);
-   
+    _powerProgress->setPercentage(0);//将力度条的值归0
+    _dottedLineProgress2->setVisible(false);//将上次轨迹线隐藏
+    
+    //更新显示图形的排列模式
     int num=random(1, 6);
     ValueVector shapeVV=LevelData::paeseLevelShape(num).asValueVector();
     cLevel++;
@@ -479,10 +430,10 @@ void GameScene::setNextLevelPicture(EventCustom* e)
             if (i<4) {
                 int randName=random(0, 2);
                 int mPicID =avm.at(i+randName*4).asValueMap()["id"].asInt();
-                std::string mPicName =avm.at(i).asValueMap()["pictureName"].asString();
+                std::string mPicName =avm.at(i+randName*4).asValueMap()["pictureName"].asString();
                 name<<mPicName<<mPicID<<".png";
                 Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=randNumber;
+                rp->ID=mPicID;
                 rp->setTexture(texture);
             }else{
                 randNumber=random(1, 6);//随机图片
@@ -524,9 +475,9 @@ void GameScene::setNextLevelPicture(EventCustom* e)
             //指针
             Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG2.png");
             _spriteTiao->setTexture(textureZhizhen);
-            //进度条
-            Texture2D* textureProgress = TextureCache::sharedTextureCache()->addImage("gamescene/powerBar2.png");
-            _spritePower->setTexture(textureProgress);
+            //进度条背景
+            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG2.png");
+            _ruling->setTexture(textureProgressBG);
             //底座投影
             textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation5.png");
             dzty->setTexture(textureDzty);
@@ -550,9 +501,9 @@ void GameScene::setNextLevelPicture(EventCustom* e)
             //指针
             Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG1.png");
             _spriteTiao->setTexture(textureZhizhen);
-            //进度条
-            Texture2D* textureProgress = TextureCache::sharedTextureCache()->addImage("gamescene/powerBar1.png");
-            _spritePower->setTexture(textureProgress);
+            //进度条背景
+            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG1.png");
+            _ruling->setTexture(textureProgressBG);
 
         }
         
@@ -580,7 +531,7 @@ void GameScene::setNextLevelPicture(EventCustom* e)
             rp->initResolvePicture(name, picId);
             rp->setPicturePosition(visibleSize.width*px*0.001, visibleSize.height*py*0.001);
             rp->setRotation(rotation);
-                //this->addChild(rp,3);
+//            this->addChild(rp,3);
                 //rp->setVisible(false);
             hiddenPictureVector.pushBack(rp);
         }
@@ -591,37 +542,20 @@ void GameScene::setNextLevelPicture(EventCustom* e)
     //判断本关模式
     char getUserSql[100];
     sprintf(getUserSql, "select * from User where level=%d",cLevel);
-    
     //从数据库中取出用户信息
     cocos2d::Value cv=DataUtil::getRow(getUserSql);
     int pattern=cv.asValueMap()["pattern"].asInt();
-    float rotateTime1;float rotateTime2;
     if (pattern==1) {
-        //_powerBarPoint->setPosition(Vec2(visibleSize.width*0.01 + origin.x, visibleSize.height*0.01 + origin.y));
-       // _powerBarPoint->setRotation(-45);
-        
-        _dottedLineProgress2->setVisible(false);
-        rotateTime1=2.0;rotateTime2=2.0;
+        //设置指针摆动速度
+        auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
+        _spriteTiaoRotate->setSpeed(2.0);
     }else{
-        _dottedLineProgress2->setVisible(false);
-        rotateTime1=1.5;rotateTime2=1.5;
+        //设置指针摆动速度
+        auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
+        _spriteTiaoRotate->setSpeed(2.0);
+        
     }
-    Director* director=Director::getInstance();
-    director->getActionManager()->removeActionByTag(1000, _spriteTiao);
-    director->getActionManager()->removeActionByTag(1001, _dottedSprite);
-    
-    RotateTo* rotate1= RotateTo::create(rotateTime1,-45.0);
-    RotateTo* rotate2 = RotateTo::create(rotateTime2,45.0);
-    Sequence* sequenceBG=Sequence::create(rotate1, rotate2, NULL);
-    RepeatForever* repeatBG=RepeatForever::create(sequenceBG);
-    repeatBG->setTag(1000);
-    director->getActionManager()->addAction(repeatBG, _spriteTiao, false);
-    auto lineRotate1= RotateTo::create(rotateTime1,-45.0);
-    auto lineRotate2= RotateTo::create(rotateTime2,45.0);
-    auto sequenceLineBG=Sequence::create(lineRotate1, lineRotate2, NULL);
-    RepeatForever* repeatLineBG=RepeatForever::create(sequenceLineBG);
-    repeatLineBG->setTag(1001);
-    director->getActionManager()->addAction(repeatLineBG, _dottedSprite, false);
+
 }
 void GameScene::resetGame(EventCustom* e)
 {
@@ -635,10 +569,13 @@ void GameScene::resetGame(EventCustom* e)
     _isTaoZhong=false;
     SimpleAudioEngine::getInstance()->rewindBackgroundMusic();//重新开始播放背景音乐
     sprintf(_loopNumberLabel, "%d",_loopNumber);
-    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.19,origin.y + visibleSize.height*0.915));
+    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.23,origin.y + visibleSize.height*0.93));
     labelNumber->setString(_loopNumberLabel);
     Director::getInstance()->resume();
+    _powerProgress->setPercentage(0);//将力度条的值归0
+    _dottedLineProgress2->setVisible(false);//将上次轨迹线隐藏
     
+    //更新显示图形的排列模式
     int num=random(1, 6);
     ValueVector shapeVV=LevelData::paeseLevelShape(num).asValueVector();
 
@@ -661,10 +598,10 @@ void GameScene::resetGame(EventCustom* e)
             if (i<4) {
                 int randName=random(0, 2);
                 int mPicID =avm.at(i+randName*4).asValueMap()["id"].asInt();
-                std::string mPicName =avm.at(i).asValueMap()["pictureName"].asString();
+                std::string mPicName =avm.at(i+randName*4).asValueMap()["pictureName"].asString();
                 name<<mPicName<<mPicID<<".png";
                 Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=randNumber;
+                rp->ID=mPicID;
                 rp->setTexture(texture);
             }else{
                 randNumber=random(1, 6);//随机图片
@@ -706,9 +643,9 @@ void GameScene::resetGame(EventCustom* e)
             //指针
             Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG2.png");
             _spriteTiao->setTexture(textureZhizhen);
-            //进度条
-            Texture2D* textureProgress = TextureCache::sharedTextureCache()->addImage("gamescene/powerBar2.png");
-            _spritePower->setTexture(textureProgress);
+            //进度条背景
+            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG2.png");
+            _ruling->setTexture(textureProgressBG);
             //底座投影
             textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation5.png");
             dzty->setTexture(textureDzty);
@@ -733,9 +670,9 @@ void GameScene::resetGame(EventCustom* e)
             //指针
             Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG1.png");
             _spriteTiao->setTexture(textureZhizhen);
-            //进度条
-            Texture2D* textureProgress = TextureCache::sharedTextureCache()->addImage("gamescene/powerBar1.png");
-            _spritePower->setTexture(textureProgress);
+            //进度条背景
+            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG1.png");
+            _ruling->setTexture(textureProgressBG);
         }
     }
     
@@ -777,38 +714,21 @@ void GameScene::resetGame(EventCustom* e)
     cocos2d::Value cv=DataUtil::getRow(getUserSql);
     int pattern=cv.asValueMap()["pattern"].asInt();
     int yinXingNum=cv.asValueMap()["starNum"].asInt();
-    float rotateTime1;float rotateTime2;
-
     if (pattern==1&&yinXingNum!=3) {
-        //_powerBarPoint->setPosition(Vec2(visibleSize.width*0.01 + origin.x, visibleSize.height*0.01 + origin.y));
-        //_powerBarPoint->setRotation(-45);
-        _dottedLineProgress2->setVisible(false);
-        rotateTime1=2.0;rotateTime2=2.0;
+        //设置指针摆动速度
+        auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
+        _spriteTiaoRotate->setSpeed(2.0);
     }else if(pattern==2){
-        rotateTime1=1.5;rotateTime2=1.5;
-        _dottedLineProgress2->setVisible(false);
+        //设置指针摆动速度
+        auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
+        _spriteTiaoRotate->setSpeed(1.5);
     }else if(pattern==1&&yinXingNum==3){
-        rotateTime1=1.5;rotateTime2=1.5;
+        //设置指针摆动速度
+        auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
+        _spriteTiaoRotate->setSpeed(1.5);
         DataUtil::updatePatternData(2,cLevel);//更新游戏模式
         UserDefault::getInstance()->setBoolForKey("isGengxin", true);
     }
-
-    Director* director=Director::getInstance();
-    director->getActionManager()->removeActionByTag(1000, _spriteTiao);
-    director->getActionManager()->removeActionByTag(1001, _dottedSprite);
-    
-    RotateTo* rotate1= RotateTo::create(rotateTime1,-45.0);
-    RotateTo* rotate2 = RotateTo::create(rotateTime2,45.0);
-    Sequence* sequenceBG=Sequence::create(rotate1, rotate2, NULL);
-    RepeatForever* repeatBG=RepeatForever::create(sequenceBG);
-    repeatBG->setTag(1000);
-    director->getActionManager()->addAction(repeatBG, _spriteTiao, false);
-    auto lineRotate1= RotateTo::create(rotateTime1,-45.0);
-    auto lineRotate2= RotateTo::create(rotateTime2,45.0);
-    auto sequenceLineBG=Sequence::create(lineRotate1, lineRotate2, NULL);
-    RepeatForever* repeatLineBG=RepeatForever::create(sequenceLineBG);
-    repeatLineBG->setTag(1001);
-    director->getActionManager()->addAction(repeatLineBG, _dottedSprite, false);
 
 }
 
@@ -818,35 +738,20 @@ bool GameScene::onTouchBegan(Touch *touch, Event *event)
 
     Director* director=Director::getInstance();
     director->getActionManager()->pauseTarget(GameScene::_spriteTiao);//暂停指针的动作
-    director->getActionManager()->pauseTarget(GameScene::_dottedSprite);//暂停虚线的动作
-    //director->getActionManager()->removeActionByTag(2000, _dottedLineProgress);
+    director->getActionManager()->resumeTarget(_powerProgress);//继续力度条进度
     _powerProgress->setVisible(true);
-    _dottedSprite->setVisible(false);
-    if (_isHelp) {
-        _dottedLineProgress->setVisible(true);
-        _isHelp=false;
-    }
     
-    //指针进度条的动作
-//    auto rotate3= RotateTo::create(0.01f,_spriteTiao->getRotation());
-//    _powerProgress->runAction(rotate3);
+//    if (_isHelp) {
+//        _dottedLineProgress->setVisible(true);
+//        _isHelp=false;
+//    }
     
-    auto rotate4= RotateTo::create(0.01f,_spriteTiao->getRotation());
-    _dottedLineProgress->runAction(rotate4);
+    //力度条的动作
     ProgressFromTo* ptUp=ProgressFromTo::create(1, 0.0f, 100.0f);
     ProgressFromTo* ptDown=ProgressFromTo::create(1, 100.0f, 0.0f);
     auto sequencePG=Sequence::create(ptUp, ptDown, NULL);
     auto repeatPG=RepeatForever::create(sequencePG);
     _powerProgress->runAction(repeatPG);
-    
-    //虚线进度条的动作
-    //_dottedLineProgress->setPercentage(0.0f);
-    ProgressFromTo* LineptUp=ProgressFromTo::create(1, 0.0f, 100.0f);
-    ProgressFromTo* LineptDown=ProgressFromTo::create(1, 100.0f, 0.0f);
-    auto sequenceLine=Sequence::create(LineptUp, LineptDown, NULL);
-    auto repeatLine=RepeatForever::create(sequenceLine);
-    _dottedLineProgress->runAction(repeatLine);
-   
     
     return true;
 }
@@ -861,37 +766,9 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
     //暂停指针的旋转动作
     Director* director=Director::getInstance();
     director->getActionManager()->resumeTarget(GameScene::_spriteTiao);
-    director->getActionManager()->resumeTarget(GameScene::_dottedSprite);//暂停虚线的动作
-    //director->getActionManager()->addAction(_repeatLineBG, _dottedLineProgress, false);
     
-    //RepeatForever* repeatLineBG=(RepeatForever*)_powerProgress->getActionByTag(1000);
-    _powerProgress->setVisible(false);//显示指针的进度条
-    //_dottedSprite->setVisible(true);
-    _dottedLineProgress->setVisible(false);
-    
-    //float per=_powerProgress->getPercentage();
-//    //力度点得位置,
-//    if (per<50) {
-//        _powerBarPoint->setRotation(per*0.9-45);
-//        _powerBarPoint->setPosition(Vec2(visibleSize.width*0.01 + origin.x+2.7*per,visibleSize.height*0.01 + origin.y+per));
-//    }else{
-//         _powerBarPoint->setRotation(per*0.9-45);
-//        _powerBarPoint->setPosition(Vec2(visibleSize.width*0.01 + origin.x+2.7*per,visibleSize.height*0.01 + origin.y+50-(per-50)));
-//    }
-    
-    //力度和角度
-   // _powerNumber=_powerProgress->getPercentage();
-    //_angleNumber=_spriteTiao->getRotation();
-    
-    //char powerChar[10];
-    //sprintf(powerChar, "%d",_powerNumber);
-    //_labelPower->setString(powerChar);
-    
-    //char angleChar[10];
-    //sprintf(angleChar, "%d",_angleNumber);
-    //_labelAngle->setString(angleChar);
-    
-    
+    _powerProgress->setVisible(true);//显示指针的进度条
+    director->getActionManager()->pauseTarget(_powerProgress);//暂停力度条进度
     //从数据库中取出用户信息,判断游戏模式
     int comeInLevel=UserDefault::getInstance()->getIntegerForKey("cLevel");
     char getUserSql[100];
@@ -1061,10 +938,10 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
     }
     if (_loopNumber>0) {
         sprintf(_loopNumberLabel, "%d",_loopNumber-1);
-        auto spriteShuzi_return  = TargetedAction::create(labelNumber,Place::create(Vec2(visibleSize.width*0.2, visibleSize.height*0.915)));//数字由两位数变成一位数时，调整数字位置
+        auto spriteShuzi_return  = TargetedAction::create(labelNumber,Place::create(Vec2(visibleSize.width*0.23, visibleSize.height*0.93)));//数字由两位数变成一位数时，调整数字位置
 
-        labelNumber->runAction(Sequence::create(ScaleTo::create(0.5, 1.5*visibleSize.width/640.0),spriteShuzi_return,
-                                                    CallFunc::create([=](){labelNumber->setString(_loopNumberLabel);}), ScaleTo::create(0.5, 1*visibleSize.width/640.0),       NULL));
+        labelNumber->runAction(Sequence::create(ScaleTo::create(0.5, 1.35*visibleSize.width/640.0),spriteShuzi_return,
+                                                    CallFunc::create([=](){labelNumber->setString(_loopNumberLabel);}), ScaleTo::create(0.5, 1.1*visibleSize.width/640.0),       NULL));
         
     }else
         _isTouch=false;
@@ -1223,23 +1100,23 @@ void GameScene::menuHelpCallback(Ref* pSender)
     if (isSound) {
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
-    if (!_dottedSprite->isVisible()) {
-        if (_helpNumber>0) {
-            _helpNumber--;
-            _isHelp=true;
-            _dottedSprite->setVisible(true);
-            DataUtil::updatePropData("fileProp", _helpNumber);
-            char _helpNumberLabel[10];
-            sprintf(_helpNumberLabel, ":%d",_helpNumber);
-            _labelHelpNumber->setString(_helpNumberLabel);
-        }else{
-            log("帮助道具数量不足");
-            Director::getInstance()->pause();
-            Scene* shopScene=ShoppingMall::createScene();
-            Director::getInstance()->pushScene(shopScene);
-        }
-
-    }
+//    if (!_dottedSprite->isVisible()) {
+//        if (_helpNumber>0) {
+//            _helpNumber--;
+//            _isHelp=true;
+//            _dottedSprite->setVisible(true);
+//            DataUtil::updatePropData("fileProp", _helpNumber);
+//            char _helpNumberLabel[10];
+//            sprintf(_helpNumberLabel, ":%d",_helpNumber);
+//            _labelHelpNumber->setString(_helpNumberLabel);
+//        }else{
+//            log("帮助道具数量不足");
+//            Director::getInstance()->pause();
+//            Scene* shopScene=ShoppingMall::createScene();
+//            Director::getInstance()->pushScene(shopScene);
+//        }
+//
+//    }
     
     
 }

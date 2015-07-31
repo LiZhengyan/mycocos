@@ -59,15 +59,11 @@ public:
     
     bool _IsNeedExit;
     
-    Sprite* _dottedSprite;//虚线指针
     Sprite* _spriteTiao;//指针
     ProgressTimer* _powerProgress;//指针进度条
-    
-    Sprite* _powerBarPoint;//力度
+    Sprite* _ruling;//指针进度条背景
     Sprite* _noMoveSprite;
     Sprite* _spriteQuan;
-    Sprite* _spritePower;//进度条图片
-    ProgressTimer* _dottedLineProgress;//虚线进度条
     
     ProgressTimer* _dottedLineProgress2;//虚线进度条
     
@@ -78,9 +74,6 @@ public:
     Vector<Sprite*> dizuoTouyingVector;//底座投影
     Vector<Sprite*>waterVector;
     
-    
-    int _powerNumber;//力度
-    int _angleNumber;//角度
     int _helpNumber;//帮助
     int _loopNumber;//环数
     char _loopNumberLabel[10];
@@ -97,7 +90,7 @@ public:
     
     Sprite* _wholePicture;//全图
     Sprite* _gameBG;
-    Sprite* _ruling;//刻度
+    
     
     RepeatForever* _repeatLineBG;
     ValueVector calculationSatrNumber(int quanNumber,int picNumber);//计算所得星星的个数

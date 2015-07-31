@@ -15,7 +15,8 @@ USING_NS_CC;
 #define smartRes_shuTiaoScale           SmartRes::getSmartResShuTiaoScale()
 #define smartRes_starHigh               SmartRes::getSmartResSatrHight()
 #define smartRes_shuZiHigh              SmartRes::getSmartShuZiHight()
-#define smartRes_restartBtnHigh         SmartRes::getSmartRestartBtnHight()
+#define smartRes_jinDuTiaoHeigh         SmartRes::getSmartJinDuTiaoHeigh()
+#define smartRes_shangCiGuiJiHeigh      SmartRes::getSmartShangCiGuiJiHeigh()
 
 class SmartRes
 {
@@ -24,10 +25,16 @@ public:
     static float getSmartResM_dzty(){
         TargetPlatform target=Application::getInstance()->getTargetPlatform();
         float m_dzty;
-        if (target==kTargetIpad) {
-            m_dzty=0.21;
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        int height=(int)visibleSize.height;
+        if (height==960) {
+             m_dzty=0.19;
         }else{
-            m_dzty=0.16;
+            if (target==kTargetIpad) {
+                m_dzty=0.21;
+            }else{
+                m_dzty=0.16;
+            }
         }
         return m_dzty;
     }
@@ -46,11 +53,17 @@ public:
     static float getSmartResShuTiaoScale(){
         TargetPlatform target=Application::getInstance()->getTargetPlatform();
         float shutiaocale;
-        if (target==kTargetIpad) {
-            
-            shutiaocale=0.04;
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        int height=(int)visibleSize.height;
+        if (height==960) {
+            shutiaocale=0.05;
         }else{
-            shutiaocale=0.06;
+
+            if (target==kTargetIpad) {
+                shutiaocale=0.04;
+            }else{
+                shutiaocale=0.06;
+            }
         }
         return shutiaocale;
     }
@@ -68,22 +81,44 @@ public:
     static float getSmartShuZiHight(){
         TargetPlatform target=Application::getInstance()->getTargetPlatform();
         float shuZiHight;
-        if (target==kTargetIpad) {
-            shuZiHight=0.605;
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        int height=(int)visibleSize.height;
+        if (height==960) {
+            shuZiHight=0.61;
         }else{
-            shuZiHight=0.615;
+            if (target==kTargetIpad) {
+                shuZiHight=0.605;
+            }else{
+                shuZiHight=0.615;
+            }
         }
         return shuZiHight;
     }
-    static float getSmartRestartBtnHight(){
+    static float getSmartJinDuTiaoHeigh(){
         TargetPlatform target=Application::getInstance()->getTargetPlatform();
-        float restartBtnHight;
+        float jinDuTiaoHight;
         if (target==kTargetIpad) {
-            restartBtnHight=0.3;
+            jinDuTiaoHight=0.34;
         }else{
-            restartBtnHight=0.3;
+            jinDuTiaoHight=0.30;
         }
-        return restartBtnHight;
+        return jinDuTiaoHight;
+    }
+    static float getSmartShangCiGuiJiHeigh(){
+        TargetPlatform target=Application::getInstance()->getTargetPlatform();
+        float shangCiGuiJiHeigh;
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        int height=(int)visibleSize.height;
+        if (height==960) {
+            shangCiGuiJiHeigh=0.71;
+        }else{
+            if (target==kTargetIpad) {
+                shangCiGuiJiHeigh=0.65;
+            }else{
+                shangCiGuiJiHeigh=0.85;
+            }
+        }
+        return shangCiGuiJiHeigh;
     }
    
 
