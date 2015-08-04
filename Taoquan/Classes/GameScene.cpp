@@ -51,6 +51,8 @@ bool GameScene::init()
     //_isSucceed=false;
     //_isFailed=false;
     _isTaoZhong=false;
+    QUAN_SCA=0.8*visibleSize.width/640;
+    
     
     _timeNumber=60;
     
@@ -97,7 +99,7 @@ bool GameScene::init()
         _spriteQuan=Sprite::create("gamescene/quan3.png");
     }else
         _spriteQuan=Sprite::create("gamescene/quan.png");
-    _spriteQuan->setScale(0.8*visibleSize.width/640);
+    _spriteQuan->setScale(QUAN_SCA);
     _spriteQuan->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height*0.1 + origin.y));
     this->addChild(_spriteQuan,3);
 
@@ -260,7 +262,7 @@ bool GameScene::init()
     _powerProgress=ProgressTimer::create(Sprite::create("gamescene/powerBar.png"));
     _powerProgress->setScale(0.7*visibleSize.width/640);
     _powerProgress->setTag(2);
-    _powerProgress->setRotation(45);
+    _powerProgress->setRotation(90);
     
     _powerProgress->setAnchorPoint(Vec2(0.5,0));
     _powerProgress->setBarChangeRate(Point(0,1));
@@ -280,6 +282,7 @@ bool GameScene::init()
     labelNumber = LabelAtlas::create(circleNumberChar, "gamescene/shuzi2.png", 27.0f, 40.0f, '0');
     labelNumber->setScale(visibleSize.width/640.0);
     labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.86,origin.y + visibleSize.height*0.062));
+    
     this->addChild(labelNumber, 1);
     //添加不动圈
     auto noMoveSprite = Sprite::create("gamescene/huan.png");
@@ -739,19 +742,8 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
             float s=sqrtf((x*x+y*y)-(_spriteQuan->getPositionX()*getPositionX()+getPositionY()*getPositionY()));
             _isTouch=false;
         
-            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(x, y));
-            auto quanRate = Spawn::create(quanMove, RotateBy::create(s/(visibleSize.width*1.3),360),NULL);
-            auto ease=EaseSineOut::create(quanRate);
         
-        
-            p6 = MotionStreak::create(0.25, 1, _spriteQuan->getContentSize().width*0.9*(_spriteQuan->getScale()), Color3B::WHITE,"quan_weiba2.png" );
-            p6->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1));
-            p6->isFastMode();
-            this->addChild(p6,5);
-            p6->setVisible(true);
-        
-            auto menuItemBlink=Spawn::create(JumpBy::create(0.6f, Vec2(0,50), 50, 1),FadeTo::create(0.6f, 0), NULL);
-
+            log("S=%f",s);
         
             ResolvePicture* taozhong=NULL;
             ResolvePicture* taozhong_heshi=NULL;
@@ -773,15 +765,22 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
                 }
             }
         
+
         
-//        auto spriteQuan_return  = TargetedAction::create(_spriteQuan, MoveTo::create(0, Vec2(visibleSize.width/2, visibleSize.height*0.1)));  //设置一个圈子回来的公共动作
-        auto spriteQuan_return  = TargetedAction::create(_spriteQuan,Place::create(Vec2(visibleSize.width/2, visibleSize.height*0.1)));
-        auto targetAct = TargetedAction::create(taozhong,menuItemBlink);
+        auto menuItemBlink=Spawn::create(FadeTo::create(0.6f, 0), NULL);    //套中目标以后，块逐渐消失
+        auto spriteQuan_return  = TargetedAction::create(_spriteQuan,Place::create(Vec2(visibleSize.width/2, visibleSize.height*0.1)));  //圈子瞬移回来
+        auto targetAct = TargetedAction::create(taozhong,menuItemBlink);  //绑定
         
     
         
-        if(taozhong != NULL && taozhong_heshi!=NULL)
+        if(taozhong != NULL && taozhong_heshi!=NULL)       //套中了，并且是所需要的块
         {
+            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(taozhong->getPositionX(),taozhong->getPositionY()));  //替换目标point
+            //圈子一边飞一边变变形
+            auto quanRate = Spawn::create(quanMove,   Sequence::create(ScaleTo::create((s/(visibleSize.width*1.3)*1),QUAN_SCA,QUAN_SCA*0.5), NULL),  NULL);
+            auto ease=EaseSineOut::create(quanRate);
+            
+//            2个特效p4p5，只要套中，且套对才又
             ParticleSystem * p4=ParticleGalaxy::createWithTotalParticles(200);
             p4->setPosition(Vec2(taozhong->getPositionX(),taozhong->getPositionY()+50));
             p4->setStartColor(Color4F(1,1,1,1));
@@ -796,22 +795,20 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
             this->addChild(p5,5);
             
             
-            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{p6->setVisible(false);}),
-                                                    
+            _spriteQuan->runAction(Sequence::create(ease,
+                                                    CallFunc::create([=]{_spriteQuan->setZOrder(1);}),    //设置圈子的zorder
+                                                    MoveBy::create(0.3, Vec2(0,-30)),  //下沉
                                                     FadeTo::create(0.2, 0),
-                                                    targetAct,
-                                                    spriteQuan_return,
-                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);
-                
-                                                                            taozhong->setPosition(taozhong->getPositionX(),taozhong->getPositionY()-50);
-//                                                                            firesprite->setPosition(taozhong->getPosition());
-//                                                                            firesprite->setVisible(true);
+                                                    targetAct,   //套中的块在做动作
+                                                    spriteQuan_return,    //回来吧圈子
+                                                    CallFunc::create([=]{_spriteQuan->setZOrder(3);}),    //恢复圈子的zorder原来的
+                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);_spriteQuan->setScale(QUAN_SCA);_spriteQuan->setRotation(0);
                                                                             p4->setVisible(true);
                                                                             p5->setVisible(true);
-                
+//                                                                            特效飞到左下角
                                                                             p4->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
                                                                             p5->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
-                                                                            taozhong->changPicture(cLevel);
+                                                                            taozhong->changPicture(cLevel);  //替换图片
                 
                 
                 
@@ -829,18 +826,34 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
                                                                             NULL));
         }else if (taozhong != NULL)
         {
+            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(taozhong->getPositionX(),taozhong->getPositionY()));
+            auto quanRate = Spawn::create(quanMove, Sequence::create(ScaleTo::create((s/(visibleSize.width*1.3)*1),QUAN_SCA*0.8,QUAN_SCA*0.56), NULL), NULL);
+            auto ease=EaseSineOut::create(quanRate);
+            
             auto targetAct = TargetedAction::create(taozhong,Sequence::create(MoveBy::create(0.05, Vec2(-15,0)),MoveBy::create(0.1, Vec2(30,0)), MoveBy::create(0.05, Vec2(-15,0)),NULL));
-            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{p6->setVisible(false);}),
+            _spriteQuan->runAction(Sequence::create(ease,
+                                                    CallFunc::create([=]{_spriteQuan->setZOrder(1);}),
+                                                    MoveBy::create(0.3, Vec2(0,-30)),
                                                     FadeTo::create(0.2, 0),spriteQuan_return,
+                                                    CallFunc::create([=]{_spriteQuan->setZOrder(3);}),
                                                     Repeat::create(targetAct,1),
-                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);
+                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);_spriteQuan->setScale(QUAN_SCA);_spriteQuan->setRotation(0);
                                                                             taozhong->setPosition(taozhong->getPositionX(),taozhong->getPositionY());
                                                                             _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1));if(--_loopNumber>0){_isTouch=true;}
                                                                             }),NULL));
         }else
         {
-            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{p6->setVisible(false);}),
-                                                    FadeTo::create(0.2, 0),spriteQuan_return,CallFunc::create([=](){_spriteQuan->setOpacity(255);if(--_loopNumber>0){_isTouch=true;}}),NULL));
+            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(x, y));
+            auto quanRate = Spawn::create(quanMove,  Sequence::create(ScaleTo::create((s/(visibleSize.width*1.3)*1),QUAN_SCA*0.8,QUAN_SCA*0.56), NULL),NULL);
+            auto ease=EaseSineOut::create(quanRate);
+            
+            _spriteQuan->runAction(Sequence::create(ease,
+//                                                    CallFunc::create([=]{p6->setVisible(false);}),
+                                                    FadeTo::create(0.2, 0),spriteQuan_return,CallFunc::create([=](){
+                                                                                            _spriteQuan->setOpacity(255);
+                                                                                            _spriteQuan->setRotation(0);
+                                                                                            _spriteQuan->setScale(QUAN_SCA);
+                                                                                            if(--_loopNumber>0){_isTouch=true;}}),NULL));
             log("啥都没有中。回来吧");
             log("在循环里面圈子的数目是%d",_loopNumber);
 
@@ -857,7 +870,7 @@ void GameScene::onTouchCancelled(Touch *touch, Event *event)
 
 void GameScene::update(float dt)
 {
-    if(p6!=NULL){p6->setPosition(_spriteQuan->getPositionX(),_spriteQuan->getPositionY()-20);}
+//    if(p6!=NULL){p6->setPosition(_spriteQuan->getPositionX(),_spriteQuan->getPositionY()-20);}
     sprintf(_loopNumberLabel, ":%d",_loopNumber);
     labelNumber->setString(_loopNumberLabel);
     
@@ -870,9 +883,6 @@ void GameScene::update(float dt)
     {   log("这里进入失败界面2");
         this->scheduleOnce(SEL_SCHEDULE(&GameScene::enterIntoFailedUI), 1.0f);
         
-    }else if(_timeNumber==0&&hiddenPictureVector.size()>0&&_isTouch)
-    {
-        this->scheduleOnce(SEL_SCHEDULE(&GameScene::enterIntoFailedUI), 1.0f);
     }
     
     

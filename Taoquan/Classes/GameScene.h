@@ -77,6 +77,7 @@ public:
     int _loopNumber;//环数
     char _loopNumberLabel[10];
     float x;float y;
+    float QUAN_SCA;
     
     bool _isTouch;//判断是否可触摸
     bool _isLoopOrigin;//判断环是否在原来位置
