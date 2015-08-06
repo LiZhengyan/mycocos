@@ -24,6 +24,7 @@ public:
     
     void menuSelectLevelCallback(Ref* pSender);
     void menuResumeCallback(Ref* pSender);
+    void menuRestartCallback(Ref* pSender);
 };
 
 #endif /* defined(__TaoQuan2__PauseLayer__) */

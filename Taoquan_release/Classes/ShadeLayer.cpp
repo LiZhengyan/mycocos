@@ -8,7 +8,7 @@
 
 #include "ShadeLayer.h"
 #include "DataUtil.h"
-
+#include "SelectLevel.h"
 USING_NS_CC;
 #include"SimpleAudioEngine.h"
 using namespace CocosDenshion;
@@ -32,7 +32,7 @@ bool ShadeLayer::init() {
     
     //添加过关
     Sprite* guoguanSP=Sprite::create("guoguan/guoguanSP.png");
-    guoguanSP->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.76));
+    guoguanSP->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.764));
     guoguanSP->setScale(visibleSize.width/640);
     this->addChild(guoguanSP,2);
     
@@ -80,6 +80,8 @@ bool ShadeLayer::init() {
     MenuItemImage* nextLevelItem;
     //本关金星模式按钮
     MenuItemImage* nextLevelGoldItem;
+    //重新开始按钮
+    MenuItemImage* restartItem;
 
     if (pattern==1&&starNum==3) {
         //下一关银星按钮
@@ -88,18 +90,52 @@ bool ShadeLayer::init() {
                                                    CC_CALLBACK_1(ShadeLayer::menuNextCallback, this));
         
         nextLevelItem->setPosition(Vec2(origin.x + visibleSize.width*0.5,
-                                        origin.y +visibleSize.height*0.38));
+                                        origin.y +visibleSize.height*0.382));
+        //进入金星模式按钮
         nextLevelGoldItem = MenuItemImage::create(
                                               "guoguan/tiaozhanMoshi.png",
                                               "guoguan/selectedTiaozhanMoshi.png",
                                               CC_CALLBACK_1(ShadeLayer::menuThisLevelCallback, this));
         
         nextLevelGoldItem->setPosition(Vec2(origin.x + visibleSize.width*0.5,
-                                        origin.y +visibleSize.height*0.45));
+                                        origin.y +visibleSize.height*0.46));
         auto menu = Menu::create(nextLevelItem,nextLevelGoldItem, NULL);
         menu->setPosition(Vec2::ZERO);
         menu->setScale(visibleSize.width/640);
         this->addChild(menu, 1);
+    }else if((pattern==1&&starNum<3)||(pattern==2&&starNum<3)) {
+        
+        if (pattern==1&&starNum<3) {
+            //添加提示
+            Sprite* prompt=Sprite::create("guoguan/tishi.png");
+            prompt->setPosition(Vec2(visibleSize.width/2,visibleSize.height*0.14));
+            prompt->setScale(visibleSize.width*0.75/640.0);
+            this->addChild(prompt);
+        }
+        
+        //下一关银星按钮
+        nextLevelItem = MenuItemImage::create(
+                                              "guoguan/nextLevel.png",
+                                              "guoguan/selectedNextLevel.png",
+                                              CC_CALLBACK_1(ShadeLayer::menuNextCallback, this));
+        
+        nextLevelItem->setPosition(Vec2(origin.x + visibleSize.width*0.5,
+                                        origin.y +visibleSize.height*0.382));
+
+        
+        //重新开始按钮
+        restartItem = MenuItemImage::create(
+                                              "shibai/restartBtn1.png",
+                                              "shibai/selectedRestartBtn1.png",
+                                              CC_CALLBACK_1(ShadeLayer::menuResatrtCallback, this));
+        
+        restartItem->setPosition(Vec2(origin.x + visibleSize.width*0.5,
+                                        origin.y +visibleSize.height*0.46));
+        auto menu = Menu::create(nextLevelItem,restartItem, NULL);
+        menu->setPosition(Vec2::ZERO);
+        menu->setScale(visibleSize.width/640);
+        this->addChild(menu, 1);
+        
     }else{
         //下一关银星按钮
         nextLevelItem = MenuItemImage::create(
@@ -108,11 +144,14 @@ bool ShadeLayer::init() {
                                               CC_CALLBACK_1(ShadeLayer::menuNextCallback, this));
         
         nextLevelItem->setPosition(Vec2(origin.x + visibleSize.width*0.5,
-                                        origin.y +visibleSize.height*0.4));
+                                        origin.y +visibleSize.height*0.382));
         auto menu = Menu::create(nextLevelItem, NULL);
         menu->setPosition(Vec2::ZERO);
         menu->setScale(visibleSize.width/640);
         this->addChild(menu, 1);
+        
+        
+
     }
    
     
@@ -129,7 +168,18 @@ bool ShadeLayer::init() {
     return true;
 }
 
-
+void ShadeLayer::menuResatrtCallback(Ref* pSender)
+{
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
+    Director::getInstance()->resume();//继续游戏
+    
+    this->removeFromParent();
+    EventCustom _event("succeedResatrt");
+    _eventDispatcher->dispatchEvent(&_event);
+}
 
 void ShadeLayer::menuNextCallback(Ref* pSender)
 {
@@ -137,16 +187,27 @@ void ShadeLayer::menuNextCallback(Ref* pSender)
     if (isSound) {
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
-    EventCustom _event("succeefulUI");
-    char getPropSql[100];
-    sprintf(getPropSql, "select * from Prop ");
-    Value avm=DataUtil::getRow(getPropSql);
-    int cieclePropNumber=avm.asValueMap()["circleProp"].asInt();
-    char* buf=new char[10];
-    sprintf(buf, "%d",cieclePropNumber);
-    _event.setUserData(buf);
-    _eventDispatcher->dispatchEvent(&_event);
-    CC_SAFE_DELETE_ARRAY(buf);
+    
+    
+    //判断是否是最后一关
+    if (_level==18) {
+        Director::getInstance()->resume();
+        Scene* selectScene=SelectLevel::createScene();
+        Director::getInstance()->replaceScene(selectScene);
+    }else{
+        EventCustom _event("succeefulUI");
+        char getPropSql[100];
+        sprintf(getPropSql, "select * from Prop ");
+        Value avm=DataUtil::getRow(getPropSql);
+        int cieclePropNumber=avm.asValueMap()["circleProp"].asInt();
+        char* buf=new char[10];
+        sprintf(buf, "%d",cieclePropNumber);
+        _event.setUserData(buf);
+        _eventDispatcher->dispatchEvent(&_event);
+        CC_SAFE_DELETE_ARRAY(buf);
+    }
+    
+    
     this->removeFromParentAndCleanup(true);
    
 }

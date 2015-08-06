@@ -18,6 +18,12 @@
 
 USING_NS_CC;
 
+struct tagResource
+{
+    cocos2d::Vec2 vec2;
+    int id;
+};
+
 class GameScene :public Layer
 {
 public:
@@ -28,6 +34,8 @@ public:
     void menuBackCallback(cocos2d::Ref* pSender);//返回按钮回调方法
     void menuPauseCallback(Ref* pSender);//暂停按钮回调方法
     void menuHelpCallback(Ref* pSender);//帮助按钮回调方法
+    void menuAddQuanCallback(Ref* pSender);//增加圈按钮回调方法
+    void spriteQuanMoveCallBack(); //添加圈子飞行结束以后的动作
     
     CREATE_FUNC(GameScene);
     
@@ -72,7 +80,7 @@ public:
     Vector<ResolvePicture*> showPictureVector;//隐藏的小图
     Vector<Sprite*> dizuoVector;//底座
     Vector<Sprite*> dizuoTouyingVector;//底座投影
-    Vector<Sprite*>waterVector;
+    Vector<Sprite*> waterVector;
     
     int _helpNumber;//帮助
     int _loopNumber;//环数
@@ -83,6 +91,7 @@ public:
     bool _isHelp;
     bool _isTaoZhong;
     
+    RepeatForever* repeatPG;
     
     ShadeLayer* _succeedLayer;//过关的层
     FailedShadeLayer* _failLayer;//失败层
@@ -95,11 +104,24 @@ public:
     RepeatForever* _repeatLineBG;
     ValueVector calculationSatrNumber(int quanNumber,int picNumber);//计算所得星星的个数
     
-    float _speed;//指针摆动速度
+    float _speedT;//指针摆动速度
+    float _speedP;
     float QUAN_SCA;
     
+    Speed*_spriteTiaoSpeed;
+    Speed* _progressTimerSpeed;//进度条速度
     ~GameScene();
-        
+
+    Vector<ResolvePicture*>vec2Vector;
+    
+    
+    LabelAtlas* _labelLevel;//关卡数字
+   
+    LabelAtlas* _totalQuanNumber;//关卡数字
+    
+    void updateToOriginalState();//更新为初始化状态
+    tagResource *p_sp[10];
+    
 private:
     LabelAtlas* labelTime;
     LabelAtlas* labelNumber;

@@ -7,6 +7,7 @@
 //
 
 #include "PauseLayer.h"
+#include "SelectLevel.h"
 #include"SimpleAudioEngine.h"
 using namespace CocosDenshion;
 PauseLayer* PauseLayer::create()
@@ -33,21 +34,27 @@ bool PauseLayer::init() {
     this->addChild(blackBG);
     
     //添加继续按钮和主菜单按钮
+    auto restartItem = MenuItemImage::create("shibai/restartBtn1.png",
+                                            "shibai/selectedRestartBtn1.png",CC_CALLBACK_1(PauseLayer::menuRestartCallback, this));
+    restartItem->setScale(visibleSize.width/640);
+    restartItem->setPosition(Vec2(visibleSize.width*0.5,origin.y + visibleSize.height*0.5));
+
+    
     
     auto resumeItem = MenuItemImage::create("guoguan/resumeGame.png",
                                             "guoguan/selectedResumeGame.png",CC_CALLBACK_1(PauseLayer::menuResumeCallback, this));
     resumeItem->setScale(visibleSize.width/640);
-    resumeItem->setPosition(Vec2(visibleSize.width*0.5,origin.y + visibleSize.height*0.56));
+    resumeItem->setPosition(Vec2(visibleSize.width*0.5,origin.y + visibleSize.height*0.6));
     
     auto backSelectLevelItem = MenuItemImage::create("shibai/selectLevelBtn.png","shibai/selectLevelBtn.png",
                                       CC_CALLBACK_1(PauseLayer::menuSelectLevelCallback, this));
     
     backSelectLevelItem->setScale(visibleSize.width/640);
-    backSelectLevelItem->setPosition(Vec2(visibleSize.width*0.5,origin.y + visibleSize.height*0.46));
+    backSelectLevelItem->setPosition(Vec2(visibleSize.width*0.5,origin.y + visibleSize.height*0.4));
     
     
     
-    auto menu = Menu::create(resumeItem,backSelectLevelItem, NULL);
+    auto menu = Menu::create(resumeItem,backSelectLevelItem,restartItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
@@ -69,11 +76,48 @@ void PauseLayer::menuSelectLevelCallback(Ref* pSender)
     if (isSound) {
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
+    Director::getInstance()->resume();
+    this->removeFromParent();
+    //EventCustom _event("pauseBackSelectLevel");
+    //_eventDispatcher->dispatchEvent(&_event);
+    int cLevel=UserDefault::getInstance()->getIntegerForKey("cLevel");
+    bool isGengxin=UserDefault::getInstance()->getBoolForKey("isGengxin");
+    if(isGengxin)
+    {
+        DataUtil::updatePatternData(1,cLevel);
+        UserDefault::getInstance()->setBoolForKey("isGengxin",false);
+    }
+    
+    
+    bool isReduceEnergy=UserDefault::getInstance()->getBoolForKey("isReduceEnergy");
+    if (isReduceEnergy) {
+        //减少体力
+        char getUserSql[100];
+        sprintf(getUserSql, "select * from Prop ");
+        Value avm=DataUtil::getRow(getUserSql);
+        int energyNumber=avm.asValueMap()["energy"].asInt();
+        DataUtil::updatePropData("energy", energyNumber-1);
+        
+        UserDefault::getInstance()->setBoolForKey("isReduceEnergy", false);
+    }
+    Scene* selectScene=SelectLevel::createScene();
+    Director::getInstance()->replaceScene(selectScene);
+
+}
+
+void PauseLayer::menuRestartCallback(Ref* pSender)
+{
+    bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
+    if (isSound) {
+        SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
+    }
     this->removeFromParent();
     Director::getInstance()->resume();
-    EventCustom _event("backSelectLevel");
+    EventCustom _event("backRestartGame");
     _eventDispatcher->dispatchEvent(&_event);
+    
 }
+
 
 void PauseLayer::menuResumeCallback(Ref* pSender)
 {

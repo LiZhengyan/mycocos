@@ -20,8 +20,10 @@ public:
     void initResolvePicture(const std::string& filename,int idNumber);
     void setPicturePosition(float x,float y);
     void changPicture(int level);
+    void savePicturePosition(Vec2 point);
     
     int ID;
+    Vec2 PPOINT;
     std::string pictureColor;
     bool isCover;
     

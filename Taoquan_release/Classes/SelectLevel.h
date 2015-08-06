@@ -14,6 +14,7 @@
 #include "DataUtil.h"
 #include "cocos-ext.h"
 #include "AlertLayer.h"
+
 USING_NS_CC_EXT;
 USING_NS_CC;
 
@@ -35,6 +36,10 @@ public:
     void leftAndRightAdjustScrollView(Ref* pSender);//左右按钮的回调方法
     
     void callBackPropNumberChange(EventCustom* e);
+    
+    void showEnergy(float dt);//显示精力
+    
+    void addGold(Ref* pSender);//添加金币
     
     //以下是注册触摸事件和实现各种的touch函数
     virtual bool onTouchBegan(Touch *touch, Event *event);
@@ -62,10 +67,9 @@ public:
     //是否解锁
     bool m_IsNeedExit;
 
+    Sprite* _transparent;//透明条
+    int _heartNumber;
     
-    
-//    LabelAtlas* _cPropNumber;
-//    LabelAtlas* _hPropNumber;
     
     MenuItemImage* _leftButton;
     MenuItemImage* _rightButton;
@@ -75,8 +79,8 @@ public:
     AlertLayer* _alertLayer;//弹窗层
     
     Vector<MenuItemImage*>menuVector;
-     Vector<LabelAtlas*>propNumberVector;
-    
+    Vector<LabelAtlas*>propNumberVector;
+    Vector<Sprite*>_heartVector;
     
 private:
     //将CCScrollView作为自己的层添加进来

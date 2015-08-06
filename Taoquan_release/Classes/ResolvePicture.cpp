@@ -33,6 +33,12 @@ void ResolvePicture::setPicturePosition(float x,float y)
  
     this->setPosition(Vec2(x, y));
 }
+
+void ResolvePicture::savePicturePosition(Vec2 point)
+{
+    PPOINT=point;
+
+}
 void ResolvePicture::changPicture(int level)
 {
     /*this->runAction(Sequence::create(DelayTime::create(1.0f),CallFunc::create([=](){

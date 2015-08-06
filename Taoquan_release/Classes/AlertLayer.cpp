@@ -40,7 +40,7 @@ bool AlertLayer::init() {
 //    this->addChild(centerBG,2);
     //添加消耗提示
     Sprite* xiaohaoSP=Sprite::create("alertlayer/useFile.png");
-    xiaohaoSP->setPosition(Vec2(visibleSize.width/2,visibleSize.height*0.15));
+    xiaohaoSP->setPosition(Vec2(visibleSize.width/2,visibleSize.height*0.145));
     xiaohaoSP->setScale(visibleSize.width/640.0);
     this->addChild(xiaohaoSP,3);
     

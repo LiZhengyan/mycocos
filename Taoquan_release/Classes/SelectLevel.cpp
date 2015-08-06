@@ -12,6 +12,8 @@
 #include"SimpleAudioEngine.h"
 #include "ShoppingMall.h"
 #include "RemindLayer.h"
+#include "Single.h"
+
 //USING_NS_CC;
 using namespace CocosDenshion;
 Scene* SelectLevel::createScene()
@@ -21,6 +23,9 @@ Scene* SelectLevel::createScene()
     scene->addChild(layer);
     return scene;
 }
+//static int timeMin=10;static int timeSec=60;
+static LabelAtlas* _minuteNumber;
+
 
 bool SelectLevel::init()
 {
@@ -29,11 +34,9 @@ bool SelectLevel::init()
         return false;
     }
 
-       
+
     //数据库测试
      DataUtil::initDB("ok.db");
-
-    
     //数据库中创建用户表
     bool isUserExist=DataUtil::tableIsExist("User");
     bool isPropExist=DataUtil::tableIsExist("Prop");
@@ -43,21 +46,31 @@ bool SelectLevel::init()
         DataUtil::createTable(creatUserTable,"User");
         //像表格中插入数据
         /*string insertUser = "insert into User values(1,'false',0,0),(2,'true',0,0),(3,'true',0,0),(4,'true',0,0),(5,'true',0,0),(6,'true',0,0),(7,'true',0,0),(8,'true',0,0),(9,'true',0,0),(10,'true',0,0),(11,'true',0,0),(12,'true',0,0),(13,'true',0,0),(14,'true',0,0),(15,'true',0,0),(16,'true',0,0),(17,'true',0,0),(18,'true',0,0)";*/
-        string insertUser = "insert into User values(1,'false',0,1),(2,'false',0,1),(3,'false',0,1),(4,'false',0,1),(5,'false',0,1),(6,'false',0,1),(7,'false',0,1),(8,'false',0,1),(9,'false',0,1),(10,'false',0,1),(11,'false',0,1),(12,'false',0,1),(13,'false',0,1),(14,'false',0,1),(15,'false',0,1),(16,'false',0,1),(17,'false',0,1),(18,'false',0,1),(19,'false',0,1),(20,'false',0,1),(21,'false',0,1),(22,'false',0,1),(23,'false',0,1),(24,'false',0,1),(25,'false',0,1),(26,'false',0,1),(27,'false',0,1),(28,'false',0,1),(29,'false',0,1),(30,'false',0,1),(31,'false',0,1),(32,'false',0,1),(33,'false',0,1),(34,'false',0,1),(35,'false',0,1),(36,'false',0,1)";
+        string insertUser = "insert into User values(1,'false',0,1),(2,'true',0,1),(3,'true',0,1),(4,'true',0,1),(5,'true',0,1),(6,'true',0,1),(7,'true',0,1),(8,'true',0,1),(9,'true',0,1),(10,'true',0,1),(11,'true',0,1),(12,'true',0,1),(13,'true',0,1),(14,'true',0,1),(15,'true',0,1),(16,'true',0,1),(17,'true',0,1),(18,'true',0,1),(19,'true',0,1),(20,'true',0,1),(21,'true',0,1),(22,'true',0,1),(23,'true',0,1),(24,'true',0,1),(25,'true',0,1),(26,'true',0,1),(27,'true',0,1),(28,'true',0,1),(29,'true',0,1),(30,'true',0,1),(31,'true',0,1),(32,'true',0,1),(33,'true',0,1),(34,'true',0,1),(35,'true',0,1),(36,'true',0,1)";
         DataUtil::insertData(insertUser);
     }
     if (isPropExist==false) {
-        string creatPropTable = "create table Prop(fileProp integer,helpProp integer,circleProp integer)";
+        string creatPropTable = "create table Prop(fileProp integer,helpProp integer,circleProp integer,energy integer,month integer,day integer,hour integer,minute integer)";
         DataUtil::createTable(creatPropTable,"Prop");
         //像表格中插入数据
-        string insertProp = "insert into Prop values(10,10,10)";
+        string insertProp = "insert into Prop values(10,10,10,6,0,0,0,0)";
         DataUtil::insertData(insertProp);
     }
 
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
+    //导演类的定时器
+    //Scheduler* m_scheduler=new Scheduler();
+    //setScheduler(m_scheduler);
+    //Director::getInstance()->getScheduler()->scheduleUpdateForTarget(m_scheduler, 1, false);
+    
+    //Director::getInstance()->getScheduler()->schedule(schedule_selector(SelectLevel::showEnergy), this, 1.0, false);
+    this->schedule(SEL_SCHEDULE(&SelectLevel::showEnergy), 1.0f);
+   
     
     
+    
+    //Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SelectLevel::showEnergy), this, 1.0, false);
     //播放背景音乐，true表示循环播放
     //SimpleAudioEngine::getInstance()->preloadBackgroundMusic("gameSceneMusic.mp3");//加载
     bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
@@ -65,8 +78,7 @@ bool SelectLevel::init()
     {
         SimpleAudioEngine::getInstance()->playBackgroundMusic("musicAndeffect/selectLevelMusic.mp3",true);//播放
     }
-    m_IsNeedExit=false;
-   
+    m_IsNeedExit=false; 
     
     ScrollView * scrollView = ScrollView::create(Size(visibleSize.width,visibleSize.height));
     
@@ -122,7 +134,14 @@ bool SelectLevel::init()
                         levelButton = MenuItemImage::create("selectlevel/levelNumberBG.png","selectlevel/levelNumberBG.png",CC_CALLBACK_1(SelectLevel::menuLevelButtonCallback, this,k*9+i*3+j+1,isSuo));
                         //锁
                         suo=Sprite::create("selectlevel/suo.png");
-                        suo->setPosition(ccpAdd(Vec2(visibleSize.width/4*(j+1),visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i),Vec2(visibleSize.width*k,0)) );
+                        //suo->setPosition(ccpAdd(Vec2(visibleSize.width/4*(j+1),visibleSize.height*0.64-visibleSize.height*0.128*i),Vec2(visibleSize.width*k,0)) );
+                        
+                        //4和6调换位置
+                        if (i==1) {
+                            suo->setPosition(ccpAdd(Vec2(visibleSize.width*0.75-visibleSize.width/4*j,visibleSize.height*0.64-visibleSize.height*0.128*i),Vec2(visibleSize.width*k,0)));
+                        }else{
+                            suo->setPosition(ccpAdd(Vec2(visibleSize.width*0.25+visibleSize.width/4*j,visibleSize.height*0.64-visibleSize.height*0.128*i),Vec2(visibleSize.width*k,0)));
+                        }
                         layer->addChild(suo,4);
                     }else{
                         //星星个数是否为0时，关卡按钮的状态
@@ -226,37 +245,76 @@ bool SelectLevel::init()
         //this->m_scrollView->setContentOffsetInDuration(Vec2(-visibleSize.width * 1,0), 0.1f);//设置滑动视图的当前页在0.1秒内移动多少像素
     
     //透明条
-//    Sprite* transparent=Sprite::create("selectlevel/toumingtiao.png");
-//    transparent->setPosition(Vec2(visibleSize.width/2, visibleSize.height-transparent->getContentSize().height/2));
-//    transparent->setScale(visibleSize.width/640);
-//    this->addChild(transparent,2);
+    _transparent=Sprite::create("selectlevel/toumingtiao.png");
+    _transparent->setPosition(Vec2(visibleSize.width/2, visibleSize.height-_transparent->getContentSize().height/2));
+    _transparent->setScale(visibleSize.width/640);
+    this->addChild(_transparent,2);
     
-    //帮助数量图标
-//    Sprite* hNumber=Sprite::create("selectlevel/h.png");
-//    hNumber->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height*0.97));
-//    hNumber->setScale(visibleSize.width/640);
-//    this->addChild(hNumber,3);
+    
+    
     //圈数量图标
 //    Sprite* cNumber=Sprite::create("selectlevel/c.png");
 //    cNumber->setPosition(Vec2(visibleSize.width*0.7, visibleSize.height*0.97));
 //    cNumber->setScale(visibleSize.width/640);
 //    this->addChild(cNumber,3);
     
-//    char getUserSql[100];
-//    sprintf(getUserSql, "select * from Prop ");
-//    Value avm=DataUtil::getRow(getUserSql);
-//    int PropNumber0=avm.asValueMap()["helpProp"].asInt();
-//    int PropNumber2=avm.asValueMap()["circleProp"].asInt();
-//    
-// 
-//
-//    char hpropChar[20];
-//    sprintf(hpropChar, ":%d",PropNumber0);
-//    _hPropNumber=LabelAtlas::create(hpropChar, "selectlevel/propNumber.png", 17.0f, 24.0f, '0');
-//    _hPropNumber->setPosition(Vec2(visibleSize.width*0.5, visibleSize.height*0.957));
-//    _hPropNumber->setScale(visibleSize.width/640);
-//    this->addChild(_hPropNumber,2);
-//    
+    char getUserSql[100];
+    sprintf(getUserSql, "select * from Prop ");
+    Value avm=DataUtil::getRow(getUserSql);
+    int energyNumber=avm.asValueMap()["energy"].asInt();
+    if (UserDefault::getInstance()->getBoolForKey("isTimeGengXin")) {
+        int month=avm.asValueMap()["month"].asInt();
+        int day=avm.asValueMap()["day"].asInt();
+        int hour=avm.asValueMap()["hour"].asInt();
+        int minute=avm.asValueMap()["minute"].asInt();
+        if (Single::getInstance()->getLocalMonth()>month) {
+            DataUtil::updatePropData("energy", 6);
+        }else if (Single::getInstance()->getLocalDay()>day){
+            DataUtil::updatePropData("energy", 6);
+        }else if (Single::getInstance()->getLocalHour()>hour){
+            DataUtil::updatePropData("energy", 6);
+        }else if ((Single::getInstance()->getLocalMinute()-minute)/2){
+            int num=(Single::getInstance()->getLocalMinute()-minute)/2;
+            if (num+energyNumber>6) {
+                DataUtil::updatePropData("energy", 6);
+            }else{
+                DataUtil::updatePropData("energy", num+energyNumber);
+            }
+            
+        }
+        
+        UserDefault::getInstance()->setBoolForKey("isTimeGengXin", false);
+    }
+    
+    
+    char hpropChar[20];
+    sprintf(hpropChar, "%d:%d",Single::getInstance()->get_minute(),Single::getInstance()->get_second());
+    _minuteNumber=LabelAtlas::create(hpropChar, "selectlevel/shuzi.png", 17.0f, 24.0f, '0');
+    _minuteNumber->setPosition(Vec2(visibleSize.width*0.08, visibleSize.height*0.92));
+    _minuteNumber->setScale(visibleSize.width/640);
+    _minuteNumber->setAnchorPoint(Vec2(0.5, 0.5));
+    this->addChild(_minuteNumber,2);
+    
+    //添加红心
+    char getUserSql1[100];
+    sprintf(getUserSql1, "select * from Prop ");
+    Value avm1=DataUtil::getRow(getUserSql1);
+    _heartNumber=avm.asValueMap()["energy"].asInt();
+    
+    for (int i=0; i<6; i++) {
+        Sprite* heart=Sprite::create("selectlevel/kongxin.png");
+        heart->setPosition(Vec2(visibleSize.width*0.05+visibleSize.width*0.065*i, visibleSize.height*0.97));
+        heart->setScale(visibleSize.width*0.4/640);
+        this->addChild(heart,3);
+        _heartVector.pushBack(heart);
+    }
+    for (int i=0; i<_heartNumber; i++) {
+        Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
+        _heartVector.at(i)->setTexture(texture);
+    }
+    
+    
+    
 //    char cpropChar[20];
 //    sprintf(cpropChar, ":%d",PropNumber2);
 //    _cPropNumber=LabelAtlas::create(cpropChar, "selectlevel/propNumber.png", 17.0f, 24.0f, '0');
@@ -276,17 +334,19 @@ bool SelectLevel::init()
     auto chengjiuButton = MenuItemImage::create("selectlevel/chengjiu.png","selectlevel/chengjiu.png",
                                            CC_CALLBACK_1(SelectLevel::menuChengjiuCallback, this));
     chengjiuButton->setScale(visibleSize.width*0.15/chengjiuButton->getContentSize().width);
-    chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.4,origin.y +visibleSize.height*0.05+chengjiuButton->getContentSize().height));
+    //chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.4,origin.y +visibleSize.height*0.05+chengjiuButton->getContentSize().height));
+    chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.5,origin.y +visibleSize.height*0.05+chengjiuButton->getContentSize().height));
     //分享按钮
     auto shareButton = MenuItemImage::create("selectlevel/fenxiang.png","selectlevel/fenxiang.png",
                                                 CC_CALLBACK_1(SelectLevel::menuShareCallback, this));
     shareButton->setScale(visibleSize.width*0.15/shareButton->getContentSize().width);
-    shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.6 ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height));
-    //存档按钮
-    auto cundangButton = MenuItemImage::create("selectlevel/shangcheng.png","selectlevel/shangcheng.png",
-                                                CC_CALLBACK_1(SelectLevel::menuCundangCallback, this));
-    cundangButton->setScale(visibleSize.width*0.15/cundangButton->getContentSize().width);
-    cundangButton->setPosition(Vec2(origin.x+visibleSize.width*0.8,origin.y +visibleSize.height*0.05+cundangButton->getContentSize().height));
+    //shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.6 ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height));
+    shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.8 ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height));
+//    //商城按钮
+//    auto cundangButton = MenuItemImage::create("selectlevel/shangcheng.png","selectlevel/shangcheng.png",
+//                                                CC_CALLBACK_1(SelectLevel::menuCundangCallback, this));
+//    cundangButton->setScale(visibleSize.width*0.15/cundangButton->getContentSize().width);
+//    cundangButton->setPosition(Vec2(origin.x+visibleSize.width*0.8,origin.y +visibleSize.height*0.05+cundangButton->getContentSize().height));
     
     //左滑按钮
     _leftButton = MenuItemImage::create("selectlevel/leftButton.png","selectlevel/leftButton.png",
@@ -301,8 +361,13 @@ bool SelectLevel::init()
     _rightButton->setPosition(Vec2(origin.x+visibleSize.width*0.95-_rightButton->getContentSize().width/2 ,origin.y +visibleSize.height/2));
     _rightButton->setScale(visibleSize.width*0.08/_rightButton->getContentSize().width);
 
+    
+    //添加金币按钮
+    MenuItemImage* addButton=MenuItemImage::create("selectlevel/jia.png","selectlevel/jia.png",CC_CALLBACK_1(SelectLevel::addGold, this));
+    addButton->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height*0.97));
+    addButton->setScale(visibleSize.width*0.4/640);
     // create menu, it's an autorelease object
-    auto menu = Menu::create(chengjiuButton,shareButton,cundangButton,_leftButton,_rightButton,_musicMenu, NULL);
+    auto menu = Menu::create(chengjiuButton,shareButton,_leftButton,_rightButton,_musicMenu,addButton, NULL);
     menu->setPosition(Vec2::ZERO);
     
     this->addChild(menu, 3);
@@ -327,6 +392,38 @@ bool SelectLevel::init()
     _eventDispatcher->addEventListenerWithFixedPriority(shopUICustomListener, 1);
     
     return true;
+}
+void SelectLevel::addGold(Ref* pSender)
+{
+    for (int i=0; i<6; i++) {
+        Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
+        _heartVector.at(i)->setTexture(texture);
+    }
+    _heartNumber=6;
+    DataUtil::updatePropData("energy", _heartNumber);
+}
+
+void SelectLevel::showEnergy(float dt)
+{
+    char hpropChar[20];
+    if (Single::getInstance()->get_second()<10) {
+        sprintf(hpropChar, "%d:0%d",Single::getInstance()->get_minute(),Single::getInstance()->get_second());
+    }else
+        sprintf(hpropChar, "%d:%d",Single::getInstance()->get_minute(),Single::getInstance()->get_second());
+    _minuteNumber->setString(hpropChar);
+    
+    
+    char getUserSql[100];
+    sprintf(getUserSql, "select * from Prop ");
+    Value avm=DataUtil::getRow(getUserSql);
+    int energyNumber=avm.asValueMap()["energy"].asInt();
+    if (energyNumber>_heartNumber) {
+        Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
+        _heartVector.at(_heartNumber)->setTexture(texture);
+        //DataUtil::updatePropData("energy", _heartNumber);
+        _heartNumber++;
+    }
+    
 }
 
 void SelectLevel::callBackPropNumberChange(EventCustom* e)
@@ -354,9 +451,23 @@ void SelectLevel::menuLevelButtonCallback(Ref* pSender,int level,bool issuo)
     SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/selectLevelButtonEffect.wav");
     }
     UserDefault::getInstance()->setIntegerForKey("comeInLevel", level);
-    if (!issuo) {
-        Scene* gameScene=GameScene::createScene();
-        Director::getInstance()->replaceScene(gameScene);
+    if (!issuo&&_heartNumber>0) {
+        //红心减少
+//        CallFunc* c1=CallFunc::create([=]{
+//            if (_heartNumber>0) {
+//                Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/kongxin.png");
+//                _heartVector.at(_heartNumber-1)->setTexture(texture);
+//                _heartNumber--;
+//                DataUtil::updatePropData("energy", _heartNumber);
+//            }
+//        });
+//        CallFunc* c2=CallFunc::create([=]{
+            //进入游戏界面
+            Scene* gameScene=GameScene::createScene();
+            Director::getInstance()->replaceScene(gameScene);
+        //});
+        //this->runAction(Sequence::create(c1,DelayTime::create(0.5),c2,NULL));
+        
     }
     
 }
@@ -490,7 +601,7 @@ void SelectLevel::leftAndRightAdjustScrollView(Ref* pSender)
 
 SelectLevel::~SelectLevel()
 {
-    _eventDispatcher->removeCustomEventListeners("alertUI");
+    //_eventDispatcher->removeCustomEventListeners("alertUI");
     _eventDispatcher->removeCustomEventListeners("shopUI");
 }
 
@@ -584,6 +695,13 @@ void SelectLevel::menuCloseCallback(Ref* pSender)
     MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
     return;
 #endif
+    Single::getInstance()->stop();
+    //更新时间
+    DataUtil::updatePropData("month", Single::getInstance()->getLocalMonth());
+    DataUtil::updatePropData("day", Single::getInstance()->getLocalDay());
+    DataUtil::updatePropData("monute", Single::getInstance()->getLocalMinute());
+    DataUtil::updatePropData("hour", Single::getInstance()->getLocalHour());
+    UserDefault::getInstance()->setBoolForKey("isTimeGengXin", true);
     //最后别忘了关闭数据库哦
     DataUtil::closeDB();
     SimpleAudioEngine::getInstance()->end();//关闭音乐

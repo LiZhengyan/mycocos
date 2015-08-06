@@ -38,9 +38,22 @@ bool FailedShadeLayer::init()
     sprintf(getUserSql, "select * from User where level=%d",_clevel);
     cocos2d::Value cv=DataUtil::getRow(getUserSql);
     
+    
+    bool isReduceEnergy=UserDefault::getInstance()->getBoolForKey("isReduceEnergy");
+    if (isReduceEnergy) {
+        //减少体力
+        char getUserSql[100];
+        sprintf(getUserSql, "select * from Prop ");
+        Value avm=DataUtil::getRow(getUserSql);
+        int energyNumber=avm.asValueMap()["energy"].asInt();
+        DataUtil::updatePropData("energy", energyNumber-1);
+        
+        UserDefault::getInstance()->setBoolForKey("isReduceEnergy", false);
+    }
+
     //添加失败
     Sprite* failSP=Sprite::create("shibai/shibaiSP.png");
-    failSP->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.76));
+    failSP->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.764));
     failSP->setScale(visibleSize.width/640);
     this->addChild(failSP,2);
     //添加星星
@@ -62,7 +75,7 @@ bool FailedShadeLayer::init()
     
     //重新开始按钮
     auto restartItem = MenuItemImage::create();
-    //添加提示
+    
     restartItem = MenuItemImage::create("shibai/restartBtn1.png","shibai/selectedRestartBtn1.png",
                                             CC_CALLBACK_1(FailedShadeLayer::menuRestartCallback, this));
    
@@ -75,13 +88,19 @@ bool FailedShadeLayer::init()
                                              CC_CALLBACK_1(FailedShadeLayer::menuSelectLevelCallback, this));
     
     selectLevelItem->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                      origin.y +visibleSize.height *0.38));
+                                      origin.y +visibleSize.height *0.382));
     
     // create menu, it's an autorelease object
     auto menu = Menu::create(restartItem,selectLevelItem, NULL);
     menu->setPosition(Vec2::ZERO);
     menu->setScale(visibleSize.width/640);
     this->addChild(menu, 1);
+    
+    //添加提示
+    Sprite* prompt=Sprite::create("shibai/tishi.png");
+    prompt->setPosition(Vec2(visibleSize.width/2,visibleSize.height*0.145));
+    prompt->setScale(visibleSize.width*0.75/640.0);
+    this->addChild(prompt);
     
     //添加监听
     auto listener1=EventListenerTouchOneByOne::create();
@@ -107,8 +126,6 @@ void FailedShadeLayer::menuRestartCallback(Ref* pSender)
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
     Director::getInstance()->resume();//继续游戏
-    
-    
     this->removeFromParent();
     EventCustom _event("failedUI");
     _eventDispatcher->dispatchEvent(&_event);
@@ -123,8 +140,18 @@ void FailedShadeLayer::menuSelectLevelCallback(Ref* pSender)
     Director::getInstance()->resume();//继续游戏
     this->removeFromParent();
     
-    EventCustom _event("backSelectLevel");
-    _eventDispatcher->dispatchEvent(&_event);
+    //EventCustom _event("backSelectLevel");
+    //_eventDispatcher->dispatchEvent(&_event);
+    int cLevel=UserDefault::getInstance()->getIntegerForKey("cLevel");
+    bool isGengxin=UserDefault::getInstance()->getBoolForKey("isGengxin");
+    if(isGengxin)
+    {
+        DataUtil::updatePatternData(1,cLevel);
+        UserDefault::getInstance()->setBoolForKey("isGengxin",false);
+    }
+    
+    Scene* selectScene=SelectLevel::createScene();
+    Director::getInstance()->replaceScene(selectScene);
 }
 
 bool FailedShadeLayer::onTouchBegan(Touch* touch, Event* event)
