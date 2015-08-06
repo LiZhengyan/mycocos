@@ -297,12 +297,17 @@
                 <name>selectlevel/s.png</name>
                 <name>selectlevel/shangcheng.png</name>
                 <name>selectlevel/shutiao2.png</name>
+                <name>selectlevel/shuzi.png</name>
                 <name>selectlevel/starLight.png</name>
                 <name>selectlevel/starNoLight.png</name>
                 <name>selectlevel/suo.png</name>
                 <name>selectlevel/toumingtiao.png</name>
                 <name>selectlevel/weiJiesuo.png</name>
                 <name>selectlevel/weiJiesuoNum.png</name>
+                <name>selectlevel/jia.png</name>
+                <name>selectlevel/kongxin.png</name>
+                <name>selectlevel/hongxin.png</name>
+                <name>selectlevel/yinXing.png</name>
             </array>
         <key>shop</key>
             <array>
