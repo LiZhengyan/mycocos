@@ -414,7 +414,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/ShadeLayer.o: \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././Particle3D/CCParticleSystem3D.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././Particle3D/PU/CCPUParticleSystem3D.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/Particle3D/CCParticleSystem3D.h \
- jni/../../Classes/DataUtil.h \
+ jni/../../Classes/DataUtil.h jni/../../Classes/SelectLevel.h \
+ jni/../../Classes/AlertLayer.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/audio/android/prebuilt-mk/../../include/SimpleAudioEngine.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/audio/android/prebuilt-mk/../../include/Export.h
 
@@ -1249,6 +1250,10 @@ jni/../../Classes/ShadeLayer.h:
 /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/Particle3D/CCParticleSystem3D.h:
 
 jni/../../Classes/DataUtil.h:
+
+jni/../../Classes/SelectLevel.h:
+
+jni/../../Classes/AlertLayer.h:
 
 /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/audio/android/prebuilt-mk/../../include/SimpleAudioEngine.h:
 

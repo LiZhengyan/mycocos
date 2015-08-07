@@ -40,7 +40,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ShoppingMall.cpp \
 ../../classes/ShoppingMall.h \
 ../../Classes/RemindLayer.cpp \
-../../classes/RemindLayer.h
+../../classes/Single.cpp \
+../../classes/LoadScene.cpp \
+../../Classes/SmartRes.cpp \
+../../Classes/SmartRes.h
 
 
 

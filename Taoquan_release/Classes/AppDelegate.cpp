@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "ShoppingMall.h"
 #include "LogoScene.h"
+#include "SelectLevel.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -44,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-    //auto scene = ShoppingMall::createScene();
+    //auto scene = SelectLevel::createScene();
     auto scene = LogoScene::createScene();
     // run
     director->runWithScene(scene);

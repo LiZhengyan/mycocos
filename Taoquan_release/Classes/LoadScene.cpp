@@ -59,11 +59,12 @@ bool LoadScene::init()
     paeseXml();
     
     //音乐音效的加载
-    //SimpleAudioEngine::getInstance()->preloadBackgroundMusic("musicAndeffect/selectLevelMusic.mp3");
-    //SimpleAudioEngine::getInstance()->preloadEffect("musicAndeffect/selectLevelButtonEffect.wav");
-    //SimpleAudioEngine::getInstance()->preloadBackgroundMusic("musicAndeffect/gameSceneMusic.mp3");
-    //SimpleAudioEngine::getInstance()->preloadEffect("musicAndeffect/buttonEffect.wav");
-    UserDefault::getInstance()->setBoolForKey("isSound", false);
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("musicAndeffect/selectLevelMusic.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("musicAndeffect/selectLevelButtonEffect.wav");
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("musicAndeffect/gameSceneMusic.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("musicAndeffect/buttonEffect.wav");
+    UserDefault::getInstance()->setBoolForKey("isSound", true);
+
 
     
     //添加监听
@@ -144,28 +145,27 @@ void LoadScene::menuCloseCallback(Ref* pSender)
 {
     //log("成功!!!!");
     _haveLoadNum++;
-    if (_haveLoadNum%53==0) {
+    if (_haveLoadNum%60==0) {
         i++;
+        
         auto loadSprite = Sprite::create("jiazai/jiazaiDian.png");
         loadSprite->setScale(visibleSize.width*0.3/640);
         loadSprite->setPosition(Vec2(visibleSize.width*(0.45+i*0.05) + origin.x, visibleSize.height*0.05 + origin.y));
-        
-        // add the sprite as a child to this layer
         this->addChild(loadSprite, 2);
         
     }
     //log("++++++++%d====%d",i,_haveLoadNum);
-    if (i==6) {
-//        auto loadSprite = Sprite::create("jiazai/enterGame.png");
-//        loadSprite->setScale(visibleSize.width*0.9/640);
-//        loadSprite->setPosition(Vec2(visibleSize.width*0.5 + origin.x, visibleSize.height*0.45 + origin.y));
-//        this->addChild(loadSprite, 2);
+    if (_haveLoadNum==_totalNum) {
+        i=6;
+        auto loadSprite = Sprite::create("jiazai/jiazaiDian.png");
+        loadSprite->setScale(visibleSize.width*0.3/640);
+        loadSprite->setPosition(Vec2(visibleSize.width*(0.45+i*0.05) + origin.x, visibleSize.height*0.05 + origin.y));
+        this->addChild(loadSprite, 2);
         //跳转到选择关卡界面
         Scene* selectLevelScene=SelectLevel::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.2f, selectLevelScene));
-
-
     }
+
     
 }
 bool LoadScene::onTouchBegan(Touch *touch, Event *event)

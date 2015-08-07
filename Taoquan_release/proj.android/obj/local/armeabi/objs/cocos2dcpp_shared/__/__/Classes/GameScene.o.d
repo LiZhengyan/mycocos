@@ -419,6 +419,7 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/GameScene.o: \
  jni/../../Classes/SelectLevel.h jni/../../Classes/DataUtil.h \
  jni/../../Classes/AlertLayer.h jni/../../Classes/LevelData.h \
  jni/../../Classes/SmartRes.h jni/../../Classes/ShoppingMall.h \
+ jni/../../Classes/Single.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/audio/android/prebuilt-mk/../../include/SimpleAudioEngine.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/audio/android/prebuilt-mk/../../include/Export.h
 
@@ -1271,6 +1272,8 @@ jni/../../Classes/LevelData.h:
 jni/../../Classes/SmartRes.h:
 
 jni/../../Classes/ShoppingMall.h:
+
+jni/../../Classes/Single.h:
 
 /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/audio/android/prebuilt-mk/../../include/SimpleAudioEngine.h:
 

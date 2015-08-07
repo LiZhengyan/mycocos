@@ -30,14 +30,13 @@ void ResolvePicture::initResolvePicture(const std::string& filename,int idNumber
 
 void ResolvePicture::setPicturePosition(float x,float y)
 {
- 
     this->setPosition(Vec2(x, y));
 }
 
 void ResolvePicture::savePicturePosition(Vec2 point)
 {
     PPOINT=point;
-
+    
 }
 void ResolvePicture::changPicture(int level)
 {
@@ -75,8 +74,8 @@ void ResolvePicture::changPicture(int level)
             sprintf(name, "gamescene/n%d.png",randN);
         else
         sprintf(name, "gamescene/t%d.png",randN);
-        Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name);
-        this->setTexture(texture);
+        //Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name);
+        this->setTexture(name);
         this->ID=randN;
         
     }),NULL)) ;

@@ -166,7 +166,7 @@ void GameScene::mergeTiles(int targetRow, int col, puzzle::Tile* prevTile, puzzl
 	this->moveCount++;
 	auto mtAction = MoveTo::create(0.1f, caculateTilePos(targetRow, col));
 	auto func = CallFunc::create([this, prevTile, currTile, targetRow, col]()->void {
-		currTile->stopAllActions(); 
+		currTile->stopAllActions();
 		currTile->removeFromParent();
 		prevTile->removeFromParent();
 		puzzle::Tile * t = puzzle::Tile::create(currTile->getValue() * 2);

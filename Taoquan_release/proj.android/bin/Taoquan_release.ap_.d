@@ -14,6 +14,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/HelloWorld.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/jiazai \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/loadPicture.xml \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/logo.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/musicAndeffect \
@@ -259,6 +260,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/kedu.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/lan11.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/lan13.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/level.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/lv11.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/lv13.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/lv16.png \
@@ -286,6 +288,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/quan3.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/resumeButton1.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/shuzi.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/shuzi1.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/shuzi2.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/start5.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/t1.png \
@@ -295,6 +298,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/t5.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/t6.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/x.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/xiegang.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/zhizhenBG.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/zhizhenBG1.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/gamescene/zhizhenBG2.png \
@@ -314,8 +318,13 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan/starLight.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan/starNoLight.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan/tiaozhanMoshi.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan/tishi.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan/whiteBG.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/guoguan/yongshi.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/jiazai/enterGame.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/jiazai/jiazaiBG.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/jiazai/jiazaiDian.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/jiazai/loading.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/musicAndeffect/buttonEffect.wav \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/musicAndeffect/gameSceneMusic.mp3 \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/musicAndeffect/selectLevelButtonEffect.wav \
@@ -332,6 +341,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/chengjiu.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/circleBG.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/circleBG1.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/ditiao.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/fenxiang.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/fileLevelButton.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/fileNumber.png \
@@ -343,7 +353,11 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/h.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/hengtiao1.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/hengtiao2.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/hongxin.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/isFileBG.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/jia.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/jinbi.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/kongxin.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/leftButton.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/levelNumber.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/levelNumberBG.png \
@@ -360,6 +374,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/shangcheng.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/shutiao1.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/shutiao2.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/shuzi.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/starLight.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/starNoLight.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/suo.png \
@@ -371,6 +386,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/weiJiesuoNum.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/Yes.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/yinXing.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/selectlevel/zuanshi.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/blackBG.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/restartBtn.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/restartBtn1.png \
@@ -379,6 +395,7 @@
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/selectedSelectLevelBtn.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/selectLevelBtn.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/shibaiSP.png \
+/Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/tishi.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/whiteBG.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/xiaohaoSP.png \
 /Users/lizhengyan/Documents/workspace/Taoquan_release/proj.android/assets/shibai/yinXing.png \

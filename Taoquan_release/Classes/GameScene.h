@@ -52,9 +52,8 @@ public:
     
     void setNextLevelPicture(EventCustom* e);//自定义监听，下一关的回调方法
     void resetGame(EventCustom* e);//自定义监听，重新开始的回调方法
-    void backSelectLevel(EventCustom* e);//自定义监听，返回主界面回调方法
 
-    std::string randomChoosePictureColor(int num);//随机选择图片颜色
+    void judgeCurrentLevelPattern(int level);//判断本关的模式
     
     void enterIntoSucceedUI();
     void enterIntoFailedUI();

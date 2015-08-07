@@ -64,11 +64,17 @@ bool GameScene::init()
     cLevel=comeInLevel;
     UserDefault::getInstance()->setIntegerForKey("cLevel", cLevel);
     //添加暂停按钮
+    Sprite* pauseSprite=Sprite::create("gamescene/pauseButton.png");
+    pauseSprite->setPosition(Vec2(visibleSize.width*0.94,origin.y + visibleSize.height*0.94));
+    pauseSprite->setScale(visibleSize.width*0.8/640);
+    this->addChild(pauseSprite,2);
+    
     MenuItemImage*pauseItem = MenuItemImage::create("gamescene/pauseButton.png","gamescene/pauseButton.png",
                                            CC_CALLBACK_1(GameScene::menuPauseCallback, this));
-    pauseItem->setScale(visibleSize.width*0.6/640);
-    pauseItem->setPosition(Vec2(visibleSize.width*0.95,origin.y + visibleSize.height*0.96));
-    pauseItem->setContentSize(Size(80,80));
+    pauseItem->setScale(visibleSize.width*1.6/640);
+    pauseItem->setOpacity(0);
+    pauseItem->setPosition(Vec2(visibleSize.width*0.94,origin.y + visibleSize.height*0.94));
+   
     //帮助按钮
     /*auto helpItem = MenuItemImage::create("gamescene/helpButton.png","gamescene/helpButton.png",
                                           CC_CALLBACK_1(GameScene::menuHelpCallback, this));
@@ -76,11 +82,18 @@ bool GameScene::init()
     helpItem->setPosition(Vec2(origin.x +visibleSize.width*0.1,origin.y + visibleSize.height*0.94));
     helpItem->setScale(visibleSize.width*0.9/640);*/
     //增加圈按钮
+    Sprite* addSprite=Sprite::create("selectlevel/jia.png");
+    addSprite->setPosition(Vec2(origin.x + visibleSize.width*0.25, origin.y + visibleSize.height*0.94));
+    addSprite->setScale(visibleSize.width*0.5/640);
+    this->addChild(addSprite,2);
+    
     auto addQuanItem = MenuItemImage::create("selectlevel/jia.png","selectlevel/jia.png",
                                           CC_CALLBACK_1(GameScene::menuAddQuanCallback, this));
     
-    addQuanItem->setPosition(Vec2(origin.x + visibleSize.width*0.23, origin.y + visibleSize.height*0.96));
-    addQuanItem->setScale(visibleSize.width*0.3/640);
+    addQuanItem->setPosition(Vec2(origin.x + visibleSize.width*0.25, origin.y + visibleSize.height*0.935));
+    addQuanItem->setScale(visibleSize.width*0.8/640);
+    addQuanItem->setOpacity(0);
+    addQuanItem->setContentSize(Size(80,80));
 
     
     auto menu = Menu::create(pauseItem,addQuanItem, NULL);
@@ -111,12 +124,12 @@ bool GameScene::init()
     labelNumber->setScale(visibleSize.width*0.6/640.0);
     //labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.84,origin.y + visibleSize.height*0.062));
     labelNumber->setAnchorPoint(Vec2(0.5, 0.5));
-    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.11,origin.y + visibleSize.height*0.96));
+    labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.12,origin.y + visibleSize.height*0.94));
     
     this->addChild(labelNumber, 1);
     //圈数斜杠
     Sprite* slash=Sprite::create("gamescene/xiegang.png");
-    slash->setPosition(Vec2(origin.x + visibleSize.width*0.15,origin.y + visibleSize.height*0.96));
+    slash->setPosition(Vec2(origin.x + visibleSize.width*0.16,origin.y + visibleSize.height*0.94));
     slash->setScale(visibleSize.width*0.8/640.0);
     this->addChild(slash,1);
     //总圈数
@@ -126,7 +139,7 @@ bool GameScene::init()
     _totalQuanNumber->setScale(visibleSize.width*0.6/640.0);
     //labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.84,origin.y + visibleSize.height*0.062));
     _totalQuanNumber->setAnchorPoint(Vec2(0.5, 0.5));
-    _totalQuanNumber->setPosition(Vec2(origin.x + visibleSize.width*0.18,origin.y + visibleSize.height*0.96));
+    _totalQuanNumber->setPosition(Vec2(origin.x + visibleSize.width*0.19,origin.y + visibleSize.height*0.94));
     this->addChild(_totalQuanNumber, 1);
 
     
@@ -136,22 +149,26 @@ bool GameScene::init()
     }else
         _noMoveSprite = Sprite::create("gamescene/huan2.png");
     
-    _noMoveSprite->setScale(visibleSize.width*0.9/640.0);
+    _noMoveSprite->setScale(visibleSize.width*1.4/640.0);
     //noMoveSprite->setPosition(Vec2(origin.x + visibleSize.width*0.78, origin.y + visibleSize.height*0.08));
-    _noMoveSprite->setPosition(Vec2(origin.x + visibleSize.width*0.06, origin.y + visibleSize.height*0.96));
+    _noMoveSprite->setPosition(Vec2(origin.x + visibleSize.width*0.06, origin.y + visibleSize.height*0.94));
     this->addChild(_noMoveSprite, 1);
     //关卡文字
     Sprite* levelLabel=Sprite::create("gamescene/level.png");
-    levelLabel->setScale(visibleSize.width/640.0);
-    levelLabel->setPosition(Vec2(origin.x + visibleSize.width*0.45, origin.y + visibleSize.height*0.92));
+    levelLabel->setScale(visibleSize.width*1.1/640.0);
+    levelLabel->setPosition(Vec2(origin.x + visibleSize.width*0.45, origin.y + visibleSize.height*0.915));
     this->addChild(levelLabel, 1);
     //关卡数字
     char levelNumberChar[20];
-    sprintf(levelNumberChar, "%d:%d",cLevel/9+1,cLevel%9);
+    if(cLevel%9!=0){
+        sprintf(levelNumberChar, "%d:%d",cLevel/9+1,cLevel%9);
+    }else{
+        sprintf(levelNumberChar, "%d:%d",cLevel/9,9);
+    }
     _labelLevel = LabelAtlas::create(levelNumberChar, "gamescene/shuzi1.png", 18.0f, 24.0f, '0');
     _labelLevel->setScale(visibleSize.width*1.2/640.0);
     _labelLevel->setAnchorPoint(Vec2(0.5, 0.5));
-    _labelLevel->setPosition(Vec2(origin.x + visibleSize.width*0.565,origin.y + visibleSize.height*0.921));
+    _labelLevel->setPosition(Vec2(origin.x + visibleSize.width*0.565,origin.y + visibleSize.height*0.915));
     
     this->addChild(_labelLevel, 1);
     
@@ -258,11 +275,6 @@ bool GameScene::init()
         this->addChild(rp, 2);
         rp->savePicturePosition(rp->getPosition());   //保留一份老数据
         spriteVector.pushBack(rp);
-        //vec2Vector.pushBack(rp);
-        
-        
-        
-        
         
       
         //底座
@@ -391,12 +403,6 @@ bool GameScene::init()
     auto failedUICustomListener = EventListenerCustom::create("failedUI", CC_CALLBACK_1(GameScene::resetGame, this));
     _eventDispatcher->addEventListenerWithFixedPriority(failedUICustomListener, 1);
     
-    //auto backSelectLevelCustomListener = EventListenerCustom::create("backSelectLevel", CC_CALLBACK_1(GameScene::backSelectLevel, this));
-    //_eventDispatcher->addEventListenerWithFixedPriority(backSelectLevelCustomListener, 1);
-    
-    //auto pauseBackSelectLevelCustomListener = EventListenerCustom::create("pauseBackSelectLevel", CC_CALLBACK_1(GameScene::backSelectLevel, this));
-    //_eventDispatcher->addEventListenerWithFixedPriority(pauseBackSelectLevelCustomListener, 1);
-    
     
     //暂停界面自定义监听回调
     auto pauseUICustomListener = EventListenerCustom::create("backRestartGame", CC_CALLBACK_1(GameScene::resetGame, this));
@@ -417,423 +423,11 @@ bool GameScene::init()
     return true;
 }
 
-std::string GameScene::randomChoosePictureColor(int num)
+//判断本关模式
+void GameScene::judgeCurrentLevelPattern(int level)
 {
-    string color;
-    //随机颜色
-
-    Texture2D* texture;
-    do {
-        switch (random(1, 5)) {
-            case 1:
-                color="gamescene/hong";
-                break;
-            case 2:
-                color="gamescene/huang";
-                break;
-            case 3:
-                color="gamescene/ju";
-                break;
-            case 4:
-                color="gamescene/lan";
-                break;
-            case 5:
-                color="gamescene/zi";
-                break;
-            default:
-                break;
-        }
-        
-        std::stringstream filename;
-        filename<<color<<num<<".png";
-        texture= Director::getInstance()->getTextureCache()->addImage(filename.str());
-        
-        
-    } while (!texture);
-    return color;
-}
-
-//设置图片的摆放位置
-void GameScene::setNextLevelPicture(EventCustom* e)
-{
-    Director::getInstance()->resume();
-    
-    
-    _isTouch=true;
-    SimpleAudioEngine::getInstance()->rewindBackgroundMusic();//重新开始播放背景音乐
-    _isTaoZhong=false;
-    //更新圈数
-    char*buf =static_cast<char*>(e->getUserData());
-    _loopNumber=std::atoi(buf);
-    //labelNumber->setPosition(Vec2(origin.x + visibleSize.width*0.23,origin.y + visibleSize.height*0.93));
-    labelNumber->setString(buf);
-    _powerProgress->setPercentage(0);//将力度条的值归0
-    _dottedLineProgress2->setVisible(false);//将上次轨迹线隐藏
-    
-    
-    //更新显示图形的排列模式
-    int num=random(1, 6);
-    ValueVector shapeVV=LevelData::paeseLevelShape(num).asValueVector();
-    cLevel++;
-    UserDefault::getInstance()->setIntegerForKey("cLevel", cLevel);
-    
-    //更新关卡数字
-    char levelNumberChar[20];
-    sprintf(levelNumberChar, "%d:%d",cLevel/9+1,cLevel%9);
-    _labelLevel->setString(levelNumberChar);
-    
-    //从json中取出小图
-    ValueVector avm=LevelData::paeseLevelSmallPicture(cLevel).asValueVector();
-
-    for (int i=0; i<spriteVector.size(); i++) {
-        char s[10];
-        sprintf(s, "s%d", i+1);
-        int ss =shapeVV.at(0).asValueMap()[s].asInt();
-        int pX=ss/100;
-        int pY=ss%100;
-        
-        //添加图片
-        ResolvePicture* rp=(ResolvePicture*)spriteVector.at(i);
-        rp->setScale(0.8*visibleSize.width/640);
-        rp->setPicturePosition(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01);
-        rp->savePicturePosition(rp->getPosition());
-        std::stringstream name; string color="";int randNumber;
-        if (cLevel>9) {
-            if (i<4) {
-                int randName=random(0, 2);
-                int mPicID =avm.at(i+randName*4).asValueMap()["id"].asInt();
-                std::string mPicName =avm.at(i+randName*4).asValueMap()["pictureName"].asString();
-                name<<mPicName<<mPicID<<".png";
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=mPicID;
-                rp->setTexture(texture);
-            }else{
-                randNumber=random(1, 6);//随机图片
-                name<<"gamescene/t"<<randNumber<<".png";
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=randNumber;
-                rp->setTexture(texture);
-            }
-        }else{
-            if (i<avm.size()) {
-                int mPicID =avm.at(i).asValueMap()["id"].asInt();
-                randNumber=mPicID;
-                string picName;
-                picName=avm.at(i).asValueMap()["pictureName"].asString();
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(picName);
-                rp->ID=randNumber;
-                rp->setTexture(texture);
-            }else{
-                randNumber=random(1, 8);//随机图片
-                name<<"gamescene/n"<<randNumber<<".png";
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=randNumber;
-                rp->setTexture(texture);
-            }
-        }
-        //vec2Vector.pushBack(rp);
-        
-        Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
-        Texture2D* textureDzty;Texture2D* textureBG;
-        if (cLevel>9) {
-            //背景
-            textureBG = TextureCache::sharedTextureCache()->addImage("gamescene/gameBG.png");
-            _gameBG->setTexture(textureBG);
-            //左上角 环
-            Texture2D* textureHuan = TextureCache::sharedTextureCache()->addImage("gamescene/huan2.png");
-            _spriteQuan->setTexture(textureHuan);
-            //圈
-            Texture2D* textureQuan = TextureCache::sharedTextureCache()->addImage("gamescene/quan3.png");
-            _spriteQuan->setTexture(textureQuan);
-            //指针
-            Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG2.png");
-            _spriteTiao->setTexture(textureZhizhen);
-            //进度条背景
-            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG2.png");
-            _ruling->setTexture(textureProgressBG);
-            //底座投影
-            textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation5.png");
-            dzty->setTexture(textureDzty);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
-        }else{
-            //更换背景图片
-            char bgName[40];
-            sprintf(bgName, "gamescene/gameBG%d.png",num);
-            textureBG = TextureCache::sharedTextureCache()->addImage(bgName);
-            _gameBG->setTexture(textureBG);
-            //底座投影
-            textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation.png");
-            dzty->setTexture(textureDzty);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
-            //左上角 环
-            Texture2D* textureHuan = TextureCache::sharedTextureCache()->addImage("gamescene/huan1.png");
-            _spriteQuan->setTexture(textureHuan);
-            //圈
-            Texture2D* textureQuan = TextureCache::sharedTextureCache()->addImage("gamescene/quan2.png");
-            _spriteQuan->setTexture(textureQuan);
-            //指针
-            Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG1.png");
-            _spriteTiao->setTexture(textureZhizhen);
-            //进度条背景
-            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG1.png");
-            _ruling->setTexture(textureProgressBG);
-
-        }
-        
-        }
-    
-
-    std::string bigPicName;
-    
-    //添加隐藏小图（从json文件中获取）
-    ValueVector picVV=LevelData::paeseXml(cLevel).asValueVector();
-    hiddenPictureVector.clear();//清空Vector
-    for (int i=0; i<picVV.size(); i++) {
-        int _inttag =picVV.at(i).asValueMap()["inttag"].asInt();
-        int picId=_inttag;
-        std::string name =picVV.at(i).asValueMap()["picName"].asString();
-        int px =picVV.at(i).asValueMap()["positionX"].asInt();
-        int py =picVV.at(i).asValueMap()["positionY"].asInt();
-        int rotation=picVV.at(i).asValueMap()["rotation"].asInt();
-        //大图从json文件中获得
-        if (_inttag>1000) {
-            bigPicName=name;
-        }else{
-            ResolvePicture* rp=ResolvePicture::createResolvePicture();
-            rp->setScale(visibleSize.width*smartRes_hiddenPicScale/58);
-            rp->initResolvePicture(name, picId);
-            rp->setPicturePosition(visibleSize.width*px*0.001, visibleSize.height*py*0.001);
-            rp->setRotation(rotation);
-            //this->addChild(rp,3);
-            //rp->setVisible(false);
-            hiddenPictureVector.pushBack(rp);
-        }
-    }
-    //添加大图
-    Texture2D* texture = TextureCache::sharedTextureCache()->addImage(bigPicName);
-    _wholePicture->setTexture(texture);
-    //判断本关模式
     char getUserSql[100];
-    sprintf(getUserSql, "select * from User where level=%d",cLevel);
-    //从数据库中取出用户信息
-    cocos2d::Value cv=DataUtil::getRow(getUserSql);
-    int pattern=cv.asValueMap()["pattern"].asInt();
-    if (pattern==1) {
-        this->unschedule(schedule_selector(GameScene::updateTime));
-        //设置指针摆动速度
-        //auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
-        _spriteTiaoSpeed->setSpeed(0.7);
-        //设置进度条速度
-        //auto progressTimerSpeed=static_cast<Speed*>(_powerProgress->getActionByTag(1002));
-        _progressTimerSpeed->setSpeed(0.5);
-    }else{
-        //设置指针摆动速度
-        //auto _spriteTiaoRotate=static_cast<Speed*>(_spriteTiao->getActionByTag(1000));
-        _spriteTiaoSpeed->setSpeed(1.2);
-        //设置进度条速度
-        //auto progressTimerSpeed=static_cast<Speed*>(_powerProgress->getActionByTag(1002));
-        _progressTimerSpeed->setSpeed(1.0);
-        this->schedule(schedule_selector(GameScene::updateTime), 3.0);//图片位置移动
-        
-    }
-    
-}
-
-void GameScene::updateToOriginalState()
-{
-    
-
-    Director* director=Director::getInstance();
-    //director->getActionManager()->pauseAllRunningActions();//暂停所有的动作
-    
-    director->getActionManager()->removeAllActionsFromTarget(_spriteQuan);//暂停所有的动作
-    //director->getActionManager()->removeAllActionsFromTarget(taozhong);
-    //director->getActionManager()->removeAllActionsFromTarget(taozhong_heshi);
-    _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1)); 
-    _spriteQuan->setZOrder(3);
-    _spriteQuan->setOpacity(255);
-    _spriteQuan->setScale(QUAN_SCA);
-    _spriteQuan->setRotation(0);
-    
-    
-    this->removeChildByTag(124);
-    this->removeChildByTag(125);
-    
-}
-
-void GameScene::resetGame(EventCustom* e)
-{
-    updateToOriginalState();
-    char getPropSql[100];
-    sprintf(getPropSql, "select * from Prop ");
-    Value propAvm=DataUtil::getRow(getPropSql);
-    int cieclePropNumber=propAvm.asValueMap()["circleProp"].asInt();
-    _loopNumber=cieclePropNumber;
-    _isTouch=true;
-    _isTaoZhong=false;
-    SimpleAudioEngine::getInstance()->rewindBackgroundMusic();//重新开始播放背景音乐
-    sprintf(_loopNumberLabel, "%d",_loopNumber);
-    labelNumber->setString(_loopNumberLabel);
-    Director::getInstance()->resume();
-    _powerProgress->setPercentage(0);//将力度条的值归0
-    _dottedLineProgress2->setVisible(false);//将上次轨迹线隐藏
-    
-    
-    
-    
-    
-    //更新关卡数字
-    char levelNumberChar[20];
-    sprintf(levelNumberChar, "%d:%d",cLevel/9+1,cLevel%9);
-    _labelLevel->setString(levelNumberChar);
-    
-    //清空showPictureVector
-    int picNumber=(int)showPictureVector.size();
-    for (int i=0; i<picNumber; i++) {
-        ResolvePicture* rp=(ResolvePicture*)showPictureVector.at(i);
-        this->removeChild(rp);
-        
-    }
-    hiddenPictureVector.clear();//清空Vector
-    
-    //更新显示图形的排列模式
-    int num=random(1, 6);
-    ValueVector shapeVV=LevelData::paeseLevelShape(num).asValueVector();
-
-    //从json中取出小图
-    ValueVector avm=LevelData::paeseLevelSmallPicture(cLevel).asValueVector();
-    
-    for (int i=0; i<spriteVector.size(); i++) {
-        char s[10];
-        sprintf(s, "s%d", i+1);
-        int ss =shapeVV.at(0).asValueMap()[s].asInt();
-        int pX=ss/100;
-        int pY=ss%100;
-        //刷新图片
-        ResolvePicture* rp=(ResolvePicture*)spriteVector.at(i);
-        rp->setScale(0.8*visibleSize.width/640);
-        rp->setPicturePosition(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01);
-        rp->savePicturePosition(rp->getPosition());
-        std::stringstream name; string color="";int randNumber;
-        
-        if (cLevel>9) {
-            if (i<4) {
-                int randName=random(0, 2);
-                int mPicID =avm.at(i+randName*4).asValueMap()["id"].asInt();
-                std::string mPicName =avm.at(i+randName*4).asValueMap()["pictureName"].asString();
-                name<<mPicName<<mPicID<<".png";
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=mPicID;
-                rp->setTexture(texture);
-            }else{
-                randNumber=random(1, 6);//随机图片
-                name<<"gamescene/t"<<randNumber<<".png";
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=randNumber;
-                rp->setTexture(texture);
-            }
-        }else{
-            if (i<avm.size()) {
-                int mPicID =avm.at(i).asValueMap()["id"].asInt();
-                randNumber=mPicID;
-                string picName;
-                picName=avm.at(i).asValueMap()["pictureName"].asString();
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(picName);
-                rp->ID=randNumber;
-                rp->setTexture(texture);
-            }else{
-                randNumber=random(1, 8);//随机图片
-                name<<"gamescene/n"<<randNumber<<".png";
-                Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
-                rp->ID=randNumber;
-                rp->setTexture(texture);
-            }
-        }
-        rp->setOpacity(255);
-        
-        //vec2Vector.pushBack(rp);
-        Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
-        Texture2D* textureDzty;Texture2D* textureBG;
-        if (cLevel>9) {
-            //背景
-            textureBG = TextureCache::sharedTextureCache()->addImage("gamescene/gameBG.png");
-            _gameBG->setTexture(textureBG);
-            //左上角 环
-            Texture2D* textureHuan = TextureCache::sharedTextureCache()->addImage("gamescene/huan2.png");
-            _spriteQuan->setTexture(textureHuan);
-            //圈
-            Texture2D* textureQuan = TextureCache::sharedTextureCache()->addImage("gamescene/quan3.png");
-            _spriteQuan->setTexture(textureQuan);
-            //指针
-            Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG2.png");
-            _spriteTiao->setTexture(textureZhizhen);
-            //进度条背景
-            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG2.png");
-            _ruling->setTexture(textureProgressBG);
-            //底座投影
-            textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation5.png");
-            dzty->setTexture(textureDzty);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
-        }else{
-            
-            //更换背景图片
-            char bgName[40];
-            sprintf(bgName, "gamescene/gameBG%d.png",num);
-            textureBG = TextureCache::sharedTextureCache()->addImage(bgName);
-            _gameBG->setTexture(textureBG);
-            //底座投影
-            textureDzty = TextureCache::sharedTextureCache()->addImage("gamescene/foundation.png");
-            dzty->setTexture(textureDzty);
-            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
-            //左上角 环
-            Texture2D* textureHuan = TextureCache::sharedTextureCache()->addImage("gamescene/huan1.png");
-            _spriteQuan->setTexture(textureHuan);
-            //圈
-            Texture2D* textureQuan = TextureCache::sharedTextureCache()->addImage("gamescene/quan2.png");
-            _spriteQuan->setTexture(textureQuan);
-            //指针
-            Texture2D* textureZhizhen = TextureCache::sharedTextureCache()->addImage("gamescene/zhizhenBG1.png");
-            _spriteTiao->setTexture(textureZhizhen);
-            //进度条背景
-            Texture2D* textureProgressBG = TextureCache::sharedTextureCache()->addImage("gamescene/powerBarBG1.png");
-            _ruling->setTexture(textureProgressBG);
-        }
-    }
-    
-    std::string bigPicName;
-    
-    //添加隐藏小图和大图（从json文件中获取）
-    ValueVector picVV=LevelData::paeseXml(cLevel).asValueVector();
-    
-    for (int i=0; i<picVV.size(); i++) {
-        int _inttag =picVV.at(i).asValueMap()["inttag"].asInt();
-        int picId=_inttag;
-        std::string name =picVV.at(i).asValueMap()["picName"].asString();
-        int px =picVV.at(i).asValueMap()["positionX"].asInt();
-        int py =picVV.at(i).asValueMap()["positionY"].asInt();
-        int rotation=picVV.at(i).asValueMap()["rotation"].asInt();
-        //大图从json文件中获得
-        if (_inttag>1000) {
-            bigPicName=name;
-        }else{
-            ResolvePicture* rp=ResolvePicture::createResolvePicture();
-            rp->setScale(visibleSize.width*smartRes_hiddenPicScale/58);
-            rp->initResolvePicture(name, picId);
-            rp->setPicturePosition(visibleSize.width*px*0.001, visibleSize.height*py*0.001);
-            rp->setRotation(rotation);
-            //rp->setVisible(false);
-            //this->addChild(rp,3);
-            hiddenPictureVector.pushBack(rp);
-        }
-    }
-    //添加大图
-    Texture2D* texture = TextureCache::sharedTextureCache()->addImage(bigPicName);
-    _wholePicture->setTexture(texture);
-    
-    //判断本关模式
-    char getUserSql[100];
-    sprintf(getUserSql, "select * from User where level=%d",cLevel);
-    
+    sprintf(getUserSql, "select * from User where level=%d",level);
     //从数据库中取出用户信息
     cocos2d::Value cv=DataUtil::getRow(getUserSql);
     int pattern=cv.asValueMap()["pattern"].asInt();
@@ -875,6 +469,326 @@ void GameScene::resetGame(EventCustom* e)
         UserDefault::getInstance()->setBoolForKey("isGengxin", true);
         this->schedule(schedule_selector(GameScene::updateTime), 3.0);//图片位置移动
     }
+}
+
+//设置图片的摆放位置
+void GameScene::setNextLevelPicture(EventCustom* e)
+{
+    Director::getInstance()->resume();
+    
+    _isTouch=true;
+    SimpleAudioEngine::getInstance()->rewindBackgroundMusic();//重新开始播放背景音乐
+    _isTaoZhong=false;
+    //更新圈数
+    char*buf =static_cast<char*>(e->getUserData());
+    _loopNumber=std::atoi(buf);
+    labelNumber->setString(buf);
+    _powerProgress->setPercentage(0);//将力度条的值归0
+    _dottedLineProgress2->setVisible(false);//将上次轨迹线隐藏
+    cLevel++;//关卡加1
+    UserDefault::getInstance()->setIntegerForKey("cLevel", cLevel);
+    
+    //更新关卡数字
+    char levelNumberChar[20];
+    if(cLevel%9!=0){
+        sprintf(levelNumberChar, "%d:%d",cLevel/9+1,cLevel%9);
+    }else{
+        sprintf(levelNumberChar, "%d:%d",cLevel/9,9);
+    }
+    
+    _labelLevel->setString(levelNumberChar);
+
+    
+    //更新显示图形的排列模式
+    int num=random(1, 6);
+    ValueVector shapeVV=LevelData::paeseLevelShape(num).asValueVector();
+    
+    //从json中取出小图
+    ValueVector avm=LevelData::paeseLevelSmallPicture(cLevel).asValueVector();
+
+    for (int i=0; i<spriteVector.size(); i++) {
+        char s[10];
+        sprintf(s, "s%d", i+1);
+        int ss =shapeVV.at(0).asValueMap()[s].asInt();
+        int pX=ss/100;
+        int pY=ss%100;
+        
+        //添加图片
+        ResolvePicture* rp=(ResolvePicture*)spriteVector.at(i);
+        rp->setScale(0.8*visibleSize.width/640);
+        rp->setPicturePosition(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01);
+        rp->savePicturePosition(rp->getPosition());
+        std::stringstream name; string color="";int randNumber;
+        if (cLevel>9) {
+            if (i<4) {
+                int randName=random(0, 2);
+                int mPicID =avm.at(i+randName*4).asValueMap()["id"].asInt();
+                std::string mPicName =avm.at(i+randName*4).asValueMap()["pictureName"].asString();
+                name<<mPicName<<mPicID<<".png";
+                //Texture2D* texture = TextureCache::sharedTextureCache()->addImage(name.str());
+                rp->ID=mPicID;
+                rp->setTexture(name.str());
+            }else{
+                randNumber=random(1, 6);//随机图片
+                name<<"gamescene/t"<<randNumber<<".png";
+                rp->ID=randNumber;
+                rp->setTexture(name.str());
+            }
+        }else{
+            if (i<avm.size()) {
+                int mPicID =avm.at(i).asValueMap()["id"].asInt();
+                randNumber=mPicID;
+                string picName;
+                picName=avm.at(i).asValueMap()["pictureName"].asString();
+                //Texture2D* texture = TextureCache::sharedTextureCache()->addImage(picName);
+                rp->ID=randNumber;
+                rp->setTexture(picName);
+            }else{
+                randNumber=random(1, 8);//随机图片
+                name<<"gamescene/n"<<randNumber<<".png";
+                rp->ID=randNumber;
+                rp->setTexture(name.str());
+            }
+        }
+        
+        Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
+        if (cLevel>9) {
+            //背景
+            _gameBG->setTexture("gamescene/gameBG.png");
+            //左上角 环
+            _noMoveSprite->setTexture("gamescene/huan2.png");
+            //圈
+            _spriteQuan->setTexture("gamescene/quan3.png");
+            //指针
+            _spriteTiao->setTexture("gamescene/zhizhenBG2.png");
+            //进度条背景
+            _ruling->setTexture("gamescene/powerBarBG2.png");
+            //底座投影
+            dzty->setTexture("gamescene/foundation5.png");
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+        }else{
+            //更换背景图片
+            char bgName[40];
+            sprintf(bgName, "gamescene/gameBG%d.png",num);
+            _gameBG->setTexture(bgName);
+            //底座投影
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+            //左上角 环
+            _noMoveSprite->setTexture("gamescene/huan1.png");
+            //圈
+            _spriteQuan->setTexture("gamescene/quan2.png");
+            //指针
+            _spriteTiao->setTexture("gamescene/zhizhenBG1.png");
+            //进度条背景
+            _ruling->setTexture("gamescene/powerBarBG1.png");
+
+        }
+        
+        }
+    
+
+    std::string bigPicName;
+    
+    //添加隐藏小图（从json文件中获取）
+    ValueVector picVV=LevelData::paeseXml(cLevel).asValueVector();
+    hiddenPictureVector.clear();//清空Vector
+    for (int i=0; i<picVV.size(); i++) {
+        int _inttag =picVV.at(i).asValueMap()["inttag"].asInt();
+        int picId=_inttag;
+        std::string name =picVV.at(i).asValueMap()["picName"].asString();
+        int px =picVV.at(i).asValueMap()["positionX"].asInt();
+        int py =picVV.at(i).asValueMap()["positionY"].asInt();
+        int rotation=picVV.at(i).asValueMap()["rotation"].asInt();
+        //大图从json文件中获得
+        if (_inttag>1000) {
+            bigPicName=name;
+        }else{
+            ResolvePicture* rp=ResolvePicture::createResolvePicture();
+            rp->setScale(visibleSize.width*smartRes_hiddenPicScale/58);
+            rp->initResolvePicture(name, picId);
+            rp->setPicturePosition(visibleSize.width*px*0.001, visibleSize.height*py*0.001);
+            rp->setRotation(rotation);
+            //this->addChild(rp,3);
+            //rp->setVisible(false);
+            hiddenPictureVector.pushBack(rp);
+        }
+    }
+    //添加大图
+    _wholePicture->setTexture(bigPicName);
+    //判断本关模式
+    judgeCurrentLevelPattern(cLevel);
+    
+}
+
+void GameScene::updateToOriginalState()
+{
+    Director* director=Director::getInstance();
+    
+    director->getActionManager()->removeAllActionsFromTarget(_spriteQuan);//暂停所有的动作
+    _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1)); 
+    _spriteQuan->setZOrder(3);
+    _spriteQuan->setOpacity(255);
+    _spriteQuan->setScale(QUAN_SCA);
+    _spriteQuan->setRotation(0);
+    
+    this->removeChildByTag(124);
+    this->removeChildByTag(125);
+    
+}
+
+void GameScene::resetGame(EventCustom* e)
+{
+    updateToOriginalState();
+    char getPropSql[100];
+    sprintf(getPropSql, "select * from Prop ");
+    Value propAvm=DataUtil::getRow(getPropSql);
+    int cieclePropNumber=propAvm.asValueMap()["circleProp"].asInt();
+    _loopNumber=cieclePropNumber;
+    _isTouch=true;
+    _isTaoZhong=false;
+    SimpleAudioEngine::getInstance()->rewindBackgroundMusic();//重新开始播放背景音乐
+    sprintf(_loopNumberLabel, "%d",_loopNumber);
+    labelNumber->setString(_loopNumberLabel);
+    Director::getInstance()->resume();
+    _powerProgress->setPercentage(0);//将力度条的值归0
+    _dottedLineProgress2->setVisible(false);//将上次轨迹线隐藏
+    
+    
+    //更新关卡数字
+    char levelNumberChar[20];
+    if(cLevel%9!=0){
+        sprintf(levelNumberChar, "%d:%d",cLevel/9+1,cLevel%9);
+    }else{
+        sprintf(levelNumberChar, "%d:%d",cLevel/9,9);
+    }
+
+    _labelLevel->setString(levelNumberChar);
+    
+    //清空showPictureVector
+    int picNumber=(int)showPictureVector.size();
+    for (int i=0; i<picNumber; i++) {
+        ResolvePicture* rp=(ResolvePicture*)showPictureVector.at(i);
+        this->removeChild(rp);
+        
+    }
+    hiddenPictureVector.clear();//清空Vector
+    
+    //更新显示图形的排列模式
+    int num=random(1, 6);
+    ValueVector shapeVV=LevelData::paeseLevelShape(num).asValueVector();
+
+    //从json中取出小图
+    ValueVector avm=LevelData::paeseLevelSmallPicture(cLevel).asValueVector();
+    
+    for (int i=0; i<spriteVector.size(); i++) {
+        char s[10];
+        sprintf(s, "s%d", i+1);
+        int ss =shapeVV.at(0).asValueMap()[s].asInt();
+        int pX=ss/100;
+        int pY=ss%100;
+        //刷新图片
+        ResolvePicture* rp=(ResolvePicture*)spriteVector.at(i);
+        rp->setScale(0.8*visibleSize.width/640);
+        rp->setPicturePosition(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01);
+        rp->savePicturePosition(rp->getPosition());
+        std::stringstream name; string color="";int randNumber;
+        
+        if (cLevel>9) {
+            if (i<4) {
+                int randName=random(0, 2);
+                int mPicID =avm.at(i+randName*4).asValueMap()["id"].asInt();
+                std::string mPicName =avm.at(i+randName*4).asValueMap()["pictureName"].asString();
+                name<<mPicName<<mPicID<<".png";
+                rp->ID=mPicID;
+                rp->setTexture(name.str());
+            }else{
+                randNumber=random(1, 6);//随机图片
+                name<<"gamescene/t"<<randNumber<<".png";
+                rp->ID=randNumber;
+                rp->setTexture(name.str());
+            }
+        }else{
+            if (i<avm.size()) {
+                int mPicID =avm.at(i).asValueMap()["id"].asInt();
+                randNumber=mPicID;
+                string picName;
+                picName=avm.at(i).asValueMap()["pictureName"].asString();
+                rp->ID=randNumber;
+                rp->setTexture(picName);
+            }else{
+                randNumber=random(1, 8);//随机图片
+                name<<"gamescene/n"<<randNumber<<".png";
+                rp->ID=randNumber;
+                rp->setTexture(name.str());
+            }
+        }
+        rp->setOpacity(255);
+        
+        Sprite* dzty=(Sprite*)dizuoTouyingVector.at(i);
+        if (cLevel>9) {
+            //背景
+            _gameBG->setTexture("gamescene/gameBG.png");
+            //左上角 环
+            _noMoveSprite->setTexture("gamescene/huan2.png");
+            //圈
+            _spriteQuan->setTexture("gamescene/quan3.png");
+            //指针
+            _spriteTiao->setTexture("gamescene/zhizhenBG2.png");
+            //进度条背景
+            _ruling->setTexture("gamescene/powerBarBG2.png");
+            //底座投影
+            dzty->setTexture("gamescene/foundation5.png");
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+        }else{
+            
+            //更换背景图片
+            char bgName[40];
+            sprintf(bgName, "gamescene/gameBG%d.png",num);
+            _gameBG->setTexture(bgName);
+            //底座投影
+            dzty->setTexture("gamescene/foundation.png");
+            dzty->setPosition(Vec2(origin.x+visibleSize.width*pX*0.01, origin.y + visibleSize.height*pY*0.01-visibleSize.height*smartRes_dzty));
+            //左上角 环
+            _noMoveSprite->setTexture("gamescene/huan1.png");
+            //圈
+            _spriteQuan->setTexture("gamescene/quan2.png");
+            //指针
+            _spriteTiao->setTexture("gamescene/zhizhenBG1.png");
+            //进度条背景
+            _ruling->setTexture("gamescene/powerBarBG1.png");
+        }
+    }
+    
+    std::string bigPicName;
+    
+    //添加隐藏小图和大图（从json文件中获取）
+    ValueVector picVV=LevelData::paeseXml(cLevel).asValueVector();
+    
+    for (int i=0; i<picVV.size(); i++) {
+        int _inttag =picVV.at(i).asValueMap()["inttag"].asInt();
+        int picId=_inttag;
+        std::string name =picVV.at(i).asValueMap()["picName"].asString();
+        int px =picVV.at(i).asValueMap()["positionX"].asInt();
+        int py =picVV.at(i).asValueMap()["positionY"].asInt();
+        int rotation=picVV.at(i).asValueMap()["rotation"].asInt();
+        //大图从json文件中获得
+        if (_inttag>1000) {
+            bigPicName=name;
+        }else{
+            ResolvePicture* rp=ResolvePicture::createResolvePicture();
+            rp->setScale(visibleSize.width*smartRes_hiddenPicScale/58);
+            rp->initResolvePicture(name, picId);
+            rp->setPicturePosition(visibleSize.width*px*0.001, visibleSize.height*py*0.001);
+            rp->setRotation(rotation);
+            //rp->setVisible(false);
+            //this->addChild(rp,3);
+            hiddenPictureVector.pushBack(rp);
+        }
+    }
+    //添加大图
+    _wholePicture->setTexture(bigPicName);
+    //判断本关模式
+    judgeCurrentLevelPattern(cLevel);
 
 }
 
@@ -923,13 +837,11 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
     if ((pattern==1&&yinXingNum==3)||pattern==2) {
         //虚线轨迹
         _dottedLineProgress2->setVisible(false);
-        
     }else{
         //虚线轨迹
         _dottedLineProgress2->setVisible(true);
         _dottedLineProgress2->setRotation(_spriteTiao->getRotation());
         _dottedLineProgress2->setPercentage(_powerProgress->getPercentage());
-
     }
     
     if (_isTouch) {
@@ -988,153 +900,6 @@ void GameScene::onTouchEnded(Touch *touch, Event *event)
         return ;
         
     }
-    /*
-        auto menuItemBlink=Spawn::create(JumpBy::create(0.6f, Vec2(0,50), 50, 1),FadeTo::create(0.6f, 0), NULL);
-        
-        ResolvePicture* taozhong=NULL;
-        ResolvePicture* taozhong_heshi=NULL;
-        
-        for (int i=0; i<spriteVector.size(); i++)
-        {
-            //判断是否套住
-            ResolvePicture* showRp=spriteVector.at(i);
-            if (sqrt((x-showRp->getPositionX())*(x-showRp->getPositionX())+(y-showRp->getPositionY())*(y-showRp->getPositionY()))<=53.0)
-            {
-                taozhong=showRp;
-                showRp->isCover=true;
-                for (int j=0; j<hiddenPictureVector.size(); j++) {
-                    ResolvePicture* hiddenRp=hiddenPictureVector.at(j);
-                    if (hiddenRp->ID==showRp->ID)
-                    {
-                        taozhong_heshi=hiddenRp;
-                        hiddenPictureVector.eraseObject(hiddenRp);
-                        showPictureVector.pushBack(taozhong_heshi);
-                        break;
-                    }
-                }
-            }
-        }
-    
-        auto spriteQuan_return  = TargetedAction::create(_spriteQuan,Place::create(Vec2(visibleSize.width/2, visibleSize.height*0.1)));
-        auto targetAct = TargetedAction::create(taozhong,menuItemBlink);
-        
-        if(taozhong != NULL && taozhong_heshi!=NULL)
-        {
-            //套住时圈的动作
-            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(taozhong->getPositionX(),taozhong->getPositionY()));
-            auto quanRate = Spawn::create(quanMove,Sequence::create(ScaleTo::create(s/(visibleSize.width*1.3),QUAN_SCA,QUAN_SCA*0.5), NULL),  NULL);
-            auto ease=EaseSineOut::create(quanRate);
-            
-            ParticleSystem * p4=ParticleGalaxy::createWithTotalParticles(200);
-            p4->setPosition(Vec2(taozhong->getPositionX(),taozhong->getPositionY()+50));
-            p4->setStartColor(Color4F(1,1,1,1));
-            p4->setTag(124);
-            this->addChild(p4,5);
-            p4->setVisible(false);
-            
-            auto p5 = MotionStreak::create(0.2, 1, 100, Color3B::WHITE,"gamescene/start5.png" );
-            p5->setPosition(Vec2(taozhong->getPositionX(),taozhong->getPositionY()+50));
-            p5->setVisible(false);
-            p5->isFastMode();
-            p5->setTag(125);
-            this->addChild(p5,5);
-            
-            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{_spriteQuan->setZOrder(1);}),MoveBy::create(0.3, Vec2(0,-30)),FadeTo::create(0.2, 0),targetAct,spriteQuan_return,
-                CallFunc::create([=]{_spriteQuan->setZOrder(3);}),
-                CallFunc::create([=](){
-                _spriteQuan->setOpacity(255);
-                _spriteQuan->setScale(QUAN_SCA);
-                _spriteQuan->setRotation(0);
-                taozhong->setPosition(taozhong->getPositionX(),taozhong->getPositionY()-50);
-    
-                p5->setVisible(true);
-                p4->setVisible(true);
-                
-                p4->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
-                p5->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
-                taozhong->changPicture(cLevel);
-                
-            }),DelayTime::create(0.5), //等p4结束哦 0.5秒
-            CallFunc::create([=](){
-                taozhong->setVisible(true);
-                taozhong->setOpacity(255);
-                addChild(taozhong_heshi,3);
-                taozhong_heshi->setOpacity(0);
-                
-                taozhong_heshi->runAction(FadeTo::create(0.5, 255));
-                removeChild(p4,p5);
-                
-                this->scheduleOnce(SEL_SCHEDULE(&GameScene::enterIntoSucceedUI), 1.0f);
-                
-                if(--_loopNumber>0){
-                    _isTouch=true;
-                    //判断圈数，来确定是否减少体力
-                   UserDefault::getInstance()->setBoolForKey("isReduceEnergy", true);
-                }}),NULL));
-        }else if (taozhong != NULL)
-        {
-            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(taozhong->getPositionX(),taozhong->getPositionY()));
-            auto quanRate = Spawn::create(quanMove,Sequence::create(ScaleTo::create((s/(visibleSize.width*1.3)*1),QUAN_SCA*0.8,QUAN_SCA*0.56), NULL), NULL);
-            auto ease=EaseSineOut::create(quanRate);
-            
-            auto targetAct = TargetedAction::create(taozhong,Sequence::create(MoveBy::create(0.05, Vec2(-15,0)),MoveBy::create(0.1, Vec2(30,0)), MoveBy::create(0.05, Vec2(-15,0)),NULL));
-            _spriteQuan->runAction(Sequence::create(ease,CallFunc::create([=]{_spriteQuan->setZOrder(1);}),
-                                                    MoveBy::create(0.3, Vec2(0,-30)),
-                                                    FadeTo::create(0.2, 0),spriteQuan_return,
-                                                    CallFunc::create([=]{_spriteQuan->setZOrder(3);}),
-                                                    Repeat::create(targetAct,1),
-                                                    CallFunc::create([=](){_spriteQuan->setOpacity(255);_spriteQuan->setScale(QUAN_SCA);_spriteQuan->setRotation(0);
-                taozhong->setPosition(taozhong->getPositionX(),taozhong->getPositionY());
-                _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1));
-                if(--_loopNumber>0){
-                    _isTouch=true;
-                    //判断圈数，来确定是否减少体力
-                    //if (_loopNumber<10) {
-                        UserDefault::getInstance()->setBoolForKey("isReduceEnergy", true);
-                   // }else
-                     //   UserDefault::getInstance()->setBoolForKey("isReduceEnergy", false);
-
-                }
-            }),NULL));
-        }else
-        {
-            MoveTo* quanMove=MoveTo::create(s/(visibleSize.width*1.3), Vec2(x, y));
-            auto quanRate = Spawn::create(quanMove,Sequence::create(ScaleTo::create((s/(visibleSize.width*1.3)*1),QUAN_SCA*0.8,QUAN_SCA*0.56), NULL),NULL);
-            auto ease=EaseSineOut::create(quanRate);
-            
-            _spriteQuan->runAction(Sequence::create(ease,FadeTo::create(0.2, 0),spriteQuan_return,
-                                                    CallFunc::create([=](){
-                _spriteQuan->setOpacity(255);
-                _spriteQuan->setRotation(0);
-                _spriteQuan->setScale(QUAN_SCA);
-                if(--_loopNumber>0){
-                    _isTouch=true;
-                    //判断圈数，来确定是否减少体力
-                    //if (_loopNumber<10) {
-                        UserDefault::getInstance()->setBoolForKey("isReduceEnergy", true);
-                   // }else
-                     //   UserDefault::getInstance()->setBoolForKey("isReduceEnergy", false);
-
-                }}),NULL));
-            log("啥都没有中。回来吧");
-            log("在循环里面圈子的数目是%d",_loopNumber);
-        }
-        log("-----End-------x= %f y=%f ",x,y);
-        
-        taozhong_heshi=NULL;
-        taozhong=NULL;
-        
-    }
-    if (_loopNumber>0) {
-        sprintf(_loopNumberLabel, "%d",_loopNumber-1);
-        labelNumber->runAction(Sequence::create(ScaleTo::create(0.5, 1.35*visibleSize.width/640.0),
-                                                    CallFunc::create([=](){labelNumber->setString(_loopNumberLabel);}), ScaleTo::create(0.5, 0.6*visibleSize.width/640.0),       NULL));
-        
-    }else
-        _isTouch=false;
-
-   */
-    
     
 }
 
@@ -1198,8 +963,8 @@ void GameScene::spriteQuanMoveCallBack()
             p5->setVisible(true);
             p4->setVisible(true);
             
-            p4->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
-            p5->runAction(MoveTo::create(0.5, taozhong_heshi->getPosition()));
+            p4->runAction(MoveTo::create(0.3, taozhong_heshi->getPosition()));
+            p5->runAction(MoveTo::create(0.3, taozhong_heshi->getPosition()));
             taozhong->changPicture(cLevel);
             
         }),DelayTime::create(0.5), //等p4结束哦 0.5秒
@@ -1217,11 +982,7 @@ void GameScene::spriteQuanMoveCallBack()
             if(--_loopNumber>0){
                 _isTouch=true;
                 //判断圈数，来确定是否减少体力
-                //if (_loopNumber<10) {
                 UserDefault::getInstance()->setBoolForKey("isReduceEnergy", true);
-                //}else
-                ///   UserDefault::getInstance()->setBoolForKey("isReduceEnergy", false);
-                
                 
             }}),NULL));
     }
@@ -1241,11 +1002,7 @@ void GameScene::spriteQuanMoveCallBack()
             if(--_loopNumber>0){
                 _isTouch=true;
                 //判断圈数，来确定是否减少体力
-                //if (_loopNumber<10) {
                 UserDefault::getInstance()->setBoolForKey("isReduceEnergy", true);
-                // }else
-                //   UserDefault::getInstance()->setBoolForKey("isReduceEnergy", false);
-                
             }
         }),NULL));
     }else
@@ -1273,8 +1030,7 @@ void GameScene::spriteQuanMoveCallBack()
     
     if (_loopNumber>0) {
         sprintf(_loopNumberLabel, "%d",_loopNumber-1);
-        //auto spriteShuzi_return  = TargetedAction::create(labelNumber,Place::create(Vec2(visibleSize.width*0.23, visibleSize.height*0.93)));//数字由两位数变成一位数时，调整数字位置
-        labelNumber->runAction(Sequence::create(ScaleTo::create(0.5, 1.35*visibleSize.width/640.0),
+        labelNumber->runAction(Sequence::create(ScaleTo::create(0.5, 1.0*visibleSize.width/640.0),
                                                 CallFunc::create([=](){labelNumber->setString(_loopNumberLabel);}), ScaleTo::create(0.5, 0.6*visibleSize.width/640.0),       NULL));
         
     }else
@@ -1325,41 +1081,39 @@ void GameScene::updateTime(float dt)
 
 ValueVector GameScene::calculationSatrNumber(int quanNumber,int picNumber)
 {
-    ValueVector starVV;float num3=0;float num2=0;
+    ValueVector starVV;
+    int star=quanNumber*0.618;int star3=0;int star2=0;
     switch (picNumber) {
-        case 1:
-            num3=0.3;
-            num2=0.6;
-            break;
         case 2:
-            num3=0.8;
-            if (quanNumber==15) {
-                num2=1.2;
-            }else
-                num2=1.4;
+            star3=star-1;
             break;
         case 3:
-            num3=1.3;
-            if (quanNumber==20) {
-                num2=2.2;
-            }else
-                num2=2.3;
-            
+            star3=star;
             break;
         case 4:
-            num3=2;
-            num2=3;
+            star3=star+1;
             break;
         default:
             break;
     }
-    float f=(float)quanNumber/(float)picNumber;
-    int starNmber3=f*num3;
-    int starNmber2=f*num2;
-    starVV.push_back(Value(starNmber3));//3星
-    starVV.push_back(Value(starNmber2));//2星
+    switch (quanNumber) {
+        case 10:
+            star2=star3+2;
+            break;
+        case 15:
+            star2=star3+3;
+            break;
+        case 20:
+            star2=star3+4;
+            break;
+        default:
+            break;
+    }
     
-    log("%d   %d",starNmber3,starNmber2);
+    starVV.push_back(Value(star3));//3星
+    starVV.push_back(Value(star2));//2星
+    
+    //log("%d   %d",star3,star2);
     
     return starVV;
 }
@@ -1395,13 +1149,17 @@ void GameScene::enterIntoSucceedUI()
         ValueVector starVV=calculationSatrNumber(circlePropNumber,picNumber);
         int starNumber3=starVV.at(0).asInt();
         int starNumber2=starVV.at(1).asInt();
-        if ((10-_loopNumber)<=starNumber3) {
+        if (picNumber==1) {
             starNum=3;
-        }
-        else if ((10-_loopNumber)>starNumber3&&(10-_loopNumber)<=starNumber2){
-            starNum=2;
-        }else {
-            starNum=1;
+        }else{
+            if ((circlePropNumber-_loopNumber)<=starNumber3) {
+                starNum=3;
+            }
+            else if ((circlePropNumber-_loopNumber)>starNumber3&&(circlePropNumber-_loopNumber)<=starNumber2){
+                starNum=2;
+            }else {
+                starNum=1;
+            }
         }
        
         UserDefault::getInstance()->setIntegerForKey("cLevelXingNumber", starNum);
@@ -1414,7 +1172,6 @@ void GameScene::enterIntoSucceedUI()
             DataUtil::updateStarData(starNum, cLevel);//更新星星的数量
         }
         Director::getInstance()->pause();//暂停游戏
-        _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1+ origin.y));//圈回到原位
         //添加过关层
         _succeedLayer=ShadeLayer::create();
         _succeedLayer->init();
@@ -1429,7 +1186,6 @@ void GameScene::enterIntoFailedUI()
     if (_loopNumber==0) {
         //判断失败层是否为空
         if (getChildByName("failedLayer")==NULL&&getChildByName("succeedLayer")==NULL) {
-            //_isFailed=true;
             //移除本关套住的图片
             for (int i=0; i<showPictureVector.size(); i++) {
                 ResolvePicture* rp=(ResolvePicture*)showPictureVector.at(i);
@@ -1438,8 +1194,6 @@ void GameScene::enterIntoFailedUI()
             showPictureVector.clear();
             SimpleAudioEngine::getInstance()->stopBackgroundMusic();//停止背景音乐
             Director::getInstance()->pause();//暂停游戏
-            _spriteQuan->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.1+ origin.y));//圈回到原位
-            
             //添加失败层
             _failLayer=FailedShadeLayer::create();
             _failLayer->init();
@@ -1478,8 +1232,9 @@ void GameScene::menuAddQuanCallback(Ref* pSender)
     sprintf(totalQuan, "%d",quanNumber+5);
     _totalQuanNumber->setString(totalQuan);
     
+    _loopNumber=_loopNumber+5;
     char quanNum[10];
-    sprintf(quanNum, "%d",_loopNumber+5);
+    sprintf(quanNum, "%d",_loopNumber);
     labelNumber->setString(quanNum);
 }
 
@@ -1518,32 +1273,15 @@ void GameScene::menuHelpCallback(Ref* pSender)
     
 }
 
-void GameScene::backSelectLevel(EventCustom* e)
-{
-    bool isGengxin=UserDefault::getInstance()->getBoolForKey("isGengxin");
-    if(isGengxin)
-    {
-        DataUtil::updatePatternData(1,cLevel);
-        UserDefault::getInstance()->setBoolForKey("isGengxin",false);
-    }
-
-    Scene* selectScene=SelectLevel::createScene();
-    Director::getInstance()->replaceScene(selectScene);
-   
-}
-
 
 GameScene::~GameScene()
 {
     _eventDispatcher->removeCustomEventListeners("succeefulUI");
     _eventDispatcher->removeCustomEventListeners("failedUI");
-    //_eventDispatcher->removeCustomEventListeners("backSelectLevel");
     _eventDispatcher->removeCustomEventListeners("ThisLevelGold");
     _eventDispatcher->removeCustomEventListeners("backRestartGame");
     _eventDispatcher->removeCustomEventListeners("succeedResatrt");
-    
-    //_eventDispatcher->removeCustomEventListeners("pauseBackSelectLevel");
-    
+
 }
 
 void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)

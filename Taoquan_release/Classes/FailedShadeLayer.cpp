@@ -53,7 +53,7 @@ bool FailedShadeLayer::init()
 
     //添加失败
     Sprite* failSP=Sprite::create("shibai/shibaiSP.png");
-    failSP->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.764));
+    failSP->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.76));
     failSP->setScale(visibleSize.width/640);
     this->addChild(failSP,2);
     //添加星星
@@ -88,8 +88,8 @@ bool FailedShadeLayer::init()
                                              CC_CALLBACK_1(FailedShadeLayer::menuSelectLevelCallback, this));
     
     selectLevelItem->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                      origin.y +visibleSize.height *0.382));
-    
+                                      origin.y +visibleSize.height *smartRes_shiBaiTuichu));
+
     // create menu, it's an autorelease object
     auto menu = Menu::create(restartItem,selectLevelItem, NULL);
     menu->setPosition(Vec2::ZERO);
@@ -98,7 +98,7 @@ bool FailedShadeLayer::init()
     
     //添加提示
     Sprite* prompt=Sprite::create("shibai/tishi.png");
-    prompt->setPosition(Vec2(visibleSize.width/2,visibleSize.height*0.145));
+    prompt->setPosition(Vec2(visibleSize.width/2,visibleSize.height*0.14));
     prompt->setScale(visibleSize.width*0.75/640.0);
     this->addChild(prompt);
     
@@ -121,14 +121,24 @@ void FailedShadeLayer::menuRestartCallback(Ref* pSender)
     //this->runAction(my);
     //currentLevel++;
     //UserDefault::getInstance()->setIntegerForKey("CurrentLevel", currentLevel);
+
     bool isSound=UserDefault::getInstance()->getBoolForKey("isSound");
     if (isSound) {
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
-    Director::getInstance()->resume();//继续游戏
-    this->removeFromParent();
-    EventCustom _event("failedUI");
-    _eventDispatcher->dispatchEvent(&_event);
+    
+    //MenuItemImage* clickedItem = (MenuItemImage*) pSender;
+    
+    //this->runAction(Sequence::create(CallFunc::create([=]{
+     //   clickedItem->getNormalImage()->runAction(FadeTo::create(0.6, 0));
+   // }),CallFunc::create([=]{
+     //   clickedItem->getNormalImage()->runAction(FadeTo::create(0.6, 255));
+        Director::getInstance()->resume();//继续游戏
+        this->removeFromParent();
+        EventCustom _event("failedUI");
+        _eventDispatcher->dispatchEvent(&_event);
+   // }), NULL) );
+    
 }
 
 void FailedShadeLayer::menuSelectLevelCallback(Ref* pSender)
@@ -140,8 +150,6 @@ void FailedShadeLayer::menuSelectLevelCallback(Ref* pSender)
     Director::getInstance()->resume();//继续游戏
     this->removeFromParent();
     
-    //EventCustom _event("backSelectLevel");
-    //_eventDispatcher->dispatchEvent(&_event);
     int cLevel=UserDefault::getInstance()->getIntegerForKey("cLevel");
     bool isGengxin=UserDefault::getInstance()->getBoolForKey("isGengxin");
     if(isGengxin)

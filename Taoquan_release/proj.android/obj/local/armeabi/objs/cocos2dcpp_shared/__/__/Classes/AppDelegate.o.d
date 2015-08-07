@@ -359,11 +359,63 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/AppDelegate.o: \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../deprecated/CCNotificationCenter.h \
  /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../deprecated/CCDeprecated.h \
  jni/../../Classes/ShoppingMall.h jni/../../Classes/LogoScene.h \
- /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../tinyxml2/tinyxml2.h \
- /Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/climits \
- /Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdio \
+ jni/../../Classes/SelectLevel.h jni/../../Classes/DataUtil.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././cocos-ext.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././ExtensionMacros.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlExtensions.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControl.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlUtils.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/../../ExtensionMacros.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/ExtensionExport.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlButton.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCInvocation.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIScale9Sprite.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/GUIExport.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlColourPicker.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlHuePicker.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlSaturationBrightnessPicker.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlPotentiometer.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../2d/CCProgressTimer.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlSlider.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlStepper.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlSwitch.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCScrollView.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../base/CCEventListenerTouch.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../2d/CCActionTween.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/ExtensionMacros.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCTableView.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCScrollView.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCTableViewCell.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././physics-nodes/CCPhysicsDebugNode.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././physics-nodes/CCPhysicsSprite.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/AssetsManager.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/AssetsManagerEx.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/CCEventAssetsManagerEx.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/Downloader.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/Manifest.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/document.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/reader.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/rapidjson.h \
  /Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstring \
- /Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdarg
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/internal/pow10.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/internal/stack.h \
+ /Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/csetjmp \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/internal/strfunc.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/CCEventAssetsManagerEx.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/CCEventListenerAssetsManagerEx.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/Manifest.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././ExtensionDeprecated.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIEditBox/UIEditBox.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/GUIDefine.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../base/ObjectFactory.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIButton.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIWidget.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../2d/CCProtectedNode.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UILayoutParameter.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././Particle3D/CCParticleSystem3D.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././Particle3D/PU/CCPUParticleSystem3D.h \
+ /Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/Particle3D/CCParticleSystem3D.h \
+ jni/../../Classes/AlertLayer.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -1087,12 +1139,118 @@ jni/../../Classes/ShoppingMall.h:
 
 jni/../../Classes/LogoScene.h:
 
-/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../tinyxml2/tinyxml2.h:
+jni/../../Classes/SelectLevel.h:
 
-/Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/climits:
+jni/../../Classes/DataUtil.h:
 
-/Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdio:
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././cocos-ext.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././ExtensionMacros.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlExtensions.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControl.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlUtils.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/../../ExtensionMacros.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/ExtensionExport.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlButton.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCInvocation.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIScale9Sprite.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/GUIExport.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlColourPicker.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlHuePicker.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlSaturationBrightnessPicker.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlPotentiometer.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../2d/CCProgressTimer.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlSlider.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlStepper.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCControlExtension/CCControlSwitch.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCScrollView.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../base/CCEventListenerTouch.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../2d/CCActionTween.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/ExtensionMacros.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCTableView.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCScrollView.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././GUI/CCScrollView/CCTableViewCell.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././physics-nodes/CCPhysicsDebugNode.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././physics-nodes/CCPhysicsSprite.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/AssetsManager.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/AssetsManagerEx.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/CCEventAssetsManagerEx.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/Downloader.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/Manifest.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/document.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/reader.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/rapidjson.h:
 
 /Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstring:
 
-/Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdarg:
+/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/internal/pow10.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/internal/stack.h:
+
+/Users/lizhengyan/develop/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/csetjmp:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/external/flatbuffers/prebuilt-mk/../../json/internal/strfunc.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/CCEventAssetsManagerEx.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/CCEventListenerAssetsManagerEx.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././assets-manager/Manifest.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././ExtensionDeprecated.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIEditBox/UIEditBox.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/GUIDefine.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../base/ObjectFactory.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIButton.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UIWidget.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../2d/CCProtectedNode.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/3d/prebuilt-mk/../../ui/UILayoutParameter.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././Particle3D/CCParticleSystem3D.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/.././Particle3D/PU/CCPUParticleSystem3D.h:
+
+/Applications/Cocos/frameworks/cocos2d-x-3.6/extensions/prebuilt-mk/../../extensions/Particle3D/CCParticleSystem3D.h:
+
+jni/../../Classes/AlertLayer.h:

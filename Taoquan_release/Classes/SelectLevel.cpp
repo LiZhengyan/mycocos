@@ -95,19 +95,21 @@ bool SelectLevel::init()
             char gameName[30];
             sprintf(gameName, "selectlevel/gameBG%d.jpg",k);
             auto sprite = Sprite::create(gameName);
-            sprite->setPosition(ccpAdd(Vec2(visibleSize.width/2,visibleSize.height/2),Vec2(visibleSize.width*k,0)));
+            //sprite->setPosition(ccpAdd(Vec2(visibleSize.width/2,visibleSize.height/2),Vec2(visibleSize.width*k,0)));
+            /*3.0以后ccpAdd(p1,p2),改成p1+p2*/
+            sprite->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2)+Vec2(visibleSize.width*k,0));
             sprite->setScale(visibleSize.width/sprite->getContentSize().width);
             layer->addChild(sprite, 0);
             //标题
             char titleName[30];
             sprintf(titleName, "selectlevel/title%d.png",k);
             Sprite* spriteTitle=Sprite::create(titleName);
-            spriteTitle->setScale(visibleSize.width*1.2/640.0);
+            spriteTitle->setScale(visibleSize.width/640.0);
             spriteTitle->setPosition(Vec2(visibleSize.width/2+visibleSize.width*k,visibleSize.height*0.82));
             layer->addChild(spriteTitle,3);
             //背景圆
             auto quanBG = Sprite::create("selectlevel/circleBG.png");
-            quanBG->setPosition(ccpAdd(Vec2(visibleSize.width/2,visibleSize.height/2),Vec2(visibleSize.width*k,0)));
+            quanBG->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2)+Vec2(visibleSize.width*k,0));
             quanBG->setScale(visibleSize.width*0.9/quanBG->getContentSize().width);
             layer->addChild(quanBG, 2);
             
@@ -138,9 +140,9 @@ bool SelectLevel::init()
                         
                         //4和6调换位置
                         if (i==1) {
-                            suo->setPosition(ccpAdd(Vec2(visibleSize.width*0.75-visibleSize.width/4*j,visibleSize.height*0.64-visibleSize.height*0.128*i),Vec2(visibleSize.width*k,0)));
+                            suo->setPosition(Vec2(visibleSize.width*0.75-visibleSize.width/4*j,visibleSize.height*0.64-visibleSize.height*0.128*i)+Vec2(visibleSize.width*k,0));
                         }else{
-                            suo->setPosition(ccpAdd(Vec2(visibleSize.width*0.25+visibleSize.width/4*j,visibleSize.height*0.64-visibleSize.height*0.128*i),Vec2(visibleSize.width*k,0)));
+                            suo->setPosition(Vec2(visibleSize.width*0.25+visibleSize.width/4*j,visibleSize.height*0.64-visibleSize.height*0.128*i)+Vec2(visibleSize.width*k,0));
                         }
                         layer->addChild(suo,4);
                     }else{
@@ -160,9 +162,9 @@ bool SelectLevel::init()
                         levelNum->setScale(visibleSize.width/640.0);
                         //4和6调换位置
                         if (i==1) {
-                            levelNum->setPosition(ccpAdd(Vec2(visibleSize.width*0.72-visibleSize.width/4*j,visibleSize.height*smartRes_shuZiHigh-visibleSize.height*0.13*i),Vec2(visibleSize.width*k,0)));
+                            levelNum->setPosition(Vec2(visibleSize.width*0.72-visibleSize.width/4*j,visibleSize.height*smartRes_shuZiHigh-visibleSize.height*0.13*i)+Vec2(visibleSize.width*k,0));
                         }else{
-                            levelNum->setPosition(ccpAdd(Vec2(visibleSize.width*0.22+visibleSize.width/4*j,visibleSize.height*smartRes_shuZiHigh-visibleSize.height*0.13*i),Vec2(visibleSize.width*k,0)));
+                            levelNum->setPosition(Vec2(visibleSize.width*0.22+visibleSize.width/4*j,visibleSize.height*smartRes_shuZiHigh-visibleSize.height*0.13*i)+Vec2(visibleSize.width*k,0));
                         }
                         
                         layer->addChild(levelNum, 3);
@@ -170,9 +172,9 @@ bool SelectLevel::init()
                     }
                     //4和6按钮调换位置
                     if (i==1) {
-                        levelButton->setPosition(ccpAdd(Vec2(visibleSize.width/4*3-visibleSize.width/4*j,visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i),Vec2(visibleSize.width*k,0)) );
+                        levelButton->setPosition(Vec2(visibleSize.width/4*3-visibleSize.width/4*j,visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i)+Vec2(visibleSize.width*k,0));
                     }else{
-                        levelButton->setPosition(ccpAdd(Vec2(visibleSize.width/4*(j+1),visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i),Vec2(visibleSize.width*k,0)) );
+                        levelButton->setPosition(Vec2(visibleSize.width/4*(j+1),visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i)+Vec2(visibleSize.width*k,0));
                     }
                     
                     levelButton->setScale(visibleSize.width*0.9/640);
@@ -184,11 +186,11 @@ bool SelectLevel::init()
                     //横条和竖条
                     if (j<2) {
                         hengTiao=Sprite::create("selectlevel/hengtiao2.png");
-                        hengTiao->setPosition(ccpAdd(Vec2(visibleSize.width*0.375+visibleSize.width*0.25*j,visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i),Vec2(visibleSize.width*k,0)) );
+                        hengTiao->setPosition(Vec2(visibleSize.width*0.375+visibleSize.width*0.25*j,visibleSize.height*0.64-(visibleSize.height*0.09+visibleSize.height*0.038)*i)+Vec2(visibleSize.width*k,0));
                         hengTiao->setScale(visibleSize.width*0.12/hengTiao->getContentSize().width);
                         layer->addChild(hengTiao,2);
                         shuTiao=Sprite::create("selectlevel/shutiao2.png");
-                        shuTiao->setPosition(ccpAdd(Vec2(visibleSize.width/4*3-visibleSize.width/2*j,visibleSize.height*0.576-visibleSize.height*0.13*j),Vec2(visibleSize.width*k,0)) );
+                        shuTiao->setPosition(Vec2(visibleSize.width/4*3-visibleSize.width/2*j,visibleSize.height*0.576-visibleSize.height*0.13*j)+Vec2(visibleSize.width*k,0));
                         shuTiao->setScale(visibleSize.width*1.1/640,visibleSize.height*smartRes_shuTiaoScale/shuTiao->getContentSize().height);
                         layer->addChild(shuTiao,2);
                         
@@ -309,8 +311,8 @@ bool SelectLevel::init()
         _heartVector.pushBack(heart);
     }
     for (int i=0; i<_heartNumber; i++) {
-        Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
-        _heartVector.at(i)->setTexture(texture);
+        //Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
+        _heartVector.at(i)->setTexture("selectlevel/hongxin.png");
     }
     
     
@@ -324,26 +326,36 @@ bool SelectLevel::init()
 
     // 添加 声音  的开关按钮
     if (isSound) {
-        _musicMenu=MenuItemImage::create("selectlevel/musicOpen.png","selectlevel/musicOpen.png",CC_CALLBACK_1(SelectLevel::menuMusicCallback, this));
+        _musicMenu=MenuItemImage::create("selectlevel/musicOpen.png","selectlevel/selectMusicOpen.png",CC_CALLBACK_1(SelectLevel::menuMusicCallback, this));
     }else{
-        _musicMenu=MenuItemImage::create("selectlevel/musicClose.png","selectlevel/musicClose.png",CC_CALLBACK_1(SelectLevel::menuMusicCallback, this));
+        _musicMenu=MenuItemImage::create("selectlevel/musicClose.png","selectlevel/selectedMusicClose.png",CC_CALLBACK_1(SelectLevel::menuMusicCallback, this));
     }
     _musicMenu->setScale(visibleSize.width*0.15/_musicMenu->getContentSize().width);
-    _musicMenu->setPosition(Point(origin.x +visibleSize.width*0.2,origin.y +visibleSize.height*0.05+_musicMenu->getContentSize().height));
+    _musicMenu->setOpacity(0);
+    _musicMenu->setPosition(Point(origin.x +visibleSize.width*0.2,0));
+    _musicMenu->runAction( Spawn::create(FadeTo::create(1.0, 255),
+                                         MoveTo::create(1.0, Vec2(origin.x + visibleSize.width*0.2 ,origin.y+visibleSize.height*0.05 +_musicMenu->getContentSize().height)),
+                                         NULL));
     //成就按钮
     auto chengjiuButton = MenuItemImage::create("selectlevel/chengjiu.png","selectlevel/chengjiu.png",
-                                           CC_CALLBACK_1(SelectLevel::menuChengjiuCallback, this));
+                                                CC_CALLBACK_1(SelectLevel::menuChengjiuCallback, this));
     chengjiuButton->setScale(visibleSize.width*0.15/chengjiuButton->getContentSize().width);
-    //chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.4,origin.y +visibleSize.height*0.05+chengjiuButton->getContentSize().height));
-    chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.5,origin.y +visibleSize.height*0.05+chengjiuButton->getContentSize().height));
+    chengjiuButton->setOpacity(0);
+    chengjiuButton->setPosition(Vec2(origin.x +visibleSize.width*0.5,0));
+    chengjiuButton->runAction( Spawn::create(FadeTo::create(1.2, 255),
+                                             MoveTo::create(1.2, Vec2(origin.x + visibleSize.width*0.5 ,origin.y+visibleSize.height*0.05 +chengjiuButton->getContentSize().height)),
+                                             NULL));
     //分享按钮
     auto shareButton = MenuItemImage::create("selectlevel/fenxiang.png","selectlevel/fenxiang.png",
-                                                CC_CALLBACK_1(SelectLevel::menuShareCallback, this));
+                                             CC_CALLBACK_1(SelectLevel::menuShareCallback, this));
     shareButton->setScale(visibleSize.width*0.15/shareButton->getContentSize().width);
-    //shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.6 ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height));
-    shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.8 ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height));
+    shareButton->setOpacity(0);
+    shareButton->setPosition(Vec2(origin.x + visibleSize.width*0.8 ,0));
+    shareButton->runAction( Spawn::create(FadeTo::create(1.5, 255),
+                                          MoveTo::create(1.5, Vec2(origin.x + visibleSize.width*0.8 ,origin.y+visibleSize.height*0.05 +shareButton->getContentSize().height)),
+                                          NULL));
 //    //商城按钮
-//    auto cundangButton = MenuItemImage::create("selectlevel/shangcheng.png","selectlevel/shangcheng.png",
+//    auto cundangButton = MenuItemImage::create("selectlevel/shangcheng.png","selectlevel/selectedShangcheng.png",
 //                                                CC_CALLBACK_1(SelectLevel::menuCundangCallback, this));
 //    cundangButton->setScale(visibleSize.width*0.15/cundangButton->getContentSize().width);
 //    cundangButton->setPosition(Vec2(origin.x+visibleSize.width*0.8,origin.y +visibleSize.height*0.05+cundangButton->getContentSize().height));
@@ -363,9 +375,15 @@ bool SelectLevel::init()
 
     
     //添加金币按钮
+    Sprite* addSprite=Sprite::create("selectlevel/jia.png");
+    addSprite->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height*0.97));
+    addSprite->setScale(visibleSize.width*0.4/640);
+    this->addChild(addSprite,3);
+    
     MenuItemImage* addButton=MenuItemImage::create("selectlevel/jia.png","selectlevel/jia.png",CC_CALLBACK_1(SelectLevel::addGold, this));
+    addButton->setOpacity(0);
     addButton->setPosition(Vec2(visibleSize.width*0.45, visibleSize.height*0.97));
-    addButton->setScale(visibleSize.width*0.4/640);
+    addButton->setScale(visibleSize.width*0.8/640);
     // create menu, it's an autorelease object
     auto menu = Menu::create(chengjiuButton,shareButton,_leftButton,_rightButton,_musicMenu,addButton, NULL);
     menu->setPosition(Vec2::ZERO);
@@ -396,8 +414,8 @@ bool SelectLevel::init()
 void SelectLevel::addGold(Ref* pSender)
 {
     for (int i=0; i<6; i++) {
-        Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
-        _heartVector.at(i)->setTexture(texture);
+        //Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
+        _heartVector.at(i)->setTexture("selectlevel/hongxin.png");
     }
     _heartNumber=6;
     DataUtil::updatePropData("energy", _heartNumber);
@@ -418,9 +436,8 @@ void SelectLevel::showEnergy(float dt)
     Value avm=DataUtil::getRow(getUserSql);
     int energyNumber=avm.asValueMap()["energy"].asInt();
     if (energyNumber>_heartNumber) {
-        Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
-        _heartVector.at(_heartNumber)->setTexture(texture);
-        //DataUtil::updatePropData("energy", _heartNumber);
+        //Texture2D* texture = TextureCache::sharedTextureCache()->addImage("selectlevel/hongxin.png");
+        _heartVector.at(_heartNumber)->setTexture("selectlevel/hongxin.png");
         _heartNumber++;
     }
     
@@ -464,7 +481,7 @@ void SelectLevel::menuLevelButtonCallback(Ref* pSender,int level,bool issuo)
 //        CallFunc* c2=CallFunc::create([=]{
             //进入游戏界面
             Scene* gameScene=GameScene::createScene();
-            Director::getInstance()->replaceScene(gameScene);
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, gameScene));
         //});
         //this->runAction(Sequence::create(c1,DelayTime::create(0.5),c2,NULL));
         
@@ -491,8 +508,9 @@ bool SelectLevel::onTouchBegan(Touch * touch,Event * pEvent)
 //设置关卡跟随手指的方向移动
 void SelectLevel::onTouchMoved(Touch * touch,Event * pEvent)
 {
+    /*3.0中ccpSub(p1,p2)换成p1-p2*/
     Point point = touch->getLocation();
-    Point direction = ccpSub(point,this->m_touchPoint);
+    Point direction = point-this->m_touchPoint;
     
     //CCPoint spriteDirection = ccpAdd(this->m_offsetPoint,direction);
     //当滑动视图是第一页和最后一页时让视图不能滑动
@@ -576,27 +594,30 @@ void SelectLevel::leftAndRightAdjustScrollView(Ref* pSender)
     // 我们根据 offset 的实际情况来判断移动效果
     //如果手指往左划，offset大于0，说明页面在减小，往右增大
     if (button->getTag()==1111) {
+        //不允许超出最左边的一页和最右边的一页
         m_nCurPage --;
+        if (m_nCurPage < 0){
+            m_nCurPage = 0;
+            _leftButton->setVisible(false);
+        }else{
+            _rightButton->setVisible(true);
+            _leftButton->setVisible(true);
+        }
     }else{
         m_nCurPage ++;
+        if (m_nCurPage > 2){
+            m_nCurPage = 2;
+            _rightButton->setVisible(false);
+        }else{
+            _rightButton->setVisible(true);
+            _leftButton->setVisible(true);
+        }
     }
     
     
-    //不允许超出最左边的一页和最右边的一页
-    if (m_nCurPage < 0){
-        m_nCurPage = 0;
-        _leftButton->setVisible(false);
-    }
-    else if (m_nCurPage > 2){
-        m_nCurPage = 2;
-        _rightButton->setVisible(false);
-    }else{
-        _rightButton->setVisible(true);
-        _leftButton->setVisible(true);
-    }
     Point adjustPoint = Vec2(-winSize.width * m_nCurPage , 0);
     //这个函数比setContentOffset多了一个参数，第二个参数是设置时间的，就是用多长的时间来改变偏移量
-    this->m_scrollView->setContentOffsetInDuration(adjustPoint, 0.3f);
+    this->m_scrollView->setContentOffsetInDuration(adjustPoint, 0.1f);
 }
 
 SelectLevel::~SelectLevel()
@@ -696,6 +717,7 @@ void SelectLevel::menuCloseCallback(Ref* pSender)
     return;
 #endif
     Single::getInstance()->stop();
+    Single::getInstance()->getLocalTime();
     //更新时间
     DataUtil::updatePropData("month", Single::getInstance()->getLocalMonth());
     DataUtil::updatePropData("day", Single::getInstance()->getLocalDay());
