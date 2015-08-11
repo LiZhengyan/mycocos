@@ -60,12 +60,12 @@ bool PauseLayer::init() {
     
     
     //添加监听
-//    auto listener1=EventListenerTouchOneByOne::create();
-//    listener1->onTouchMoved=CC_CALLBACK_2(PauseLayer::onTouchMoved, this);
-//    listener1->onTouchBegan=CC_CALLBACK_2(PauseLayer::onTouchBegan,this);
-//    listener1->onTouchEnded=CC_CALLBACK_2(PauseLayer::onTouchEnded, this);
-//    listener1->setSwallowTouches(true);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1,this);
+    auto listener1=EventListenerTouchOneByOne::create();
+    listener1->onTouchMoved=CC_CALLBACK_2(PauseLayer::onTouchMoved, this);
+    listener1->onTouchBegan=CC_CALLBACK_2(PauseLayer::onTouchBegan,this);
+    listener1->onTouchEnded=CC_CALLBACK_2(PauseLayer::onTouchEnded, this);
+    listener1->setSwallowTouches(true);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1,this);
     //_eventDispatcher->addEventListenerWithFixedPriority(listener1, -1);
     
     return true;
@@ -129,7 +129,11 @@ void PauseLayer::menuRestartCallback(Ref* pSender)
     blackBG->runAction( Sequence::create(Spawn::create(FadeTo::create(0.3, 0),
                                      restartItem_Act,
                                      resumeItem_Act,
-                                                       backSelectLevelItem_Act,NULL),CallFunc::create(([=]{this->removeFromParent();})), NULL));
+                                                       backSelectLevelItem_Act,NULL),CallFunc::create(([=]{
+        
+                                                        this->removeFromParent();
+        EventCustom _event("backRestartGame");_eventDispatcher->dispatchEvent(&_event);
+                                                        })), NULL));
 
     
 }
@@ -156,16 +160,15 @@ void PauseLayer::menuResumeCallback(Ref* pSender)
                                                        backSelectLevelItem_Act,NULL),CallFunc::create(([=]{this->removeFromParent();})), NULL));
 }
 
-//bool PauseLayer::onTouchBegan(Touch* touch, Event* event)
-//{
-//    return true;
-//}
-//void PauseLayer::onTouchMoved(Touch* touch, Event* event)
-//{
-//    
-//}
-//void PauseLayer::onTouchEnded(Touch* touch, Event* event)
-//{
-//   
-//
-//}
+bool PauseLayer::onTouchBegan(Touch* touch, Event* event)
+{
+    return true;
+}
+void PauseLayer::onTouchMoved(Touch* touch, Event* event)
+{
+    
+}
+void PauseLayer::onTouchEnded(Touch* touch, Event* event)
+{
+
+}

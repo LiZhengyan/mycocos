@@ -3,9 +3,6 @@
 
 #import "IOSiAP.h"
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 @interface iAPProductsRequestDelegate : NSObject<SKProductsRequestDelegate>
 @property (nonatomic, assign) IOSiAP *iosiap;
 @end
@@ -70,9 +67,6 @@
 
 @end
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 @interface iAPTransactionObserver : NSObject<SKPaymentTransactionObserver>
 @property (nonatomic, assign) IOSiAP *iosiap;
 @end
@@ -117,25 +111,7 @@
     }
 }
 
-// Sent when an error is encountered while adding transactions from the user's purchase history back to the queue.
-- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
-{
-    
-    _iosiap->delegate->onRestoreFinished(false);
-    //NSLog(@"restore completed transactions failded.");
-}
-
-// Sent when all transactions from the user's purchase history have successfully been added back to the queue.
-- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
-{
-    _iosiap->delegate->onRestoreFinished(true);
-    //NSLog(@"restore completed transactions finished.");
-}
-
 @end
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 IOSiAP::IOSiAP():
 skProducts(nullptr),
@@ -165,9 +141,11 @@ IOSiAP::~IOSiAP()
 IOSProduct *IOSiAP::iOSProductByIdentifier(std::string &identifier)
 {
     std::vector <IOSProduct *>::iterator iterator;
-    for (iterator = iOSProducts.begin(); iterator != iOSProducts.end(); iterator++) {
+    for (iterator = iOSProducts.begin(); iterator != iOSProducts.end(); iterator++)
+    {
         IOSProduct *iosProduct = *iterator;
-        if (iosProduct->productIdentifier == identifier) {
+        if (iosProduct->productIdentifier == identifier)
+        {
             return iosProduct;
         }
     }
@@ -181,6 +159,7 @@ void IOSiAP::requestProducts(std::vector <std::string> &productIdentifiers)
     std::vector <std::string>::iterator iterator;
     for (iterator = productIdentifiers.begin(); iterator != productIdentifiers.end(); iterator++) {
         [set addObject:[NSString stringWithUTF8String:(*iterator).c_str()]];
+       
     }
     SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:set];
     iAPProductsRequestDelegate *delegate = [[iAPProductsRequestDelegate alloc] init];
@@ -197,11 +176,3 @@ void IOSiAP::paymentWithProduct(IOSProduct *iosProduct, int quantity)
     
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
-
-void IOSiAP::restorePayment()
-{
-    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////

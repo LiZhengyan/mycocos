@@ -1,92 +1,73 @@
 #include "AppDelegate.h"
-
-#include "cocos2d.h"
-#include "SimpleAudioEngine.h"
-#include "ScriptingCore.h"
-#include "jsb_cocos2dx_auto.hpp"
-#include "jsb_cocos2dx_extension_auto.hpp"
-#include "cocos2d_specifics.hpp"
-#include "extension/jsb_cocos2dx_extension_manual.h"
-#include "chipmunk/js_bindings_chipmunk_registration.h"
-#include "jsb_opengl_registration.h"
-#include "localstorage/js_bindings_system_registration.h"
-
-#include "IOSiAP_JSB.h"
+#include "MenuScene.h"
 
 USING_NS_CC;
-using namespace CocosDenshion;
 
-AppDelegate::AppDelegate()
+AppDelegate::AppDelegate() {
+
+}
+
+AppDelegate::~AppDelegate() 
 {
 }
 
-AppDelegate::~AppDelegate()
+//if you want a different context,just modify the value of glContextAttrs
+//it will takes effect on all platforms
+void AppDelegate::initGLContextAttrs()
 {
-    ScriptEngineManager::destroyInstance();
+    //set OpenGL context attributions,now can only set six attributions:
+    //red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
 }
 
-bool AppDelegate::applicationDidFinishLaunching()
+// If you want to use packages manager to install more packages, 
+// don't modify or remove this function
+static int register_all_packages()
 {
+    return 0; //flag for packages manager
+}
+
+bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-    Director *director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
-    
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLViewImpl::create("My Game");
+        director->setOpenGLView(glview);
+    }
+    glview->setDesignResolutionSize(480,800,ResolutionPolicy::EXACT_FIT);
+
     // turn on display FPS
     director->setDisplayStats(true);
-    
+
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-    
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    sc->addRegisterCallback(register_all_cocos2dx);
-    sc->addRegisterCallback(register_all_cocos2dx_extension);
-    sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
-    sc->addRegisterCallback(jsb_register_chipmunk);
-    sc->addRegisterCallback(JSB_register_opengl);
-    sc->addRegisterCallback(jsb_register_system);
-    sc->addRegisterCallback(JSB_register_iOSiAP);
-    sc->start();
-    
-    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
-    
+
+    register_all_packages();
+
+    // create a scene. it's an autorelease object
+    auto scene = MenuScene::create();
+
+    // run
+    director->runWithScene(scene);
+
     return true;
 }
 
-void handle_signal(int signal) {
-    static int internal_state = 0;
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    // should start everything back
-    Director* director = Director::getInstance();
-    if (director->getRunningScene()) {
-        director->popToRootScene();
-    } else {
-        PoolManager::sharedPoolManager()->finalize();
-        if (internal_state == 0) {
-            //sc->dumpRoot(NULL, 0, NULL);
-            sc->start();
-            internal_state = 1;
-        } else {
-            sc->runScript("hello.js");
-            internal_state = 0;
-        }
-    }
-}
-
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
-void AppDelegate::applicationDidEnterBackground()
-{
+void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
+
+    // if you use SimpleAudioEngine, it must be pause
+    // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
-void AppDelegate::applicationWillEnterForeground()
-{
+void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-    SimpleAudioEngine::getInstance()->resumeAllEffects();
+
+    // if you use SimpleAudioEngine, it must resume here
+    // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

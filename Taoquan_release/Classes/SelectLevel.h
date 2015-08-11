@@ -14,6 +14,8 @@
 #include "DataUtil.h"
 #include "cocos-ext.h"
 #include "AlertLayer.h"
+#include "achievement.h"  
+
 
 USING_NS_CC_EXT;
 USING_NS_CC;

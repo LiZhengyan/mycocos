@@ -13,7 +13,8 @@
 #include "ShoppingMall.h"
 #include "RemindLayer.h"
 #include "Single.h"
-
+#include "IOSiAP_Bridge.h"
+#include "Userguide.h"
 //USING_NS_CC;
 using namespace CocosDenshion;
 Scene* SelectLevel::createScene()
@@ -337,7 +338,7 @@ bool SelectLevel::init()
                                          MoveTo::create(1.0, Vec2(origin.x + visibleSize.width*0.2 ,origin.y+visibleSize.height*0.05 +_musicMenu->getContentSize().height)),
                                          NULL));
     //成就按钮
-    auto chengjiuButton = MenuItemImage::create("selectlevel/chengjiu.png","selectlevel/chengjiu.png",
+    auto chengjiuButton = MenuItemImage::create("selectlevel/chengjiu.png","selectlevel/selectChengjiu.png",
                                                 CC_CALLBACK_1(SelectLevel::menuChengjiuCallback, this));
     chengjiuButton->setScale(visibleSize.width*0.15/chengjiuButton->getContentSize().width);
     chengjiuButton->setOpacity(0);
@@ -346,7 +347,7 @@ bool SelectLevel::init()
                                              MoveTo::create(1.2, Vec2(origin.x + visibleSize.width*0.5 ,origin.y+visibleSize.height*0.05 +chengjiuButton->getContentSize().height)),
                                              NULL));
     //分享按钮
-    auto shareButton = MenuItemImage::create("selectlevel/fenxiang.png","selectlevel/fenxiang.png",
+    auto shareButton = MenuItemImage::create("selectlevel/fenxiang.png","selectlevel/selectFenxiang.png",
                                              CC_CALLBACK_1(SelectLevel::menuShareCallback, this));
     shareButton->setScale(visibleSize.width*0.15/shareButton->getContentSize().width);
     shareButton->setOpacity(0);
@@ -480,8 +481,18 @@ void SelectLevel::menuLevelButtonCallback(Ref* pSender,int level,bool issuo)
 //        });
 //        CallFunc* c2=CallFunc::create([=]{
             //进入游戏界面
+        log("forkey=%d",UserDefault::getInstance()->getIntegerForKey("Userguide"));
+        if (UserDefault::getInstance()->getIntegerForKey("Userguide")==2)   //完成引导以后会设置成2
+        {
             Scene* gameScene=GameScene::createScene();
             Director::getInstance()->replaceScene(TransitionFade::create(1.0f, gameScene));
+            
+        }else{
+            log("Userguide=%zd",UserDefault::getInstance()->getIntegerForKey("Userguide"));  //第一次为0 ，
+                                                                                             //然后进入超级模式为1.完成超级模式以后为2
+            Scene* gameScene=Userguide::createScene();
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, gameScene));
+        }
         //});
         //this->runAction(Sequence::create(c1,DelayTime::create(0.5),c2,NULL));
         
@@ -662,6 +673,10 @@ void SelectLevel::menuChengjiuCallback(cocos2d::Ref* pSender)
     if (isSound) {
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
+    
+    
+    Achievement* _achieve=Achievement::create();
+    addChild(_achieve,4,"lay_achieve");
 }
 //分享按钮回调方法
 void SelectLevel::menuShareCallback(cocos2d::Ref* pSender)
@@ -671,6 +686,11 @@ void SelectLevel::menuShareCallback(cocos2d::Ref* pSender)
     if (isSound) {
         SimpleAudioEngine::getInstance()->playEffect("musicAndeffect/buttonEffect.wav");
     }
+    
+        IOSiAP_Bridge* bridge = new IOSiAP_Bridge;
+        bridge->requestProducts(6);
+    
+    
 }
 //存档按钮回调方法
 void SelectLevel::menuCundangCallback(cocos2d::Ref* pSender)

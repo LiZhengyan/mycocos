@@ -18,9 +18,9 @@ public:
     
     static PauseLayer* create();
     
-//    bool onTouchBegan(Touch* touch, Event* event);
-//    void onTouchMoved(Touch* touch, Event* event);
-//    void onTouchEnded(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     
     void menuSelectLevelCallback(Ref* pSender);
     void menuResumeCallback(Ref* pSender);

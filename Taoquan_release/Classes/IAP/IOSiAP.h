@@ -1,3 +1,11 @@
+//
+//  IOSiAP.h
+//  LongChengDaRen
+//
+//  Created by 白白 on 14-11-11.
+//
+//
+
 #ifndef __iAP_JSBinding__IOSiAP__
 #define __iAP_JSBinding__IOSiAP__
 
@@ -27,13 +35,11 @@ class IOSiAPDelegate
 {
 public:
     virtual ~IOSiAPDelegate() {}
-    // for request product
+    // for requestProduct
     virtual void onRequestProductsFinish(void) = 0;
     virtual void onRequestProductsError(int code) = 0;
-    // for payment event (also for restore event)
+    // for payment
     virtual void onPaymentEvent(std::string &identifier, IOSiAPPaymentEvent event, int quantity) = 0;
-    // for restore finished
-    virtual void onRestoreFinished(bool succeed) = 0;
 };
 
 class IOSiAP
@@ -41,10 +47,9 @@ class IOSiAP
 public:
     IOSiAP();
     ~IOSiAP();
-    void requestProducts(std::vector <std::string> &productIdentifiers); // 请求商品
+    void requestProducts(std::vector <std::string> &productIdentifiers);
     IOSProduct *iOSProductByIdentifier(std::string &identifier);
-    void paymentWithProduct(IOSProduct *iosProduct, int quantity = 1); // 请求支付
-    void restorePayment(); // 恢复购买
+    void paymentWithProduct(IOSProduct *iosProduct, int quantity = 1);
     
     IOSiAPDelegate *delegate;
     // ===  internal use for object-c class ===
